@@ -7,4 +7,5 @@
 *.gz
 *.eps
 *.bst
-LaTeX_DL_468198_240419/*
+*.fdb_latexmk
+*.fls
