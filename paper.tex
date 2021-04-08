@@ -1,4 +1,3 @@
-
 \RequirePackage{fix-cm}
 %
 %\documentclass{svjour3}                     % onecolumn (standard format)
@@ -546,11 +545,11 @@
             \end{equation}
             Now equation (\ref{eq}) can be solved without much effort by Newtown's method. Suppose $a \in \D$ is the optimal solution and let 
             \begin{equation*}
-                F_{\Phi_1} = F_a \circ F_{p_{c,r}} \circ F_{p_{c,r-1}} \circ \cdots \circ F_{p_{c, 0}}
+                M_{\Phi_1} = F_a \circ F_{p_{c,r}} \circ F_{p_{c,r-1}} \circ \cdots \circ F_{p_{c, 0}}
             \end{equation*}
             and the final conformal mapping satisfying (\ref{norm phi1}) is
             \begin{equation}
-                \hat{\Phi}_1 = \tilde{\Phi}_1 \circ F_{a}^{-1} = \Phi_1 \circ F_{\Phi_1}^{-1}
+                \hat{\Phi}_1 = \tilde{\Phi}_1 \circ F_{a}^{-1} = \Phi_1 \circ M_{\Phi_1}^{-1}
             \end{equation}
 
             \begin{algorithm}[H]
@@ -558,16 +557,16 @@
             \label{alg norm phi1}
             \begin{algorithmic}
                 \STATE \textbf{Inputs:} $\Phi_1$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $\epsilon=0.2$.
-                \STATE \textbf{Initialize:} Let $r=0$, $p_{i,0} = p_i$, $F_{\Phi_1} = id$ and compute $p_{c,0}= \frac{1}{N} \sum_{i=1}^N p_{i}$. %and $M_{p_{c,0}}(z) = \frac{z-p_{c,0}}{1- \overline{p_{c, 0}}z}$
+                \STATE \textbf{Initialize:} Let $r=0$, $p_{i,0} = p_i$, $M_{\Phi_1} = id$ and compute $p_{c,0}= \frac{1}{N} \sum_{i=1}^N p_{i}$. %and $M_{p_{c,0}}(z) = \frac{z-p_{c,0}}{1- \overline{p_{c, 0}}z}$
                 \WHILE{$\abs{p_c,r} > \epsilon$}
-                    \STATE Let $F_{p_{c,r}}(z) = \frac{z-p_{c,r}}{1- \overline{p_{c, r}}z}$ and $\Phi_1 = \Phi_1 \circ F_{p_{c,r}}^{-1}$.
-                    \STATE Compute $F_{\Phi_1} = F_{p_{c,r}} \circ F_{\Phi_1}$, $p_{i, r+1} = F_{p_{c,r}}(p_{i, r})$ and $p_{c,r+1} = \frac{1}{N} \sum_{i=1}^N p_{i, r+1}$.
+                    \STATE Let $F_{p_{c,r}}(z) = \frac{z-p_{c,r}}{1- \overline{p_{c, r}}z}$ and $M_{\Phi_1} = F_{p_{c,r}} \circ M_{\Phi_1}$.%and $\Phi_1 = \Phi_1 \circ F_{p_{c,r}}^{-1}$.
+                    \STATE Compute $p_{i, r+1} = F_{p_{c,r}}(p_{i, r})$ and $p_{c,r+1} = \frac{1}{N} \sum_{i=1}^N p_{i, r+1}$.
                     \STATE Let $r = r+1$.
                 \ENDWHILE
                 \STATE Solve equation (\ref{eq}) by Newtown's method and get solution $a \in \D$.
-                \STATE Let $F_a(z) = \frac{z-a}{1- \overline{a}z}$, $F_{\Phi_1} = F_a \circ F_{\Phi_1}$ and $\hat{\Phi}_1 = \Phi_1 \circ F^{-1}_{a}$.
-                \STATE Compute $p_i = F_a(p_{i,r})$.
-                \RETURN Mobious transformation $F_{\Phi_1}$, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
+                \STATE Let $F_a(z) = \frac{z-a}{1- \overline{a}z}$ and $M_{\Phi_1} = F_a \circ M_{\Phi_1}$.% and $\hat{\Phi}_1 = \Phi_1 \circ F^{-1}_{a}$.
+                %\STATE Compute $p_i = F_a(p_{i,r})$.
+                \RETURN Mobious transformation $M_{\Phi_1}$.%, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
             \end{algorithmic}
             \end{algorithm}
 
@@ -578,39 +577,53 @@
                 \caption{The iteration of distribution adjustment. The boundary points are blue and their arithmetic center is red in each picture. (a)-(d) The 1st, 3rd, 7th, 12th iteration.}
             \end{figure*}
             
-            As for the normalization of $M_2$, it's much easier. For requirement (\ref{norm phi2 1}), we only need to map $\infty$ to $\infty$ by replace $\Phi_2$ with $\tilde{\Phi}_2(z)=\Phi_2 \circ F^{-1}_{b}(\frac{1}{z})$, where $b = \Phi_2^{-1}(\infty)$. Another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$. According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2 j \pi}{M}$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). Therefore, the maximal solution $\theta_{\max} = \argmax{j \in [0,10^5)} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ can be used to normalize the rotation and the final mapping is 
+            As for the normalization of $M_2$, it's much easier. For requirement (\ref{norm phi2 1}), let $b = \Phi_2^{-1}(\infty)$ and $c = -\frac{1}{\bar{b}}$, from
+            \begin{equation*}
+                F_{c}(\infty) = \lim_{z \rightarrow \infty} \frac{z -c}{1 - \bar{c}z} = -\frac{1}{\overline{c}} = b
+            \end{equation*} we have 
+            \begin{equation*}
+                \tilde{\Phi}_2(\infty) = \Phi_2 \circ F_{c}(\infty) = \Phi_2(b) = \infty.
+            \end{equation*}
+            So we only need replace $\Phi_2$ with $\tilde{\Phi}_2 =\Phi_2 \circ F_{c}$ to map $\infty$ to $\infty$.
+
+            According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. And another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$.  Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2\pi}{M}(j-1)$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). 
+            
+            Therefore, the maximal solution
             \begin{equation}
-                \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
+                \theta_{\max} = \argmax{j \in [1,10^5]} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}
             \end{equation}
-            where $M_{\Phi_2}(z) = e^{i \theta_{max}} \frac{z-b}{1 - \overline{b}z}$.
+            can be used to normalize the rotation and the final mapping is 
+            \begin{equation}
+                \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{\max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
+            \end{equation}
+            where $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
 
             \begin{algorithm}[H]
             \caption{Normalize $M_2$}
             \label{alg norm phi2}
             \begin{algorithmic}
                 \STATE \textbf{Inputs:} $\Phi_2$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $M=10^5$.
-                \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$.
-                \STATE Let $M_b(z) = \frac{z-b}{1-\overline{b}z}$ and $\tilde{\Phi}_2(z)=\Phi_2 \circ M^{-1}_{b}(\frac{1}{z})$.
-                \STATE Calculate $\abs{\tilde{\Phi}_2'}$ by chain derative rule.
+                \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$ and $c = -\frac{1}{\bar{b}}$.
+                \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $\tilde{\Phi}_2(z)=\Phi_2 \circ F_{c}(z)$.
                 \STATE Let $\theta_j = \frac{2\pi}{M}(j-1)$ for $j=1,2, \cdots, M$.
-                \STATE Compute $\abs{\tilde{\Phi}_2'}(e^{i \theta_j})$.
-                \STATE Find maximal value and corresponding $\theta_{max}$.
-                \STATE Let $\hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{max}}z)$ and compute $p_i = \frac{e^{-i \theta_{max}}}{M_b(p_i)}$.
-                \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
+                \STATE Find maximal value of $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ and corresponding $\theta_{\max}$.
+                \STATE Let $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
+                \RETURN Mobious transformation $M_{\Phi_2}$
+                % \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
             \end{algorithmic}
             \end{algorithm}
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=.76cm]{src/fig10.png}
+                    \includegraphics[width=7.6cm]{src/fig10.png}
                 \end{center}
-                \caption{The change of $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ for different $\theta_j \in [0, 2\pi)$. It shows this function has a significant maximum and $\theta_{max}$ is about $1.25\pi$.}
+                \caption{The change of $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ for different $\theta_j \in [0, 2\pi)$. It shows this function has a significant maximum and $\theta_{\max}$ is about $1.25\pi$.}
                 \label{derative}
             \end{figure}
 
-            After obatining Mobious transformations $F_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
+            After obatining Mobious transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
             \begin{align*}
-                \hat{H} = F_{\Phi_1} \circ H \circ M_{\Phi_2}
+                \hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}
             \end{align*}
             and it is unique up to a rotation.
             
@@ -621,17 +634,16 @@
             \caption{Calculate Beltrami signature}
             \label{alg all}
             \begin{algorithmic}
-                \STATE \textbf{Inputs:} Bounded simple connected shape $\Omega \subset \C$, $N=200$.
-                \STATE Pick $N$ clockwise points $z_1, z_2, \cdots, z_N$ from $\partial \Omega$ uniformly.
+                \STATE \textbf{Inputs:} Simple connected shape $\Omega \subset \C$, $N=200$.
+                \STATE Pick clockwise points $z_1, \cdots, z_N \in \partial \Omega$ uniformly.
                 \STATE Input $z_1, z_2, \cdots, z_N$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_1}: \D \rightarrow \Omega$ and $p_{i,1} \in \partial\D$.
-                \STATE Let $\Phi_1(z) = g_{\Phi_1}^{-1}(z)$. %and 
                 \STATE Input $z_N, \cdots, z_2, z_1$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_2}: \D \rightarrow \Omega^c$ and $p_{i,2} \in \partial\D$.
-                \STATE Let $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$.
+                \STATE Let $\Phi_1(z) = g_{\Phi_1}^{-1}(z)$ and $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$.
                 \STATE Let $f = \Phi_1^{-1} \circ \Phi_2$ and represent it by $(\varphi_i, \omega_i) = (\arg(p_{i,2}), \arg(p_{i,1}))$.
                 \STATE Extend $f$ to $H$ on $\D$ by equation (\ref{discrete poisson integral}) on grid $G$.
-                \STATE Input $\Phi_1$ and $p_{i,1}$ to Algorithm \ref{alg norm phi1}, then get $F_{\Phi_1}$.
+                \STATE Input $\Phi_1$ and $p_{i,1}$ to Algorithm \ref{alg norm phi1}, then get $M_{\Phi_1}$.
                 \STATE Input $\Phi_2$ and $p_{i,2}$ to Algorithm \ref{alg norm phi2}, then get $M_{\Phi_2}$.
-                \STATE Calculate normalized harmonic extension $\hat{H} = F_{\Phi_1} \circ H \circ M_{\Phi_2}$.
+                \STATE Calculate normalized harmonic extension $\hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}$.
                 \STATE Calculate Beltrami coefficient $B$ of $\hat{H}$.
                 \RETURN Beltrami signature $B$.
             \end{algorithmic}
