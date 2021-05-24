@@ -38,7 +38,7 @@
 %
 \begin{document}
 
-\title{Beltrami Signature: A Novel Invariant 2D Shape Representation for  Object Classification}
+\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for  Object Classification}
 % \subtitle{Do you have a subtitle?\\ If so, write it here}
 
 %\titlerunning{Short form of title}        % if too long for running head
@@ -64,40 +64,74 @@
 \maketitle
 
 \begin{abstract}
-  There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simple connected domain in this paper, named Beltrami signature. The proposed signature is based on conformal welding. We extended the welding mapping to a harmonic function. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to a rotation. And finally quasi-conformal theory get rid of the only uncertainty by computing Beltrami coefficient of harmonic extension.  The benifits of the proposed signature is it keeps invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformation and distortion. Experiments demonstrate the above properties and also show the excellent classification performance.
+  There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simply-connected domains in this paper, named the Harmonic Beltrami signature. The proposed signature is based on the extension of the conformal welding map of a unit circle $S^1$ to a harmonic function of a unit disk $\D$. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to a rotation. And finally quasi-conformal theory helps get rid of the only uncertainty by computing the Beltrami coefficient of harmonic extension.  The benifit of the proposed signature is that it keeps to be invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformations and distortions. Experiments demonstrate the above properties and also show the excellent classification performance.
 \keywords{
-  Shape representation \and conformal welding \and simple connected \and invariance}
+  Shape representation \and conformal welding \and simply-connected \and invariance}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
 
 \section{Introduction}
 \label{intro}
-    The outline of the shape contains very important information and it can be used in many applications, such as segementation, recognition, registration and so on. However, even for the simplest situation, 2D simple connected shapes, it is a big challenge to describe clearly what the shape contour looks like. Because of the complexity of the image, there is an urgent demand to find a common, simple and robust shape representation for further mining and utilizing of shapes' geometric information. Therefore, many different presentations and measures have been widly studied and proposed recently \cite{belongie2002shape,demisse2017deformation,hagedoorn2000pattern,lades1993distortion,latecki2000shape,mokhtarian1997efficient,zahn1972fourier}.
+    The outline of a shape contains important information, which can be used in many applications, such as medical image analysis, image segmentation, recognition, registration and so on. Nevertheless, it is a big challenge to define a robust descriptor for the space of shapes, even for the simplest situation of 2D simply-connected objects. In order to manipulate shapes and utilize their geometric information, there is an urgent demand to find a simple and robust representation to mathematically describe shape contours. The shape representation should also inherits a natural metric to measure geometric differences between two shape representations. With the geometric dissimilarity metric, two shapes can be quantitatively compared and prior shape information can be incorporated into various imaging models by adding a penalty term to further improve the accuracy. Due to its significance, this problem has been widely studied and different models to build the metric shape space have been proposed.
+    % \cite{belongie2002shape,demisse2017deformation,hagedoorn2000pattern,lades1993distortion,latecki2000shape,mokhtarian1997efficient,zahn1972fourier}.
 
-    Considering 2D simple connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simple connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{fig1} shows. However, it has two fatal defects. First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobious transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisifies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
+    Considering 2D simply-connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simply-connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{fig1} shows. However, it has two fatal defects. First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobious transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisfies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
 
     Another thing is that even the conformal welding is very easy to be changed by simple transformations like rotation, scaling and translation. Such a unstable representation is hard to apply in practical applications since these transformations are inevitable in the real world.
     
-    The contribution of this paper is that we propose a brand new presentation for 2D simple connected shape based on conformal welding with help of quasi-conformal theorem, which is invariant under simple transformation, and we name it Beltrami signature. Given a shape $\Omega$, $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ can be calculated by zipper algorithm, which is a mature and efficient algorithm to find the conformal mapping from the given domain to unit disk by finite boundary points.  Such conformal welding can be extended to the whole unit disk and get a harmonic function $H: \D \rightarrow \D$. Under suitable normalization, harmonic extension $H$ can be determined up to a rotation and the Beltrami coefficient of $H$ is then unique and becomes our Beltrami signature.
+    The contribution of this paper is that we propose a novel presentation for 2D simply-connected shape based on conformal welding with help of quasi-conformal theorem, which is invariant under simple transformation, and we name it Harmonic Beltrami signature. Given a shape $\Omega$, $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ can be calculated by zipper algorithm, which is a mature and efficient algorithm to find the conformal mapping from the given domain to unit disk by finite boundary points.  Such conformal welding can be extended to the whole unit disk and get a harmonic function $H: \D \rightarrow \D$. Under suitable normalization, harmonic extension $H$ can be determined up to a rotation and the Beltrami coefficient of $H$ is then unique and becomes our Harmonic Beltrami signature.
 
-    The proposed shape representation, Beltrami signature, is uniquely determined by the given domain without any assumption and artificial restriction to domain. The Beltrami signature is based on computational quasiconformal geometry. Computational quasiconformal geometry has been widely used in image processing and image analysis. Applications can be found in image segmentation 
+    The proposed shape representation, Harmonic Beltrami signature, is uniquely determined by the given domain without any assumption and artificial restriction to domain. The Harmonic Beltrami signature is based on computational quasi-conformal geometry. Computational quasi-conformal geometry has been widely used in image processing and image analysis. Applications can be found in image segmentation 
     \cite{siu2020image,chan2018topology,zhang2020topology}
     , image registration
     \cite{lam2014landmark,lui2014teichmuller,ng2014computing,lui2012optimization,lam2014genus,zhang2012registration,lee2016landmark,lui2010optimized,lui2013texture,lui2010shape,lui2010optimizedc,lui2014geometric,choi2015flash}
      and image analysis 
-    \cite{wang2007brain,lui2007landmark,choi2020shape,chan2016quasi,zeng2008shape,lui2013shapec,lui2010shape3}
-    . What's more worth mentioning is that Beltrami signature is invariant under rotation, translation and scaling and is robust to small deformation and distortion of the original shape. It means the proposed representation has high practical value and can be applied in computer vision work like classification, segementation and so on.
+    \cite{wang2007brain,lui2007landmark,choi2020shape,chan2016quasi,zeng2008shape,lui2013shape,lui2010shape3}
+    . What's more worth mentioning is that Harmonic Beltrami signature is invariant under rotation, translation and scaling and is robust to small deformation and distortion of the original shape. It means the proposed representation has high practical value and can be applied in computer vision work like classification, segmentation and so on.
     
-    The paper is organized as follows: Section \ref{background} introduces some theoretic background; Section \ref{main} shows the main theorem and how Beltrami signature is obtained from given domain; Section \ref{implementation} gives the details about the implementation; Section \ref{result} reports our experimental results. The paper is concluded in Section \ref{conclusion} and we point out future directions.
+    The paper is organized as follows: Section \ref{related work} reviews some related topics about shape representation; Section \ref{background} introduces some theoretic background; Section \ref{main} shows the main theorem and how Harmonic Beltrami signature is obtained from given domain; Section \ref{implementation} gives the details about the implementation; Section \ref{result} reports our experimental results. The paper is concluded in Section \ref{conclusion} and we point out future directions.
 
     \begin{figure}
         \begin{center}
         \includegraphics[width=7.6cm]{src/fig1_down.png}
-        \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simple connected domain $\Omega$. (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
+        \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$. (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
         \end{center}
         \label{fig1}
     \end{figure}
+
+\section{Contributions}
+The contributions of this paper can be summarized as follows.
+\begin{enumerate}
+    \item Firstly, we propose a new shape signature, called the Harmonic Beltrami signature, to effectively represent 2D simply-connected shapes. Every shape has a unique Harmonic Beltrami signature. Conversely, given a Harmonic Beltrami signature, its corresponding shape can be determined up to a translation, rotation and scaling.
+    \item Secondly, the proposed Harmonic Beltrami signature solves the issue of conformal ambiguities facing the conformal welding signature.
+    \item Thirdly, we propose a practical procedure to normalize the Harmonic Beltrami signature to handle the non-uniqueness issue, with rigorous theoretical justifications.
+    \item Fourthly, we propose a reconstruction algorithm to construct the corresponding shape from the Harmonic Beltrami signature up to a rotation, translation and scaling. This allows us to go back and fro between shapes and Beltrami signatures in the imaging model.
+    \item Finally, the proposed Harmonic Beltrami signature inherits a simple metric, namely, the $L^2$ distance, to measure the geometric dissimilarity between shapes. We have applied the shape distance to shape classification and shown satisfactory results. 
+\end{enumerate}
+
+\section{Related works}\label{related work}
+    Shape representation and description is an enduring field and there have been extensive and in-depth discussions in the past several decades. Demisse \etal \cite{demisse2017deformation} proposed a method to represent an ordered set of points sampled from a curved shape as an element of a finite dimensional matrix Lie group. Mokhtarian \etal \cite{mokhtarian1997efficient} use the maxima of curvature zero-crossing contours of Curvature Scale Space image to represent the shapes of object boundary contours. Lui \etal \cite{lui2013shape} extracted each component of a 2D multi-connected shape, then the conformal weldings represent all components and conformal modules describe relationships between components. 
+    
+    A more meticulous survery about shape representations can be found in \cite{zhang2004review}. Generally speaking, all of these representation techniques can be divided into two major categories, \textit{contour-based} methods and \textit{region-based} methods, depending on whether shape features are extracted from the contour only or from the whole shape region.
+
+    \subsection{Contour-based methods}
+        As its name suggests, this kind of representations only exploits the information providing by shape boundary. A very natural idea is that the boundary can be taken as a whole, from which a multi-dimensional numeric feature vector can be calculated and becomes the demanded representation.
+
+        The simplest features are area, circularity, curvature and so on and their combination can be used as shape representation. Peura \etal \cite{peura1997efficiency} proposed such descriptor including convexity, ratio of principle axis, circular variance and elliptic variance. Belongie \etal \cite{belongie2002shape} tried in a different way and build a representation based on Hausdorff distance, called shape contexts. For any boundary point $p$, they calculated the Hausdorff distance $d_{pq}$ and the orientation $\theta_{pq}$ with any other boundary point $q$, then these $d_{pq}$ and $\theta_{pq}$ are quantized to create a histogram map $H_p$ which is used to represent the point $p$. All the histogram $H_p$ is flattened and concatenated to form the context of the shape. Asada \etal \cite{asada1986curvature} attempted to smooth the boundary by Gaussian filter and second derivatives of Gaussian filter and the inflection points that remain are expected to be significant object characteristics.
+
+        Some other contour-based representations pay more attention to local boundary information and broke the shape down into many pieces. Chain code describes an object by a sequence of unit-size line segments with a given orientation, which was introduced by Freeman \etal \cite{freeman1961encoding}. Berretti \etal \cite{berretti2000retrieval} extended the model. The curvature zero-crossing points from a Gaussian smoothed boundary are used to obtain smooth curve, called tokens. The feature for each token is its maximum curvature and its orientation, and the similarity between two tokens is measured by the weighted Euclidean distance. 
+    
+    \subsection{Region-based methods}
+        Different from the previous category, region-based representations make the best use of all the pixels within the given shape region. Geometric moment is a classical and representative region-based shape description with form
+        \begin{equation*}
+            m_{pq} = \sum_x \sum_y x^p y^q f(x, y),
+        \end{equation*}
+        where $p, q = 0, 1, 2, \cdots$ and $f$ is the given shape. Hu published the first significant paper about geometric moment and applied it in pattern recognition \cite{hu1962visual}. Taubin \etal \cite{taubin1991object,taubin1991recognition} proposed algebraic moment, which is computed from the first $m$ central moments and is given as the eigenvalues of predefined matrices, $M_{[j; k]}$, whose elements are scaled factors of the central moments. Zhang \etal \cite{zhang2002generic} proposed Generic Fourier descriptor which is acquired by applying a 2D Fourier transform on a polar-raster sampled image
+        \begin{equation*}
+            PF_2(\rho, \phi) = \sum_r \sum_k f(r, \theta_k) e^{2 \pi i (\frac{r}{R} \rho + \theta_k \phi)},
+        \end{equation*}
+        where $0 \le r < R$, $0 \le \rho < R$, $0 \le k < T$, $0 \le \phi < T$, $\theta_k = \frac{2\pi k}{T}$ and $R, T$ are the radial frequency resolution and angular frequency resolution respectively
 
 \section{Theoretical basis}\label{background}
     \subsection{Quasi-conformal mapping and Beltrami equation}
@@ -123,19 +157,19 @@
             f(z) = f(p)+f_z(p)(z+\mu(p)\overline{z}).
         \end{equation}
 
-        \begin{figure}
-            \begin{center}
-                \includegraphics[width=7.6cm]{src/fig2.jpg}
-            \end{center}
-            \caption{(a) Shows the original hippocampus. (b) Shows the parameter domain with circle packing pattern. Under the quasiconformal parameterization, the infinitesimal circles on the parameter domain are mapped to infinitesimal ellipses on the hippocampus, as shown in (c).}
-            \label{fig2}
-        \end{figure}
+        % \begin{figure}
+        %     \begin{center}
+        %         \includegraphics[width=7.6cm]{src/fig2.jpg}
+        %     \end{center}
+        %     \caption{(a) Shows the original hippocampus. (b) Shows the parameter domain with circle packing pattern. Under the quasiconformal parameterization, the infinitesimal circles on the parameter domain are mapped to infinitesimal ellipses on the hippocampus, as shown in (c).}
+        %     \label{fig2}
+        % \end{figure}
 
         If $\mu(z)=0$ everywhere, then $f$ us called \textit{conformal} or \textit{holomorphic}. A conformal map satisfies the following well-known Cauchy-Riemann equation:
         \begin{equation}\label{cr eq}
             \Part{f}{\overline{z}} = 0.
         \end{equation}
-        Inside the local parameter domain, $f$ may be considered as a map composed of a translation to $f(p)$ together with a stretch map $S(z) = z + \mu(p)\overline{z}$, which is postcomposed by multiplication of $f_z(p)$, which is conformal. All the conformal distortion of $S(z)$ is caused by $\mu(p)$. $S(z)$ is the map that causes $f$ to map a small circle to a small ellipse (see Fig. \ref{fig2}). Form $\mu(p)$, we can determine the angles of the directions of maximal magnification and shrinkage and the amount of them as well. Specially, the angle of maximal magnification is $\arg(\mu(p))/2$ with magnifying factor $1+\abs{\mu(p)}$; the angle of maximal shrinkage is the orthogonal angle $\arg(\mu(p))/2 - \pi/2$ with shrinkage factor $1-\abs{\mu(p)}$. The distortion or dilation is given by:
+        Inside the local parameter domain, $f$ may be considered as a map composed of a translation to $f(p)$ together with a stretch map $S(z) = z + \mu(p)\overline{z}$, which is postcomposed by multiplication of $f_z(p)$, which is conformal. All the conformal distortion of $S(z)$ is caused by $\mu(p)$. $S(z)$ is the map that causes $f$ to map a small circle to a small ellipse. Form $\mu(p)$, we can determine the angles of the directions of maximal magnification and shrinkage and the amount of them as well. Specially, the angle of maximal magnification is $\arg(\mu(p))/2$ with magnifying factor $1+\abs{\mu(p)}$; the angle of maximal shrinkage is the orthogonal angle $\arg(\mu(p))/2 - \pi/2$ with shrinkage factor $1-\abs{\mu(p)}$. The distortion or dilation is given by:
         \begin{equation}
             K = \frac{1+\abs{\mu(p)}}{1-\abs{\mu(p)}}.
         \end{equation}
@@ -143,13 +177,20 @@
 
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{src/fig3.jpg}
+                \includegraphics[width=7.6cm]{src/fig3.png}
             \end{center}
             \caption{Quasi-conformal maps infinitesimal circles to ellipses. The Beltrami coefficient measure the distortion or dilation of the ellipse under the QC map.}
             \label{fig3}
         \end{figure}
 
-        Suppose $f, g: \C \rightarrow \C$ are complex-valued function with Beltrami coefficient $\mu_f, \mu_g$ respectively. Then the Beltrami coefficient for the composition $g \circ f$ is given by
+        
+        Note that there is a one-to-one correspondence between the quasi-conformal mapping f and its Beltrami coefficient $\mu$. Given $f$, there exists a Beltrami coefficient $\mu$ satisfying the Beltrami equation. Conversely, the following theorem states that given an admissible Beltrami coefficient $\mu$, there always exists an quasi-conformal mapping $f$ associating with this $\mu$.
+
+        \begin{theorem}[Measurable Riemannian Mapping Theorem]\label{Measurable Riemannian Mapping Theorem}
+            Suppose $\mu : \C \rightarrow \C$ is Lebesgue measurable satisfying $\abs{\mu}_\infty <1$; then, there exists a quasi-conformal homeomorphism $f$ from $\C$ onto itself, which is in the Sobolev space $W_{1,2}(\C)$ and satisfies the Beltrami equation in the distribution sense. The associated quasi-conformal homeomorphism $f$ is unique up to a Mobious transformation. Furthermore, by fixing $0$, $1$ and $\infty$, the $f$ is uniquely determined.
+        \end{theorem}
+
+        Suppose $f, g: \C \rightarrow \C$ are complex-valued function with Beltrami coefficient $\mu_f, \mu_g$ respectively. Then the Beltrami coefficient for the composition $g \circ f$ is given by 
         \begin{equation}\label{mu of composition}
             \mu_{g \circ f} = \frac{\mu_f+(\mu_g \circ f) \tau}{1+\overline{\mu_f}(\mu_g \circ f) \tau},
         \end{equation}
@@ -158,8 +199,8 @@
             \mu_{g \circ f} = \mu_f.
         \end{equation}
 
-    \subsection{Conformal welding}
-        Given 2D bounded simple connected shape, we can treat it as a boundary simple connected domain $\Omega \subset \C$, by Riemann mapping theorem, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$. $\Phi_1$ and $\Phi_2$ are unique up to a \textit{Mobious transformation}:
+    \subsection{Conformal welding}\label{welding}
+        Given 2D bounded simply-connected shape, we can treat it as a boundary simply-connected domain $\Omega \subset \C$, by Riemann mapping theorem, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$. $\Phi_1$ and $\Phi_2$ are unique up to a \textit{Mobious transformation}:
         \begin{equation}
             M(z) = e^{i \theta} \frac{z - a}{1 - \overline{a}z}.
         \end{equation}
@@ -168,6 +209,16 @@
             f = \Phi_1^{-1} \circ \Phi_2.
         \end{equation}
         Such $f: \partial \D \rightarrow \partial \D$ is a diffeomorphism from $\partial \D$ to itself, which can be also thought as a periodic, real-valued monotone increasing function $f_\R: [0, 2\pi) \rightarrow [0, 2\pi)$ such that $f(e^{i \theta}) = e^{i f_\R(\theta)}$ (see Fig. \ref{fig1}).
+        
+        However, such welding mappings are not unique because of the arbitrariness of Riemann mappings, as shown in Fig. \ref{unsatble}.
+        
+        \begin{figure}
+            \begin{center}
+                \includegraphics[width=7.6cm]{src/unstable welding.png}
+            \end{center}
+            \caption{Different conformal welding mappings (b), (c) and (d) of the same shape (a)}
+            \label{unsatble}
+        \end{figure}
 
     \subsection{Harmonic function and Poisson integral}
         A complex-valued function $f$ defined on $\Omega \subset \C$ is called \textit{harmonic} if it satisfies the \textit{Laplace's equation}:
@@ -178,43 +229,84 @@
 
         Chen \etal prove following theorem in \cite{chen2010compositions}, which tells us that the composition of harmonic mappings and other mappings can inherit such harmonicity in some condition.
         \begin{theorem}\label{composition of harmonic}
-            Let $f$ be a harmonic mapping, $f \circ g$ is harmonic if and only if $g(z) = az + b \overline{z} + c$, where $a$, $b$ and $c$ are constaants and $g \circ f$ is harmonic if and only if $g$ is analytic or anti-analytic.
+            Let $f$ be a harmonic mapping, $f \circ g$ is harmonic if and only if $g(z) = az + b \overline{z} + c$, where $a$, $b$ and $c$ are constants and $g \circ f$ is harmonic if and only if $g$ is analytic or anti-analytic.
         \end{theorem}
         
-        The harmonic function on a compact set is determined by its restriction to the boundary, which follows from the maximum principle, and the progress of find a harmonic function from the given domain and continuous boundary value is call \textit{Dirichlet problem}. For a special case, where the domain is unit disk on complex plane, \textit{Poisson integral} shows a method to obtain the solution $H : \overline{\D} \rightarrow \C$ of Dirichlet problem from a continious $f$ on $\partial \D$
+        The harmonic function on a compact set is determined by its restriction to the boundary, which follows from the maximum principle, and the progress of find a harmonic function from the given domain and continuous boundary value is call \textit{Dirichlet problem}. For a special case, where the domain is unit disk on complex plane, \textit{Poisson integral} shows a method to obtain the solution $H : \overline{\D} \rightarrow \C$ of Dirichlet problem from a continuous $f$ on $\partial \D$
             \begin{equation}\label{poisson integral}
                 H(re^{i\theta}) = \frac{1}{2\pi}\int_0^{2\pi} \frac{(1-r^2)f(e^{i \varphi})}{1 - 2 r cos (\varphi - \theta) + r^2} d\varphi.
             \end{equation}
-        Such $H$ is harmonic on $\D$ and continious on $\overline{\D}$ and have the same value with $f$ on the $\partial \D$, i.e. $H(e^{i\theta}) = f(e^{i\theta})$ (see Fig. \ref{harmonic}). Of course, this $H$ is unique.
+        Such $H$ is harmonic on $\D$ and continuous on $\overline{\D}$ and have the same value with $f$ on the $\partial \D$, i.e. $H(e^{i\theta}) = f(e^{i\theta})$ (see Fig. \ref{harmonic}). Of course, this $H$ is unique.
         
         \begin{figure}
             \begin{center}
                 \includegraphics[width=7.6cm]{src/fig4_down.png}
             \end{center}
-            \caption{(a) Continious function $f(e^{i \theta}) = \sin(100 \theta) + \cos(100 \theta)$ defined on $\partial \D$. (b) The corresponding harmonic function $H$ generated from $f$ by the equation (\ref{poisson integral}). Note that we used real-valued function to illustrate the progress of harmonic extension for the convenience of demonstration.}
+            \caption{(a) Continuous function $f(e^{i \theta}) = \sin(100 \theta) + \cos(100 \theta)$ defined on $\partial \D$. (b) The corresponding harmonic function $H$ generated from $f$ by the equation (\ref{poisson integral}). Note that we used real-valued function to illustrate the progress of harmonic extension for the convenience of demonstration.}
             \label{harmonic}
         \end{figure}
 
-    \section{Beltrami signature}\label{main}
-        In this chapter, we will propose a new representation, Beltrami signature, to discribe boundary simple connected domain $\Omega$. Our proposed signature is based on conformal welding and quasi-conformal theory.
+    \section{Harmonic Beltrami signature (HBS)}\label{main}
+        In this section, we describe our proposed shape signature, called the {\it Harmonic Beltrami signature (HBS)}, to represent a simply-connected domain $\Omega$. The space of HBS inherits a natural metric, so that geometric distance between two shapes can be easily measured. In the following subsection, the definition of HBS and some of its theoretical analysis are addressed.
         
-        \subsection{Beltrami signature based on conformal welding}
-            Here we give a brief explaination of how to create our new signature. Given the boundary simple connected domain $\Omega \subset \C$, we can get conformal welding $f = \Phi_1^{-1} \circ \Phi_2$ of it. Then $f$ can be extended to harmonic function $H$ defined on $\D$ by Poisson integral (\ref{poisson integral}). At the end, the Beltrami coefficient of $F$ becomes a signature of domain $\Omega$, we call it as \textit{Beltrami signature}:
-            \begin{equation}
+
+        \subsection{Definition of Harmonic Beltrami Signature}
+        Consider a bounded simply-connected domain $\Omega\subset \mathbb{C}$. Suppose $\Omega$ is a quasicircle, which is the image of the unit disk under a quasiconformal map. Let $f = \Phi_1^{-1} \circ \Phi_2$ be the conformal welding of $\Omega$, where  $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are the conformal mappings as described in Section \ref{welding}. Denote the harmonic extension of $f$ by $H:\mathbb{D}\to \mathbb{D}$.
+        
+         \begin{definition}
+         The {\it Harmonic Beltrami Signature (HBS)} is a complex-valued function $B:\mathbb{D}\to \mathbb{D}$ with $||B||_{\infty}<1$ defined as
+         \begin{equation}
                 B:= \mu_H = \frac{H_{\overline{z}}}{H_z}.
-            \end{equation}
-            Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
+        \end{equation}
+         \end{definition}
+        
+        Note that the HBS is not unique without suitable normalizations of the conformal mappings. More precisely, the conformal welding of $\Omega$ is unique up to a pre- and post-composition of Mobi\"us transformations. Suppose $f_1$ and $f_2$ are both conformal weldings of $\Omega$. Then, $f_2 = M_1\circ f\circ M_2$. The harmonic extension and hence the HBS are not unique due to conformal ambiguities. This motivates us to give the following definition of equivalence.
+        
+        \begin{definition}
+        Two HBS $B$ and $\tilde{B}$ are said to be {\it equivalent} if $B=\mu_H$ and $\tilde{B} = \mu_{\tilde{H}}$, where $H$ and $\tilde{H}$ are respectively the harmonic extensions of a diffeomorphism $f:\mathbb{S}^1\to \mathbb{S}^1$ and $\tilde{f} = M_1\circ f \circ M_2$ for some Mobi\"us transformations $M_1$ and $M_2$. In this case, we denote $B \sim \tilde{B}$. Also, the equivalence class of $B$ is denoted by $[B]$.
+        \end{definition}
+        
+        In this work, we consider the quotient space of HBS $\mathcal{B} = \{B:\mathbb{D}\to \mathbb{D}:B \text{ is a HBS} \} /\sim$ to study the space of bounded simply-connected shapes. The following theorem illustrates that $\mathcal{B}$ is indeed an effective representation for the space of shapes.
+        
+        \begin{theorem}
+        There is a one-to-one correspondence between $\mathcal{B}$ and $\mathcal{S}$. In particular, given $[B]\in \mathcal{B}$, its associated shape $\Omega$ can be determined up to a Mobi\"us transformation. Also, if $\Phi_2$ is chosen such that $\Phi_2(\infty) = \infty$, $\Omega$ is determined up to a translation, rotation and scaling.
+        \end{theorem}
+        
+        \begin{proof}
+        Given $\Omega$, there exist a unique $[B]\in \mathcal{B}$ corresponding to $\Omega$ follows from the definition of HBS. Conversely, let $[B]\in \mathcal{B}$. Define $\mu:\mathbb{C}\to \mathbb{C}$ as
+        \[
+        \mu := \begin{cases}
+        B \text{ on }\mathbb{D}\\
+        0 \text{ on }\mathbb{D}^c.
+        \end{cases}
+        \]
+        According to Quasiconformal Teichm\"uller theory, there exists $G:\mathbb{C}\to \mathbb{C}$ such that $G_{\bar{z}}/G_z = \mu$. $G$ is unique up to a Mobi\"us transformation. In other words, if $G_1$ and $G_2$ are two quasiconformal maps satisfying the above requirement, then $G_2=M\circ G_1$, where $M$ is a Mobi\"us transformation. In particular, $G$ is uniquely determined if we fix $0, 1$ and $\infty$. Let $\Omega = G(\mathbb{D})$. We claim that the HBS of $\Omega$ is $B$. To see this, let $\Phi_1: \mathbb{D}\to \Omega$ be the conformal parameterization of $\Omega$. By construction, $G|_{\mathbb{D}^c}: \mathbb{D}^c\to \Omega^c$ is conformal. The conformal welding of $\Omega$ is $\Phi_1^{-1}\circ G|_{\partial\mathbb{D}}$. As $\Phi_1$ is conformal and $G$ is harmonic, $\Phi_1^{-1}\circ G$ is the harmonic extension of the welding map. Thus, the HBS of $\Omega$ is: $\mu_{\Phi_1^{-1}\circ G}=\mu_G = B$.
+        
+        Now, $\Omega$ is uniquely determined up to a Mobi\"us transformation $M=\frac{az+b}{cz+d}$. If $G(\infty) = \infty$, then $M$ is of the form: $M = az+b= re^{i\theta}z +b$, $r\in \mathbb{R}^+$, $\theta \in [0,2\pi)$ and $b\in \mathbb{C}$. Hence, $\Omega$ is uniquely determined up to a scaling, rotation and translation, which are reflected by $r, \theta$ and $b$ respectively. 
+        \end{proof}
+
+\bigskip
+
+The above theorem demonstrates that the HBS is indeed an effective geometric representation or ``fingerprint" of a shape. It determines a shape up to a scaling, rotation and translation. 
+
+            %Here we give a brief explanation of how to create our new signature. Given the boundary simply-connected domain $\Omega \subset \C$, we can get conformal welding $f = \Phi_1^{-1} \circ \Phi_2$ of it. Then $f$ can be extended to harmonic function $H$ defined on $\D$ by Poisson integral (\ref{poisson integral}). At the end, the Beltrami coefficient of $F$ becomes a signature of domain $\Omega$, we call it as \textit{Beltrami signature}:
+           % \begin{equation}
+          %      B:= \mu_H = %\frac{H_{\overline{z}}}{H_z}.
+       %     \end{equation}
+        %    Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
 
             \begin{figure*}
                 \begin{center}
                     \includegraphics[width=\textwidth]{src/fig5.png}
                 \end{center}
-                \caption{Illustration of Beltrami signature. (a) The input shape, a dolphin. (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b). (c) The Beltrami signature of (a). Remark that the harmonic funcion and Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
+                \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin. (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b). (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
                 \label{illu of BS}
             \end{figure*}
 
-        \subsection{Analysis of uniqueness of Beltrami signature}
-            According to Riemann mapping theorem, the conformal mapings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobious transformations. Therefore, the corresponding conformal welding is
+        \subsection{Unique representative of $[B]$}
+            As discussed, every shape can be represented by its associated HBS, which is an equivalence class. In order to measure the geometric difference between shapes based on HBS, it is necessary to find a unique representative in the equivalence class $[B]$. Once the unique representatives of two shapes are determined, the geometric difference between them can be easily measured, such as the $L^2$ distance.
+            
+            According to Riemann mapping theorem, the conformal mappings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobious transformations. Therefore, the corresponding conformal welding is
             \begin{equation}
                 \tilde{f} = \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 = M_1^{-1} \circ \Phi_1^{-1} \circ \Phi_2 \circ M_2 = M_1^{-1} \circ f \circ M_2.
             \end{equation}
@@ -222,7 +314,7 @@
             With equation (\ref{poisson integral}), it can be also extended to harmonic function $\tilde{H}$. The following theorem show the relationship between $H$ and $\tilde{H}$.
 
             \begin{theorem}
-                Suppose $f$ and $\tilde{f}$ are continious map from $\partial \D$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobious transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
+                Suppose $f$ and $\tilde{f}$ are continuous map from $\mathbb{S}^1$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobious transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
             \end{theorem}
 
             \begin{proof}
@@ -243,15 +335,11 @@
                 which means $M_1^{-1} \circ H \circ M_2$ and $\tilde{H}$ have the same boundary value. From the uniqueness of harmonic mapping, $M_1^{-1} \circ H \circ M_2 = \tilde{H}$.
             \end{proof}
 
-            Because of above theorem, suppose that $M_1$ is a rotation, then we consider the Beltrami signature of $\tilde{H}$
-            \begin{equation}
+            Suppose HBS $B$ is the representative of given equivalence class $[B]$ and $H$ is the corresponding Harmonic extension. Because of above theorem, we assume $M_1$ is a rotation, then some other $\tilde{B} \in [B]$ of $\tilde{H}$ is
+            \begin{equation}\label{tildeB}
                 \tilde{B} = \mu_{\tilde{H}} = \mu_{M_1^{-1} \circ H \circ M_2} = \mu_{H\circ M_2}.
             \end{equation}
-            If we want such Beltrami signature is unique, which means $\tilde{B} = \mu_{H \circ M_2} = \mu_{H} = B$, then we get $M_2$ is identity. Therefore, we know that the uniqueness of Beltrami signature is equivalent to following restrictions:
-            \begin{enumerate}
-                \item $M_1$ should be a rotation.
-                \item $M_2$ should be identity.
-            \end{enumerate}
+            If we want to find a unique $B$, it means $\tilde{B} = \mu_{H \circ M_2} = \mu_{H} = B$, hence some pre- and post-normalizations are required.
 
         \subsection{Normalization to $M_1$}\label{norm1}
             We hope $M_1$ is a rotation. It is not that hard, for example, we can achieve it by restricting $\Phi_1(0) = 0$. But it need a hypothesis that $0$ is in $\Omega$, which is equivalent to limiting the position of shape and cannot always hold. Here we want to show a new approach without any additional assumption.
@@ -376,9 +464,9 @@
                 $\frac{a_1-a_0}{1-a_1\overline{a_0}} = 0$, then $a_0 = a_1$, which contradicts to the assumption.
             \end{proof}
 
-            \subsubsection{Unque $\Phi_1$ up to a rotation}
+            \subsubsection{Unique $\Phi_1$ up to a rotation}
             
-            Above theorems show that there is alway an unique solution $a \in \D$ for equation (\ref{eq}), so we can come back to theorem \ref{unique up to a rotation}.
+            Above theorems show that there is always a unique solution $a \in \D$ for equation (\ref{eq}), so we can come back to theorem \ref{unique up to a rotation}.
 
             \begin{proof}
                 Suppose $\Phi_1$ and $\tilde{\Phi}_1$ are two arbitrary conformal map from $\D$ to $\Omega$  then $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, where $M_1$ is a Mobious transformation. If $\Phi_1$, $\tilde{\Phi_1} $ satisfy equation (\ref{norm phi1}), let $p_k = \Phi_1^{-1}(z_k)$, then we have $\sum_{k=1}^n p_k = 0$ and $\sum_{k=1}^n M_1^{-1} (p_k) = 0$. $M_1^{-1}$ is also a Mobious transformation so let $M_1^{-1}(z) = e^{i \theta}\frac{z - a}{1 - \overline{a} z} = e^{i \theta} F_a(z)$, then we have
@@ -391,44 +479,71 @@
 
 
         \subsection{Normalization to $M_2$}\label{norm2}
-            As for $M_2$, we hope it is identity, which is equivalent with the uniqueness of $\Phi_2: \D^c \rightarrow \Omega^c$. Luckily, we always have that $\infty \in \D^c$ and $\infty \in \Omega^c$, then we can use this and derivative to guarantee the uniqueness.
+            As for $M_2$, we also hope it is also a rotation here, which is equivalent with that $\Phi_2$ is uniquely determined up to a rotation. Luckily, we always have that $\infty \in \D^c$ and $\infty \in \Omega^c$, then we can use this guarantee this uniqueness.
 
             \begin{theorem}
-                Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobious transformation. If $\tilde{\Phi_2}, \Phi_2$ satisifies that
-                \begin{align}
-                    &\tilde{\Phi_2}(\infty) = \Phi_2(\infty) = \infty\label{norm phi2 1}\\
-                    &\argmax{z \in \partial \D} \abs{\Phi_2'(z)} = \argmax{z \in \partial \D} \abs{\tilde{\Phi_2'}(z)} = 1,\label{norm phi2 2}
-                \end{align}
-                then such $M_2$ is identity.
+                Let $\Phi_2$ be a conformal map from $\D^c$ to $\Omega^c$ satisfying that
+                \begin{equation}
+                    \Phi_2(\infty) = \infty\label{norm phi2 1}
+                \end{equation}
+                then such $\Phi_2$ is uniquely determined a rotation.
             \end{theorem}
 
             \begin{proof}
-                Suppose Mobious transformation $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisify (\ref{norm phi2 1}), then
+                Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobious transformation, $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisfy (\ref{norm phi2 1}), then
                 \begin{align*}
                     &\tilde{\Phi}_2(\infty) = \Phi_2(M_2(\infty)) = \infty, \\
                     &\Phi_2(\infty) = \infty.
                 \end{align*}
                 Therefore, $M_2(\infty) = e^{i \theta} \frac{\infty - a}{1- \overline{a} \infty} = \infty$, which means that $a = 0$ and $M_2(z) = e^{i \theta} z$.
-
-                Consider the derivative of $\tilde{\Phi}_2$,
-                \begin{equation}
-                    \tilde{\Phi}_2'(z) = \Phi_2' \circ M_2(z) \cdot M_2'(z) = e^{i\theta} \Phi_2' (e^{i \theta}z),
-                \end{equation}
-                then we know that $\abs{\tilde{\Phi}_2'(z)} = \abs{\Phi_2'(e^{i \theta}z)}$. Suppose $a = \argmax{z \in \partial \D} |\Phi_2'(z)|$, then we will have that $ae^{-i \theta} = \argmax{z \in \partial \D} |\tilde{\Phi}_2'(z)|$.
-                If condition (\ref{norm phi2 2}) holds for both $\tilde{\Phi}_2$ and $\Phi_2$, it means $a = a e^{-i \theta} = 1$, so $a = 1$, $\theta = 0$ and $M_2$ is identity.
             \end{proof}
 
-        \subsection{Invariance under simple transformation}
-            With the normalization mentioned above, we can get unique Beltrami signature $B$ corresponding to domain $\Omega$, so we can remark $B$ as $B_\Omega$. Now we want to prove that if we do some simple transformation like rotation, scaling and translation to $\Omega$, the Beltrami signature is invariant.
+        \subsection{Post-normalization for $B$}\label{post norm B}
+            After normalizing $M_1$ and $M_2$, where $M_1, M_2$ are both rotation, for $B, \tilde{B} \in [B]$ with harmonic extensions $H, \tilde{H}$, according to equations (\ref{mu of conformal composition}) and (\ref{tildeB}), we have 
+            \begin{equation}\label{arg integral B is 0}
+                \tilde{B}(z) = \mu_{H \circ M_2}(z) = e^{-2i\theta} \mu_H \circ M_2(z) = e^{-2 i \theta} B(e^{i\theta} z),
+            \end{equation}
+            where $M_2(z) = e^{i \theta}z$. This equation tells us the uniqueness of $B$ can be achieved by following theorem.
+            \begin{theorem}\label{unique B}
+                Suppose $B$ is HBS in given equivalence class $[B]$ and satisfies requirements (\ref{norm phi1}) and (\ref{norm phi2 1}). If
+                \begin{equation}
+                    \arg \int_\D B(z) dz = 0,
+                \end{equation}
+                then $B$ is unique representative of $[B]$.
+            \end{theorem}
 
-            \begin{theorem}
-                Given a boundary simple connected domain $\Omega$ and transformation $T$ which is composed by rotation, scaling and transformation. Let $B_\Omega$ and $B_{T(\Omega)}$ be the Beltrami signature of $\Omega$ and $T(\Omega)$, then $B_\Omega = B_{T(\Omega)}$
+            \begin{proof}
+                Suppose $B, \tilde{B}$ are both HBS in the same equivalence class $[B]$ with harmonic extensions $H$ and $\tilde{H}$ respectively, where $\tilde{H} = M_1^{-1} \circ H \circ M_2$ and $\int_D B(z)dz = r e^{i \tau}$. According to requirements (\ref{norm phi1}) and (\ref{norm phi2 1}), $M_1, M_2$ are rotation. Let $M_2(z) = e^{i\theta}z$, then we have
+                \begin{eqnarray}
+                    \int_B \tilde{B}(z) dz
+                    &=& \int_D e^{-2i\theta} B(e^{i\theta} z) dz \nonumber \\
+                    &=& e^{-2i\theta} \int_D B(z) dz \nonumber \\
+                    &=& r e^{i(\tau-2\theta)}.
+                \end{eqnarray}
+                If equation (\ref{arg integral B is 0}) holds,
+                \begin{equation*}
+                    \tau = \tau-2\theta  = 0,
+                \end{equation*}
+                hence $\theta = 0$, $M_2$ is identity and so$\tilde{B} = \mu_{H \circ I} = \mu_H = B$.
+            \end{proof}
+
+            Note that the unique representative $B$ of $[B]$ can be easily generated from any HBS $B_0 \in [B]$. If $\tau_0 =\arg \int_\D \tilde{B}(z) dz  \neq 0$, then
+            \begin{equation}\label{normaled B}
+                B(z) = e^{i\tau_0}B_0(e^{-\frac{\tau_0}{2}i}z)
+            \end{equation}
+            is just the desired representative.
+
+        \subsection{Invariance under simple transformation}
+            With the normalization mentioned above, we can get a unique Harmonic Beltrami signature $B$ as the representative corresponding to domain $\Omega$, so we can remark $B$ as $B_\Omega$. Now we want to prove that if we do some simple transformation like rotation, scaling and translation to $\Omega$, the HBS is invariant.
+
+            \begin{theorem}\label{invariance theorem}
+                Given a boundary simply-connected domain $\Omega$ and transformation $T$ which is composed by rotation, scaling and transformation. Let $B_\Omega$ and $B_{T(\Omega)}$ be the HBS of $\Omega$ and $T(\Omega)$, then $B_\Omega = B_{T(\Omega)}$
             \end{theorem}
 
             \begin{proof}
                 Suppose $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, $\tilde{\Phi}_1: \D \rightarrow T(\Omega)$ and $\tilde{\Phi}_2 : \D^c \rightarrow T(\Omega)$ are conformal. Since $T$ is composed by rotation, scaling and translation, $T$ can be written as $T(z) = ke^{i\theta} z + b$. Such $T$ is absolutely invertible and conformal.
                 
-                Let $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1 : \D \rightarrow \Omega$, $\hat{\Phi}_1$ is conformal. Given the boundary points $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$, then $\{T(z_1), T(z_2), \cdots, T(z_n)\} \subset \partial T(\Omega)$. Since $\tilde{\Phi}_1$ satisifies condition (\ref{norm phi1}), we have
+                Let $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1 : \D \rightarrow \Omega$, $\hat{\Phi}_1$ is conformal. Given the boundary points $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$, then $\{T(z_1), T(z_2), \cdots, T(z_n)\} \subset \partial T(\Omega)$. Since $\tilde{\Phi}_1$ satisfies condition (\ref{norm phi1}), we have
                 \begin{equation*}
                     \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0.
                 \end{equation*}
@@ -437,44 +552,127 @@
                 \begin{equation*}
                     \sum_{i=1}^n \hat{\Phi}_1^{-1}(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1} \circ T(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0,
                 \end{equation*}
-                which means $\hat{\Phi}_1$ also satisifies condition (\ref{norm phi1}). Hence $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1= \Phi_1 \circ R$, which equals to
+                which means $\hat{\Phi}_1$ also satisfies condition (\ref{norm phi1}). Hence $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1= \Phi_1 \circ M_1$, which equals to
                 \begin{equation}
-                    \tilde{\Phi}_1 = T \circ \Phi_1 \circ R,
+                    \tilde{\Phi}_1 = T \circ \Phi_1 \circ M_1,
                 \end{equation}
-                where $R$ is a rotation.
+                where $M_1$ is a rotation.
 
                 Similarly, let $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2: \D^c \rightarrow \Omega^c$, $\hat{\Phi}_2$ is conformal. Since $\tilde{\Phi}_2(\infty) = \infty$, we have
                 \begin{equation*}
                     \hat{\Phi}_2(\infty) = T \circ \tilde{\Phi}_2(\infty) = \infty,
                 \end{equation*}
-                which means $\hat{\Phi}_2$ satisifies condition (\ref{norm phi2 1}).
-
-                As for condition (\ref{norm phi2 2}), we know that $T'(z) = k e^{i \theta}$, so
+                which means $\hat{\Phi}_2$ satisfies condition (\ref{norm phi2 1}). Therefore, $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2 = \Phi_2 \circ M_2$ and then
                 \begin{equation}
-                    \hat{\Phi}_2'(z) = T' \circ \tilde{\Phi}_2(z) \cdot \tilde{\Phi}_2'(z) = k e^{i \theta} \tilde{\Phi}_2'(z).
+                    \tilde{\Phi}_2 = T \circ \Phi_2 \circ M_2,
                 \end{equation}
-                Hence $\abs{\hat{\Phi}_2'} = \abs{k}\abs{\tilde{\Phi}_2'}$, which means $\hat{\Phi}_2$ also satisifies condition (\ref{norm phi2 2}). Therefore, $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2 = \Phi_2$ and then
-                \begin{equation}
-                    \tilde{\Phi}_2 = T \circ \Phi_2.
-                \end{equation}
+                where $M_2$ is also a rotation.
 
                 We have the conformal welding
-                \begin{equation}
-                    \tilde{f} = \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 = R^{-1} \circ \Phi_1^{-1} \circ T^{-1} \circ T \circ \Phi_2 = R^{-1} \circ f.
-                \end{equation}
-                Then the harmonic extension $\tilde{H} = R^{-1} \circ H$ and 
-                \begin{equation}
-                    B_{T(\Omega)} = \mu_{\tilde{H}} = \mu_{R^{-1} \circ H} = \mu_H = B_\Omega.
-                \end{equation}
+                \begin{eqnarray}
+                    \tilde{f}
+                    &=& \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 \\
+                    &=& M_1^{-1} \circ \Phi_1^{-1} \circ T^{-1} \circ T \circ \Phi_2 \circ M_2 \\
+                    &=& M_1^{-1} \circ f \circ M_2.
+                \end{eqnarray}
+                Then the harmonic extension $\tilde{H} = M_1^{-1} \circ H \circ M_2$ and so $B_\Omega = \mu_H$ and $B_{T(\Omega)} = \mu_{\tilde{H}}$ are both the representative of the same equivalence class. Therefore, $B_\Omega = B_{T(\Omega)}$ because of theorem \ref{unique B}.
             \end{proof}
+
+    \section{Reconstruction}\label{reconstruction}
+    
+        The above theorems show that our Harmonic Beltrami signature can be uniquely defined by the given shape and is invariant under translation, scaling and rotation. Conversely, we will further demonstrate the method to reconstruct the original shape when given a Beltrami signature in this section.
+
+        If $B_\Omega$ is the HBS of some simply-connected domain $\Omega$, according to the process we mentioned in Section \ref{main}, there exists conformal mappings $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, conformal welding $f: \partial \D \rightarrow \partial \D $ and harmonic extension $H$ of $f$, where $\Phi_1$ satisfies equation (\ref{norm phi1}), $\Phi_2$ satisfies equations (\ref{norm phi2 1}), $f = \Phi_1^{-1} \circ \Phi_2$, $\mu_H = B_\Omega$ and $B_\Omega$ satisfies (\ref{arg integral B is 0}).
+
+        Given a Harmonic Beltrami signature $B_\Omega$, define
+        \begin{equation}
+            g(z) = \begin{cases}
+                B_\Omega(z), z \in \D \\
+                0, z \in \D^c
+            \end{cases}
+        \end{equation}
+        According to Theorem \ref{Measurable Riemannian Mapping Theorem}, we can find mapping $G: \overline{\C} \rightarrow \overline{\C}$ such that
+        \begin{align}
+            &\mu_G = \frac{G_{\overline{z}}}{G_z} = g \nonumber\\
+            &G(\infty) = \infty\label{Ginfty}
+        \end{align}
+        where $G$ is uniquely determined up to Mobious transformation $M$. 
+        
+        Claim that $\Omega' = G(\D)$ is the reconstructed domain satisfying $\Omega' = T(\Omega)$, where $T$ is composed by rotation, scaling and translation. Note that
+        \begin{equation}
+            G_0(z) = \begin{cases}
+                \Phi_1 \circ H(z), z \in \D\\
+                \Phi_2(z), z \in \D^c
+            \end{cases}
+        \end{equation}
+        is one solution of (\ref{Ginfty}) since $\mu_{\Phi_1 \circ H} = \mu_H = B_\Omega$ inside $\D$, $\mu_{\Phi_2} = 0$ outside $\D$ and $\Phi_2(\infty) = \infty$. Therefore, we have 
+        \begin{equation}
+            G = M \circ G_0 \text{ and } M(\infty) = \infty.
+        \end{equation}
+        By the properties of Mobious transformation, we have $M(z) = az+b$ where $a, b \in \C$.
+        
+        On the other side, $H$ is a harmonic mapping from $\D$ onto itself, so $G_0(\D) = \Phi_1 \circ H(\D) = \Omega$, then $\Omega' = G(\D) = M(\Omega) = a \Omega + b$, which show the claim is correct.
+
+        That means the relationship between Harmonic Beltrami signatures and shapes is a bijection, up to transformation, scaling and rotation. 
+        \begin{theorem}
+            Let $\Omega_1, \Omega_2$ be two different simply-connected domains and $B_{\Omega_1}, B_{\Omega_2}$ are the corresponding HBS, then $B_{\Omega_1} = B_{\Omega_2}$ if and only is $\Omega_1 = T(\Omega_2)$, where $T$ is composed by rotation, scaling and translation.
+        \end{theorem}
+
+        \begin{proof}
+            The direction from signatures to shapes is proved in this section, and another direction is derived from theorem \ref{invariance theorem}.
+        \end{proof}
+        
+        Hence, following powerful theorem about Beltrami holomorphic flow tells that if two HBS are similar, their corresponding shapes must be very alike.
+
+        \begin{theorem}[Beltrami holomorphic flow on $\mathbb{S}^2$]\label{BHF}
+            There is a one-to-one correspondence between the set of quasiconformal diffeomorphisms of $\mathbb{S}^2$ that fix the points 0, 1, and $\infty$ and the set of smooth complex-valued functions $\mu$ on $\mathbb{S}^2$ with $\norm{\mu}_\infty = k < 1$. Here, we have identified $\mathbb{S}^2$ with the extended complex plane $\overline{\C}$. Furthermore, the solution $f^\mu$ to the Beltrami equation depends holomorphically on $\mu$. Let $\{\mu(t)\}$ be a family of Beltrami coefficients depending on a real or complex parameter $t$. Suppose also that $\mu(t)$ can be written in the form
+            \begin{equation}
+                \mu(t)(z) = \mu(z) + tv(z) + t \epsilon(t)(z)
+            \end{equation}
+            for $z \in \C$, with suitable $\mu$ in the unit ball of $C^\infty(\C)$, $v, \epsilon(t) \in L^\infty(\C)$ such that $\lim_{t \rightarrow 0} \norm{\epsilon(t)}_\infty = 0$. Then for all $w \in \C$,
+            \begin{equation}
+                f^{\mu(t)}(w) = f^{\mu}(w) + tV(f^\mu, v)(w) + o(\abs{t})
+            \end{equation}
+            locally uniformly on $\C$ as $t \rightarrow 0$, where
+            \begin{align}
+                &V(f^\mu, v)(w) = -\frac{f^\mu(w)(f^\mu(w)-1)}{\pi}W(f^\mu, v)(w)\\
+                &W(f^\mu, v)(w) = \int_\C \frac{v(z)(f^\mu)^2_z(z)}{f^\mu(z)(f^\mu(z)-1)(f^\mu(z) - f^\mu(w))}dz.
+            \end{align}
+        \end{theorem}
+
+        \begin{proof}
+            This theorem is due to Bojarski. For detailed proof, please refer to \cite{durrleman2007measuring}.
+        \end{proof}
+
+        Given HBS $B_1, B_2$, we can solve PDE (\ref{Ginfty}) and get solutions $G_1, G_2$, then the corresponding original simply-connected domains $\Omega_1 = G_1(\D), \Omega_2 = G_2(\D)$. Let
+        \begin{equation}
+            g(t)(z) = \begin{cases}
+                B_1(z) + t v(z), z \in \D \\
+                0, z \in \D^c
+            \end{cases}
+        \end{equation}
+        where $v(z) = B_2(z) - B_1(z)$ if $z \in \D$ and $v(z) = 0$ if $z \notin \D$, so $G(t)(z) = G_1(z) + tV(G_1, v)(z)$. When $t=1$, we have $G(1)(z) = G_2(z)$ and
+        \begin{align*}
+            &\norm{G_2 - G_1}_\infty = \norm{V(G_1, v)}_\infty \\
+            &\le \frac{1}{\pi}\norm{G_1}_\infty \norm{G_1 - 1}_\infty \norm{W(G_1, v)}\\
+            &\le \frac{2}{\pi} \norm{W(G_1, v)}_\infty.
+        \end{align*}
+        Since $G_1$ is continuous and bounded, the integral $\int_\D \frac{(G_1)_z^2(z)}{G_1(z)(G_1(z)-1)(G_1(z)-G_1(w)}dz$ is bounded for any $w \in \D$. Therefore, there exists some $M > 0$ such that
+        \begin{equation}
+            \norm{G_2 - G_1}_\infty \le \frac{2M}{\pi} \norm{B_2-B_1}_\infty.
+        \end{equation}
+        
+        This illustrates that if the difference between HBS is small enough, their corresponding domains is almost the same, which means our Harmonic Beltrami signature is a good indicator similarity of shapes.
+
+
 
     \section{Implementation detail}\label{implementation}
         \subsection{Zipper algorithm}
-            In oder to find an unique and stable Beltrami signature, the first thing is to do find a way to calculate a conformal mapping from the given domain to unit disk. As metioned in Section \ref{norm1}, we only have finite boundary points of the shape and zipper algorithm invented in the 1980s is a suitable and accurate method to deal with this situation numerically. 
+            In order to find a unique and stable HBS, the first thing is to do find a way to calculate a conformal mapping from the given domain to unit disk. As mentioned in Section \ref{norm1}, we only have finite boundary points of the shape and zipper algorithm invented in the 1980s is a suitable and accurate method to deal with this situation numerically. 
 
-            Marshall \etal demonstrates the zipper algorithm detailedly with clear diagrams in \cite{marshall2007convergence}. For the convenience of readers, we gives a very brief review here. Given $N$ clockwise boundary points $z_1, z_2, \cdots, z_N \in \partial \Omega$, this algorithm use a series of linear fractional transformations $g_1, g_2, \cdots, g_N$ to map $z_1, z_2,\cdots, z_N$ to real axis one-by-one, and finally transfrom the upper half plane to unit disk by $g_{N+1}(z) = \frac{z-i}{z+i}$. Therefore, $g = g_{N+1} \circ g_N \circ \cdots \circ g_2 \circ g_1$ is a conformal mapping undisputedly and maps all these boundary points to unit circle and the domain $\Omega$ to $\D$. Remark that zipper algorithm is sensitive to the order of points. If we input the points anti-clockwise, i.e. $z_N, z_{N-1}, \cdots, z_1$, the zipper will give us a conformal mapping from $\Omega^c$ to $\D$.
+            Marshall \etal demonstrates the zipper algorithm detailedly with clear diagrams in \cite{marshall2007convergence}. For the convenience of readers, we gives a very brief review here. Given $N$ clockwise boundary points $z_1, z_2, \cdots, z_N \in \partial \Omega$, this algorithm use a series of linear fractional transformations $g_1, g_2, \cdots, g_N$ to map $z_1, z_2,\cdots, z_N$ to real axis one-by-one, and finally transform the upper half plane to unit disk by $g_{N+1}(z) = \frac{z-i}{z+i}$. Therefore, $g = g_{N+1} \circ g_N \circ \cdots \circ g_2 \circ g_1$ is a conformal mapping indisputably and maps all these boundary points to unit circle and the domain $\Omega$ to $\D$. Remark that zipper algorithm is sensitive to the order of points. If we input the points anti-clockwise, i.e. $z_N, z_{N-1}, \cdots, z_1$, the zipper will give us a conformal mapping from $\Omega^c$ to $\D$.
 
-            For $\Phi_1 : \D \rightarrow \Omega$, we can find a conformal mapping $g_{\Phi_1}: \Omega \rightarrow \D$ by inputing points clockwise, and $\Phi_1 = g_{\Phi_1}^{-1}$. For $\Phi_2 : \D^c \rightarrow \Omega^c$, we can input anti-clockwise points and get $g_{\Phi_2} : \Omega^c \rightarrow \D$. At the result $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$. Because of the invariance of scaling, the number of boundary points $N$ is fixed as $200$ here and they are picked uniformly from the shape contour. 
+            For $\Phi_1 : \D \rightarrow \Omega$, we can find a conformal mapping $g_{\Phi_1}: \Omega \rightarrow \D$ by inputting points clockwise, and $\Phi_1 = g_{\Phi_1}^{-1}$. For $\Phi_2 : \D^c \rightarrow \Omega^c$, we can input anti-clockwise points and get $g_{\Phi_2} : \Omega^c \rightarrow \D$. At the result $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$. Because of the invariance of scaling, the number of boundary points $N$ is fixed as $200$ here and they are picked uniformly from the shape contour. 
 
             \begin{algorithm}[H]                           % HERE!!!!!!!!!
             \caption{Zipper}          % give the algorithm a caption
@@ -508,19 +706,19 @@
             \end{align*}
 
         \subsection{Normalization}
-            Because of the arbitrariness of the comformal mapping, two different harmonic extension $H$ and $\tilde{H}$ of the given domain $\Omega$ have relationship
+            Because of the arbitrariness of the conformal mapping, two different harmonic extension $H$ and $\tilde{H}$ of the given domain $\Omega$ have relationship
             \begin{equation*}
                 \tilde{H} = M_1 \circ H \circ M_2.
             \end{equation*}
-            Section \ref{norm1} and \ref{norm2} show that we can normalize $M_1$ and $M_2$ by some restrictions and then Beltrami signature $B$ can be unique. This section will tells how to satisfy equation (\ref{norm phi1}), (\ref{norm phi2 1}) and (\ref{norm phi2 2}) from the output of zipper algorithm.
+            Section \ref{norm1} and \ref{norm2} show that we can normalize $M_1$ and $M_2$ by some restrictions and then HBS $B$ can be unique. This section will tells how to satisfy equation (\ref{norm phi1}) and (\ref{norm phi2 1}) from the output of zipper algorithm.
 
-            To normalization $M_1$, we need to solve equation (\ref{eq}). Generally speaking, the output of zipper, $p_i = g_{\Phi_1}(z_i) \in \D, i = 1, 2, \cdots, N$, will concerntrate around a point. At that time, $\abs{f(a)} \approx 1$ almost everywhere and the solution of (\ref{eq}) is also very close to the point. This means the solution is quite unstable and hard to converge for common algorithms(see Fig \ref{original distribution}).
+            To normalization $M_1$, we need to solve equation (\ref{eq}). Generally speaking, the output of zipper, $p_i = g_{\Phi_1}(z_i) \in \D, i = 1, 2, \cdots, N$, will concentrate around a point. At that time, $\abs{f(a)} \approx 1$ almost everywhere and the solution of (\ref{eq}) is also very close to the point. This means the solution is quite unstable and hard to converge for common algorithms(see Fig \ref{original distribution}).
 
             \begin{figure}
                 \begin{center}
                     \includegraphics[width=7.6cm]{src/fig7_down.png}
                 \end{center}
-                \caption{(a) The $p_i \in \partial \D$ gather in a small neiborhood around their arithmetic mean $p_c$, which is labeled in red. (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to metion that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
+                \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red. (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
                 \label{original distribution}
             \end{figure}
 
@@ -586,17 +784,17 @@
             \end{equation*}
             So we only need replace $\Phi_2$ with $\tilde{\Phi}_2 =\Phi_2 \circ F_{c}$ to map $\infty$ to $\infty$.
 
-            According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. And another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$.  Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2\pi}{M}(j-1)$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). 
+            % According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. And another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$.  Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2\pi}{M}(j-1)$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). 
             
-            Therefore, the maximal solution
-            \begin{equation}
-                \theta_{\max} = \argmax{j \in [1,10^5]} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}
-            \end{equation}
-            can be used to normalize the rotation and the final mapping is 
-            \begin{equation}
-                \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{\max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
-            \end{equation}
-            where $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
+            % Therefore, the maximal solution
+            % \begin{equation}
+            %     \theta_{\max} = \argmax{j \in [1,10^5]} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}
+            % \end{equation}
+            % can be used to normalize the rotation and the final mapping is 
+            % \begin{equation}
+            %     \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{\max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
+            % \end{equation}
+            % where $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
 
             \begin{algorithm}[H]
             \caption{Normalize $M_2$}
@@ -604,37 +802,26 @@
             \begin{algorithmic}
                 \STATE \textbf{Inputs:} $\Phi_2$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $M=10^5$.
                 \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$ and $c = -\frac{1}{\bar{b}}$.
-                \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $\tilde{\Phi}_2(z)=\Phi_2 \circ F_{c}(z)$.
-                \STATE Let $\theta_j = \frac{2\pi}{M}(j-1)$ for $j=1,2, \cdots, M$.
-                \STATE Find maximal value of $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ and corresponding $\theta_{\max}$.
-                \STATE Let $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
+                \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $M_{\Phi_2} = F_{c}$.
                 \RETURN Mobious transformation $M_{\Phi_2}$
                 % \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
             \end{algorithmic}
             \end{algorithm}
 
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=7.6cm]{src/fig10.png}
-                \end{center}
-                \caption{The change of $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ for different $\theta_j \in [0, 2\pi)$. It shows this function has a significant maximum and $\theta_{\max}$ is about $1.25\pi$.}
-                \label{derative}
-            \end{figure}
-
-            After obatining Mobious transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
+            After obtaining Mobious transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
             \begin{align*}
                 \hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}
             \end{align*}
-            and it is unique up to a rotation.
+            and it is unique up to rotation. Finally, the desired HBS can be generated from $\mu_{\hat{H}}$ according to equation (\ref{normaled B}).
             
         
         \subsection{Summary of the Algorithm}
             The totally algorithm is as following.
             \begin{algorithm}[H]
-            \caption{Calculate Beltrami signature}
+            \caption{Calculate HBS}
             \label{alg all}
             \begin{algorithmic}
-                \STATE \textbf{Inputs:} Simple connected shape $\Omega \subset \C$, $N=200$.
+                \STATE \textbf{Inputs:} Simply-connected shape $\Omega \subset \C$, $N=200$.
                 \STATE Pick clockwise points $z_1, \cdots, z_N \in \partial \Omega$ uniformly.
                 \STATE Input $z_1, z_2, \cdots, z_N$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_1}: \D \rightarrow \Omega$ and $p_{i,1} \in \partial\D$.
                 \STATE Input $z_N, \cdots, z_2, z_1$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_2}: \D \rightarrow \Omega^c$ and $p_{i,2} \in \partial\D$.
@@ -644,35 +831,37 @@
                 \STATE Input $\Phi_1$ and $p_{i,1}$ to Algorithm \ref{alg norm phi1}, then get $M_{\Phi_1}$.
                 \STATE Input $\Phi_2$ and $p_{i,2}$ to Algorithm \ref{alg norm phi2}, then get $M_{\Phi_2}$.
                 \STATE Calculate normalized harmonic extension $\hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}$.
-                \STATE Calculate Beltrami coefficient $B$ of $\hat{H}$.
-                \RETURN Beltrami signature $B$.
+                \STATE Calculate Beltrami coefficient $\mu_{\hat{H}}$.
+                \STATE Calculate $\theta = \arg \int_\D \mu_{\hat{H}}(z) dz$.
+                \STATE Let $B(z) = e^{i \theta} \mu_{\hat{H}}(e^{-\frac{1}{2}i\theta} z)$.
+                \RETURN Harmonic Beltrami signature $B$.
             \end{algorithmic}
             \end{algorithm}
     \section{Experimental result}\label{result}
-        In this section, we will validate key properties of our proposed Beltrami signature, the invariance of under simple transformations and the robustness under small distortion and modification. Besides that, a good shape representation should keep the similarity with the same kind shape and is significantly different from different kinds of shape.
+        In this section, we will validate key properties of our proposed Harmonic Beltrami signature, the invariance of under simple transformations and the robustness under small distortion and modification. Besides that, a good shape representation should keep the similarity with the same kind shape and is significantly different from different kinds of shape.
 
-        Before showing results, what needs illustration is that the distance we used to measure the difference of Beltrami signature is based on $L^2$ norm,
+        Before showing results, what needs illustration is that the distance we used to measure the difference of HBS is based on $L^2$ norm,
         \begin{equation}\label{bs dis}
             d(B_1, B_2) = \sqrt{\frac{1}{N} \sum_{i=1}^N \abs{B_1(z_i) - B_2(z_i)}^2},
         \end{equation}
-        where $B_1, B_2$ are two different Beltrami signature, $z_i \in \D$ is the face center of triangluar mesh $M$ metioned in Section \ref{detail harmonic} and $N=60962$ here.
+        where $B_1, B_2$ are two different Harmonic Beltrami signatures, $z_i \in \D$ is the face center of triangular mesh $M$ mentioned in Section \ref{detail harmonic} and $N=60962$ here.
         \subsection{Invariance}\label{sec inv}
-            We use the dolphin shown in Fig \ref{illu of BS} (a) as the original shape, then calculate Beltrami signature after sacling, translation and rotation and compare them with the original shape's Beltrami signature. The result is displayed in Fig \ref{inv}. In this figure, the first column are the sets of boundary points and we remark them as $\Omega_a$ to $\Omega_f$. The second column are the corresponding Beltrami signatures $B_a$ to $B_f$. Note that all the Beltrami signatures are shown in modulus, i.e. $\abs{B_n}$ for row $n$, and in top view. And the third column(if have) are the histograms of the difference between original shape's Beltrami signature, i.e. $\abs{B_n - B_a}$ for row $n$.
+            We use the dolphin shown in Fig \ref{illu of BS} (a) as the original shape, then calculate HBS after scaling, translation and rotation and compare them with the original shape's HBS. The result is displayed in Fig \ref{inv}. In this figure, the first column are the sets of boundary points and we remark them as $\Omega_a$ to $\Omega_f$. The second column are the corresponding Harmonic Beltrami signatures $B_a$ to $B_f$. Note that all the Harmonic Beltrami signatures are shown in modulus, i.e. $\abs{B_n}$ for row $n$, and in top view. And the third column(if have) are the histograms of the difference between original shape's Harmonic Beltrami signature, i.e. $\abs{B_n - B_a}$ for row $n$.
             
-            Row b and c are about scaling, the shapes are $\Omega_b = \{z \mid z = 1.5 z_a, z_a \in \Omega_a \}$ and $\Omega_c = \{z \mid z = 0.5 z_a, z_a \in \Omega_a \}$ and the distance are $d(B_a, B_b) = 5.5647 \times 10^{-8}$ and $d(B_a, B_c) = 5.3476 \times 10^{-8}$. Row d is about translation, the shape $\Omega_d = \{z \mid z = z_a+100+20i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_d) = 4.7817 \times 10^{-8}$. Row e is about rotation, the shape is $\Omega_e = \{z \mid z = e^{0.2\pi i} z_a, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.2144 \times 10^{-8}$. Row f is the combination of scaling, tanslation and rotation, the shape is $\Omega_e = \{z \mid z = 3e^{-0.85\pi i} z_a+350+600i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.7635 \times 10^{-8}$. These confirm the invariance of Beltrami signature and scaling, translation and rotation.
+            Row b and c are about scaling, the shapes are $\Omega_b = \{z \mid z = 1.5 z_a, z_a \in \Omega_a \}$ and $\Omega_c = \{z \mid z = 0.5 z_a, z_a \in \Omega_a \}$ and the distance are $d(B_a, B_b) = 5.5647 \times 10^{-8}$ and $d(B_a, B_c) = 5.3476 \times 10^{-8}$. Row d is about translation, the shape $\Omega_d = \{z \mid z = z_a+100+20i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_d) = 4.7817 \times 10^{-8}$. Row e is about rotation, the shape is $\Omega_e = \{z \mid z = e^{0.2\pi i} z_a, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.2144 \times 10^{-8}$. Row f is the combination of scaling, translation and rotation, the shape is $\Omega_e = \{z \mid z = 3e^{-0.85\pi i} z_a+350+600i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.7635 \times 10^{-8}$. These confirm the invariance of HBS and scaling, translation and rotation.
 
             \begin{figure*}
                 \begin{center}
                     \includegraphics[width=10.5cm]{src/inv.png}
                 \end{center}
-                \caption{Beltrami signature under scaling, translation and rotation.}
+                \caption{Harmonic Beltrami signature under scaling, translation and rotation.}
                 \label{inv}
             \end{figure*}
 
         \subsection{Robustness}
-            Similar with Section \ref{sec inv}, here we still treat the dolphin as the original shape and modify some small parts of it and Fig \ref{robust} is the result. It shows that the proposed signature is robust and stable and will not have a big mutation cauesd by small disturbance.
+            Similar with Section \ref{sec inv}, here we still treat the dolphin as the original shape and modify some small parts of it and Fig \ref{robust} is the result. It shows that the proposed signature is robust and stable and will not have a big mutation caused by small disturbance.
 
-            Row g, h and i are result about modification. These shapes are generated by removing or adding something, which is in the red circle. We can see that Beltrami signatures have slight differences from $B_a$ but are still similar in general. And this figure also demonstrates that the bigger the modification part is, the more different the Beltrami signature is. For example in row i, losing a half of the tail makes the signature has a marked change. Quantitatively, $d(B_a, B_g) = 0.0132$, $d(B_a, B_h) = 0.0316$ and $d(B_a, B_i) = 0.1761$.
+            Row g, h and i are result about modification. These shapes are generated by removing or adding something, which is in the red circle. We can see that Harmonic Beltrami signatures have slight differences from $B_a$ but are still similar in general. And this figure also demonstrates that the bigger the modification part is, the more different the Harmonic Beltrami signature is. For example in row i, losing a half of the tail makes the signature has a marked change. Quantitatively, $d(B_a, B_g) = 0.0132$, $d(B_a, B_h) = 0.0316$ and $d(B_a, B_i) = 0.1761$.
 
             Row j is for distortion. This dolphin is only enlarged in horizontally and becomes fatter, then the $B_j$ moves a little bit and $d(B_a, B_j) = 0.0724$.
 
@@ -680,12 +869,12 @@
                 \begin{center}
                     \includegraphics[width=10.5cm]{src/robust.png}
                 \end{center}
-                \caption{Beltrami signature under small modification}
+                \caption{Harmonic Beltrami signature under small modification}
                 \label{robust}
             \end{figure*}
 
-        \subsection{Classification with Beltrami signature}
-            Above properties ensure the proposed signature having the ablity to reflect some stable features of given shape, but another much more important thing people concerned is that whether it can distinguish a shape from many different kinds of shapes and classify it correctly.
+        \subsection{Classification with HBS}
+            Above properties ensure the proposed signature having the ability to reflect some stable features of given shape, but another much more important thing people concerned is that whether it can distinguish a shape from many different kinds of shapes and classify it correctly.
 
             To compare the classification performance, we also use conformal welding directly to classify, and the distance is defined as
             \begin{equation}\label{welding dis}
@@ -693,13 +882,13 @@
             \end{equation}
             where $f_1, f_2$ are two different conformal welding, $N=200$ here.
 
-            We prepare 3 kinds of animals, fish, giraffe and elephant. There are 3 images for each group so 9 images in total. From Fig \ref{classification images}, we can find that each class share similar Beltrami signatures and conformal welding. From Fig \ref{dis matrix}, the inter-class distance of Beltrami signature is awlays less than 0.2 while the intra-class distance is greater than 0.2. But for conformal welding, the data is messy, for example, fish 3 thinks itself is very different from other fishes but looks most like giraffe 2. After multidimensional scaling(MDS), we can maps all these 9 shapes to points on 2D plane as Fig \ref{mds1}, where the Beltrami signature shows powerful classification ablity.
+            We prepare 3 kinds of animals, fish, giraffe and elephant. There are 3 images for each group so 9 images in total. From Fig \ref{classification images}, we can find that each class share similar HBS and conformal welding. From Fig \ref{dis matrix}, the intraclass distance of HBS is always less than 0.2 while the interclass distance is greater than 0.2. But for conformal welding, the data is messy, for example, fish 3 thinks itself is very different from other fishes but looks most like giraffe 2. After multidimensional scaling(MDS), we can maps all these 9 shapes to points on 2D plane as Fig \ref{mds1}, where the HBS shows powerful classification ability.
 
             \begin{figure*}
                 \begin{center}
                     \includegraphics[width=\textwidth]{src/figs.png}
                 \end{center}
-                \caption{These 3 rows are elephant, fish and giraffe. In each subfigure, the top left is the input shape, bottom left is the conformal welding and the right is Beltrami signature.}
+                \caption{These 3 rows are elephant, fish and giraffe. In each subfigure, the top left is the input shape, bottom left is the conformal welding and the right is Harmonic Beltrami signature.}
                 \label{classification images}
             \end{figure*}
 
@@ -707,7 +896,7 @@
                 \begin{center}
                     \includegraphics[width=7.6cm]{src/distance_down.png}
                 \end{center}
-                \caption{(a) The distance matrix of Beltrami signatures of above 9 shapes by equation (\ref{bs dis}). (b) The distance matrix of conformal weldings by equation (\ref{welding dis}).}
+                \caption{(a) The distance matrix of Harmonic Beltrami signatures of above 9 shapes by equation (\ref{bs dis}). (b) The distance matrix of conformal weldings by equation (\ref{welding dis}).}
                 \label{dis matrix}
             \end{figure}
 
@@ -715,7 +904,7 @@
                 \begin{center}
                     \includegraphics[width=7.6cm]{src/mds_down.png}
                 \end{center}
-                \caption{(a) The MDS result of Beltrami signature. (b) The MDS result of conformal welding.}
+                \caption{(a) The MDS result of Harmonic Beltrami signature. (b) The MDS result of conformal welding.}
                 \label{mds1}
             \end{figure}
             
@@ -723,21 +912,21 @@
                 \begin{center}
                     \includegraphics[width=\textwidth]{src/mds2.png}
                 \end{center}
-                \caption{(a) The MDS result of Beltrami signature. (b) The MDS result of conformal welding. (c) The clustering result of Beltrami signature. (d) The clustering results of conformal welding.}
+                \caption{(a) The MDS result of Harmonic Beltrami signature. (b) The MDS result of conformal welding. (c) The clustering result of Harmonic Beltrami signature. (d) The clustering results of conformal welding.}
                 \label{mds2}
             \end{figure*}
 
         \subsection{Classification for more classes}
-            In this experiment, we enlarge the amount of images to 58 in 7 different classes, camel, deer, dog, elephant, giraffe, gorilla and rabit. We calculate the distance matrix by equation (\ref{bs dis}) and (\ref{welding dis}) and use MDS to remap these shapes to 2D plane accordingly, then $k$-medoids method is used to cluster these points to 7 classes. The MDS and clustering results based on Beltrami signature and conformal welding are displayed in Fig \ref{mds2}. The classification accuracy based on Beltrami signature is 94.83\%, while the accuracy based on conformal welding is only 37.93\%.
+            In this experiment, we enlarge the amount of images to 58 in 7 different classes, camel, deer, dog, elephant, giraffe, gorilla and rabbit. We calculate the distance matrix by equation (\ref{bs dis}) and (\ref{welding dis}) and use MDS to remap these shapes to 2D plane accordingly, then $k$-medoids method is used to cluster these points to 7 classes. The MDS and clustering results based on Harmonic Beltrami signature and conformal welding are displayed in Fig \ref{mds2}. The classification accuracy based on Harmonic Beltrami signature is 94.83\%, while the accuracy based on conformal welding is only 37.93\%.
             
             
 
     \section{Conclusion}\label{conclusion}
-        In this paper, we propose a novel shape representation for 2D bounded simple connected objects called Beltrami signature. The proposed signature is based on conformal welding but overcome a key shortcoming that it can be uniquely determined by the given shape. What's more exciting is that the proposed representation is invariance under scaling, translation and rotation. For slight deformation and distortion, Beltrami signature keeps roubost and only changes within a reasonable small range. Therefore, there are reasons to believe the it does have ablity to represent some invariant geometrical features. The experimental results also confirm that the Beltrami signature has excellent performance in multi-classification tasks.
+        In this paper, we propose a novel shape representation for 2D bounded simply-connected objects called Harmonic Beltrami signature. The proposed signature is based on conformal welding but overcome a key shortcoming that it can be uniquely determined by the given shape. What's more exciting is that the proposed representation is invariance under scaling, translation and rotation. For slight deformation and distortion, HBS keeps robust and only changes within a reasonable small range. Therefore, there are reasons to believe the it does have ability to represent some invariant geometrical features. The experimental results also confirm that the HBS has excellent performance in multi-classification tasks.
 
-        Although our work has achieved relatively good results, the proposed representation still have some limitations. Firstly, the Beltrami signature is only applicable to simple connected shapes currently, but as a matter of fact, multi connected images are the majority in the real world. So we are eager for a feasible method to extend our Beltrami signature to multi connected situation. Secondly, the traditional algorithm to compute the Beltrami coefficient is inevitably dependent on triangluar mesh, which consumes a lot of time. Therefore, a fast algorithm to obatin this signature avoiding dense mesh is of high priority in our future work. Thirdly, when normalizing the conformal mapping $\Phi_2$ from exterior of unit disk to exterior of the domain, the position where the derivation of $\Phi_2$ reaches the maximum value is used to adjust the rotation. We trust this point in the original image has a certain geometric meaning, whereas it is not clear at present.
+        Although our work has achieved relatively good results, the proposed representation still have some limitations. Firstly, the HBS is only applicable to simply-connected shapes currently, but as a matter of fact, multi connected images are the majority in the real world. So we are eager for a feasible method to extend our HBS to multi connected situation. Secondly, the traditional algorithm to compute the Beltrami coefficient is inevitably dependent on triangular mesh, which consumes a lot of time. Therefore, a fast algorithm to obtain this signature avoiding dense mesh is of high priority in our future work. Thirdly, when normalizing the conformal mapping $\Phi_2$ from exterior of unit disk to exterior of the domain, the position where the derivation of $\Phi_2$ reaches the maximum value is used to adjust the rotation. We trust this point in the original image has a certain geometric meaning, whereas it is not clear at present.
 
-        In summary, we will focus on third marjor directions in the future. One is that the deeper meaning of Beltrami signature is worth digging and then a multi-connected version of representation based on this work can be proposed. Another is that if the Beltrami signature contains some geometrical features of shapes, we can also extract them directly from images and generate the Beltrami signature again. Hence the deep learning theory may help us to compute this signature from given images immediately, which is very likely to improve algorithm speed performance greatly. A third direction is this representation can be used in more applications like segementation, registration and so on.
+        In summary, we will focus on three major directions in the future. One is that the deeper meaning of HBS is worth digging and then a multi-connected version of representation based on this work can be proposed. Another is that if the HBS contains some geometrical features of shapes, we can also extract them directly from images and generate the HBS again. Hence the deep learning theory may help us to compute this signature from given images immediately, which is very likely to improve algorithm speed performance greatly. A third direction is this representation can be used in more applications like segmentation, registration and so on.
 %\begin{acknowledgements}
 %If you'd like to thank anyone, place your comments here
 %and remove the percent signs.

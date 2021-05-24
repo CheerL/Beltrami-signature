@@ -1,0 +1,238 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{asada1986curvature}
+Asada, H., Brady, M.: The curvature primal sketch.
+\newblock IEEE transactions on pattern analysis and machine intelligence
+  \textbf{1}(1), 2--14 (1986)
+
+\bibitem{astala2010random}
+Astala, K., Jones, P., Kupiainen, A., Saksman, E.: Random curves by conformal
+  welding.
+\newblock Comptes Rendus Mathematique \textbf{348}(5-6), 257--262 (2010)
+
+\bibitem{belongie2002shape}
+Belongie, S., Malik, J., Puzicha, J.: Shape matching and object recognition
+  using shape contexts.
+\newblock IEEE transactions on pattern analysis and machine intelligence
+  \textbf{24}(4), 509--522 (2002)
+
+\bibitem{berretti2000retrieval}
+Berretti, S., Del~Bimbo, A., Pala, P.: Retrieval by shape similarity with
+  perceptual distance and effective indexing.
+\newblock IEEE Transactions on multimedia \textbf{2}(4), 225--239 (2000)
+
+\bibitem{chan2016quasi}
+Chan, H.L., Li, H., Lui, L.M.: Quasi-conformal statistical shape analysis of
+  hippocampal surfaces for alzheimer's disease analysis.
+\newblock Neurocomputing \textbf{175}, 177--187 (2016)
+
+\bibitem{chan2018topology}
+Chan, H.L., Yan, S., Lui, L.M., Tai, X.C.: Topology-preserving image
+  segmentation by beltrami representation of shapes.
+\newblock Journal of Mathematical Imaging and Vision \textbf{60}(3), 401--421
+  (2018)
+
+\bibitem{chen2010compositions}
+Chen, S., Ponnusamy, S., Wang, X., et~al.: Compositions of harmonic mappings
+  and biharmonic mappings.
+\newblock Bulletin of the Belgian Mathematical Society-Simon Stevin
+  \textbf{17}(4), 693--704 (2010)
+
+\bibitem{choi2020shape}
+Choi, G.P., Qiu, D., Lui, L.M.: Shape analysis via inconsistent surface
+  registration.
+\newblock Proceedings of the Royal Society A \textbf{476}(2242), 20200147
+  (2020)
+
+\bibitem{choi2015flash}
+Choi, P.T., Lam, K.C., Lui, L.M.: Flash: Fast landmark aligned spherical
+  harmonic parameterization for genus-0 closed brain surfaces.
+\newblock SIAM Journal on Imaging Sciences \textbf{8}(1), 67--94 (2015)
+
+\bibitem{demisse2017deformation}
+Demisse, G.G., Aouada, D., Ottersten, B.: Deformation based curved shape
+  representation.
+\newblock IEEE transactions on pattern analysis and machine intelligence
+  \textbf{40}(6), 1338--1351 (2017)
+
+\bibitem{durrleman2007measuring}
+Durrleman, S., Pennec, X., Trouv{\'e}, A., Ayache, N.: Measuring brain
+  variability via sulcal lines registration: a diffeomorphic approach.
+\newblock In: International Conference on Medical Image Computing and
+  Computer-Assisted Intervention, pp. 675--682. Springer (2007)
+
+\bibitem{freeman1961encoding}
+Freeman, H.: On the encoding of arbitrary geometric configurations.
+\newblock IRE Transactions on Electronic Computers \textbf{1}(2), 260--268
+  (1961)
+
+\bibitem{hu1962visual}
+Hu, M.K.: Visual pattern recognition by moment invariants.
+\newblock IRE transactions on information theory \textbf{8}(2), 179--187 (1962)
+
+\bibitem{katznelson1990conformal}
+Katznelson, Y., Nag, S., Sullivan, D.: On conformal welding homeomorphisms
+  associated to jordan curves.
+\newblock Ann. Acad. Sci. Fenn. Ser. AI Math \textbf{15}(2), 293--306 (1990)
+
+\bibitem{lam2014genus}
+Lam, K.C., Gu, X., Lui, L.M.: Genus-one surface registration via
+  teichm{\"u}ller extremal mapping.
+\newblock In: International Conference on Medical Image Computing and
+  Computer-Assisted Intervention, pp. 25--32. Springer (2014)
+
+\bibitem{lam2014landmark}
+Lam, K.C., Lui, L.M.: Landmark-and intensity-based registration with large
+  deformations via quasi-conformal maps.
+\newblock SIAM Journal on Imaging Sciences \textbf{7}(4), 2364--2392 (2014)
+
+\bibitem{lee2016landmark}
+Lee, Y.T., Lam, K.C., Lui, L.M.: Landmark-matching transformation with large
+  deformation via n-dimensional quasi-conformal maps.
+\newblock Journal of Scientific Computing \textbf{67}(3), 926--954 (2016)
+
+\bibitem{lui2013texture}
+Lui, L.M., Lam, K.C., Wong, T.W., Gu, X.: Texture map and video compression
+  using beltrami representation.
+\newblock SIAM Journal on Imaging Sciences \textbf{6}(4), 1880--1902 (2013)
+
+\bibitem{lui2014teichmuller}
+Lui, L.M., Lam, K.C., Yau, S.T., Gu, X.: Teichmuller mapping (t-map) and its
+  applications to landmark matching registration.
+\newblock SIAM Journal on Imaging Sciences \textbf{7}(1), 391--426 (2014)
+
+\bibitem{lui2010optimized}
+Lui, L.M., Thiruvenkadam, S., Wang, Y., Thompson, P.M., Chan, T.F.: Optimized
+  conformal surface registration with shape-based landmark matching.
+\newblock SIAM Journal on Imaging Sciences \textbf{3}(1), 52--78 (2010)
+
+\bibitem{lui2010optimizedc}
+Lui, L.M., Thiruvenkadam, S., Wang, Y., Thompson, P.M., Chan, T.F.: Optimized
+  conformal surface registration with shape-based landmark matching.
+\newblock SIAM Journal on Imaging Sciences \textbf{3}(1), 52--78 (2010)
+
+\bibitem{lui2007landmark}
+Lui, L.M., Wang, Y., Chan, T.F., Thompson, P.: Landmark constrained genus zero
+  surface conformal mapping and its application to brain mapping research.
+\newblock Applied Numerical Mathematics \textbf{57}(5-7), 847--858 (2007)
+
+\bibitem{lui2014geometric}
+Lui, L.M., Wen, C.: Geometric registration of high-genus surfaces.
+\newblock SIAM Journal on Imaging Sciences \textbf{7}(1), 337--365 (2014)
+
+\bibitem{lui2010shape}
+Lui, L.M., Wong, T.W., Thompson, P., Chan, T., Gu, X., Yau, S.T.: Shape-based
+  diffeomorphic registration on hippocampal surfaces using beltrami holomorphic
+  flow.
+\newblock In: International Conference on Medical Image Computing and
+  Computer-Assisted Intervention, pp. 323--330. Springer (2010)
+
+\bibitem{lui2012optimization}
+Lui, L.M., Wong, T.W., Zeng, W., Gu, X., Thompson, P.M., Chan, T.F., Yau, S.T.:
+  Optimization of surface registrations using beltrami holomorphic flow.
+\newblock Journal of scientific computing \textbf{50}(3), 557--585 (2012)
+
+\bibitem{lui2010shape3}
+Lui, L.M., Zeng, W., Yau, S.T., Gu, X.: Shape analysis of planar objects with
+  arbitrary topologies using conformal geometry.
+\newblock In: European Conference on Computer Vision, pp. 672--686. Springer
+  (2010)
+
+\bibitem{lui2013shape}
+Lui, L.M., Zeng, W., Yau, S.T., Gu, X.: Shape analysis of planar
+  multiply-connected objects using conformal welding.
+\newblock IEEE transactions on pattern analysis and machine intelligence
+  \textbf{36}(7), 1384--1401 (2013)
+
+\bibitem{marshall2012conformal}
+Marshall, D.E.: Conformal welding for finitely connected regions.
+\newblock Computational Methods and Function Theory \textbf{11}(2), 655--669
+  (2012)
+
+\bibitem{marshall2007convergence}
+Marshall, D.E., Rohde, S.: Convergence of a variant of the zipper algorithm for
+  conformal mapping.
+\newblock SIAM Journal on Numerical Analysis \textbf{45}(6), 2577--2609 (2007)
+
+\bibitem{mcenteggart2018uniqueness}
+McEnteggart, O., Miller, J., Qian, W.: Uniqueness of the welding problem for
+  sle and liouville quantum gravity.
+\newblock arXiv preprint arXiv:1809.02092  (2018)
+
+\bibitem{mokhtarian1997efficient}
+Mokhtarian, F., Abbasi, S., Kittler, J.: Efficient and robust retrieval by
+  shape content through curvature scale space.
+\newblock In: Image Databases and Multi-Media Search, pp. 51--58. World
+  Scientific (1997)
+
+\bibitem{ng2014computing}
+Ng, T.C., Gu, X., Lui, L.M.: Computing extremal teichm{\"u}ller map of
+  multiply-connected domains via beltrami holomorphic flow.
+\newblock Journal of Scientific Computing \textbf{60}(2), 249--275 (2014)
+
+\bibitem{peura1997efficiency}
+Peura, M., Iivarinen, J., et~al.: Efficiency of simple shape descriptors.
+\newblock In: Proceedings of the third international workshop on visual form,
+  vol.~5, pp. 443--451 (1997)
+
+\bibitem{sharon20062d}
+Sharon, E., Mumford, D.: 2d-shape analysis using conformal mapping.
+\newblock International Journal of Computer Vision \textbf{70}(1), 55--75
+  (2006)
+
+\bibitem{siu2020image}
+Siu, C.Y., Chan, H.L., Ming~Lui, R.L.: Image segmentation with partial
+  convexity shape prior using discrete conformality structures.
+\newblock SIAM Journal on Imaging Sciences \textbf{13}(4), 2105--2139 (2020)
+
+\bibitem{taubin1991object}
+Taubin, G., Cooper, D.B.: Object recognition based on moment (or algebraic)
+  invariants.
+\newblock Citeseer (1991)
+
+\bibitem{taubin1991recognition}
+Taubin, G., Cooper, D.B.: Recognition and positioning of rigid objects using
+  algebraic moment invariants.
+\newblock In: Geometric Methods in Computer Vision, vol. 1570, pp. 175--186.
+  International Society for Optics and Photonics (1991)
+
+\bibitem{wang2007brain}
+Wang, Y., Lui, L.M., Gu, X., Hayashi, K.M., Chan, T.F., Toga, A.W., Thompson,
+  P.M., Yau, S.T.: Brain surface conformal parameterization using riemann
+  surface structure.
+\newblock IEEE transactions on medical imaging \textbf{26}(6), 853--865 (2007)
+
+\bibitem{zeng2008shape}
+Zeng, W., Lui, L.M., Gu, X., Yau, S.T., et~al.: Shape analysis by conformal
+  modules.
+\newblock Methods and Applications of Analysis \textbf{15}(4), 539--556 (2008)
+
+\bibitem{zhang2002generic}
+Zhang, D., Lu, G.: Generic fourier descriptor for shape-based image retrieval.
+\newblock In: Proceedings. IEEE International Conference on Multimedia and
+  Expo, vol.~1, pp. 425--428. IEEE (2002)
+
+\bibitem{zhang2004review}
+Zhang, D., Lu, G.: Review of shape representation and description techniques.
+\newblock Pattern recognition \textbf{37}(1), 1--19 (2004)
+
+\bibitem{zhang2020topology}
+Zhang, D., Lui, L.M.: Topology-preserving 3d image segmentation based on
+  hyperelastic regularization.
+\newblock Journal of Scientific Computing  (2020).
+\newblock Accepted
+
+\bibitem{zhang2012registration}
+Zhang, M., Li, F., He, Y., Lin, S., Wang, D., Lui, L.M.: Registration of
+  brainstem surfaces in adolescent idiopathic scoliosis using discrete ricci
+  flow.
+\newblock In: International Conference on Medical Image Computing and
+  Computer-Assisted Intervention, pp. 146--154. Springer (2012)
+
+\end{thebibliography}
