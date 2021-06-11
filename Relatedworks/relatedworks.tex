@@ -1,0 +1,114 @@
+\chapter{Related works}\label{related work}
+Shape representation and description is an enduring field and there have been extensive and in-depth discussions in the past several decades. Demisse \etal \cite{demisse2017deformation} proposed a method to represent an ordered set of points sampled from a curved shape as an element of a finite dimensional matrix Lie group. Mokhtarian \etal \cite{mokhtarian1997efficient} use the maxima of curvature zero-crossing contours of Curvature Scale Space image to represent the shapes of object boundary contours. Lui \etal \cite{lui2013shape} extracted each component of a 2D multi-connected shape, then the conformal weldings represent all components and conformal modules describe relationships between components. 
+
+A more meticulous survery about shape representations can be found in \cite{zhang2004review}. Generally speaking, all of these representation techniques can be divided into two major categories, \textit{contour-based} methods and \textit{region-based} methods, depending on whether shape features are extracted from the contour only or from the whole shape region. And the proposed Harmonic Beltrami signature in this thesis is a contour-based method.
+
+\section{Contour-based methods}
+As its name suggests, this kind of representations only exploits the information providing by shape boundary. There are generally two types of very different approaches for contour shape modeling: continuous approach (global) and discrete approach (structural). 
+
+\subsection{Contunuous approaches}
+Continuous approaches do not divide shape into sub-parts and it is A very natural idea is that the boundary can be taken as a whole, from which a multi-dimensional numeric feature vector can be calculated and becomes the demanded representation. Then we will use some metric distance on theses vectors to measure the similarity of shape.
+
+The simplest features are area, circularity, curvature and so on and their combination can be also used as shape representation. Peura \etal \cite{peura1997efficiency} proposed such descriptor including convexity, ratio of principle axis, circular variance and elliptic variance. 
+
+Belongie \etal \cite{belongie2002shape} tried in a different way and build a representation based on Hausdorff distance, called \textit{shape contexts}. Shape matching using shape contexts is an improvement to traditional Hausdorff distance based methods. It extracts a global feature, called shape context, for each boundary point. Given point $p$, the Hausdorff distance $r_{pq}$ and the orientation $\theta_{pq}$ with any other boundary point $q$ are calculated, then these $r_{pq}$ and $\theta_{pq}$ are quantized to create a histogram map $H_p$ which is used to represent the point $p$. All the histogram $H_p$ is flattened and concatenated to form the context of the shape. To make the histogram more sensitive to positions of nearby points than to those of points farther away, these vectors are put into log-polar space. This process is shown in Fig. \ref{shape contexts}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{shape_contexts.jpg}
+\end{center}
+\caption{Shape context. (a) a character shape; (b) edge image of (a); (c) some point $p$ on shape (a) and all the vectors started from $p$; (d) the log-polar histogram of the vectors in (c), the histogram is the context of point $p$; (e) the context map of shape (a), each row of the context map is the flattened histogram of each point context, the number of rows is the number of sampled points.}
+\label{shape contexts}
+\end{figure}
+
+The \textit{scale space} is created by tracking the position of in inflection points in a shape boundary filtered by low-pass Gaussian filters of variable widths. As the width $\sigma$ of Gaussian filter increases, insignificant inflections are eliminated from the boundary and the shape becomes smoother (Fig. \ref{scale space}(a)). The inflection points that remain present in the representation are expectedto be significant object characteristics. The result of this smoothing process is an \textit{interval tree} consisting of inflection points (Fig. \ref{scale space}(b)). Asada \etal \cite{asada1986curvature} improve this method by take use of both Gaussian filter and secondd derivatives of Gaussian filter. The interpretation of the interval tree is based on detecting the peaks of the tree branches from higher scales to lower scales (Fig. \ref{scale space}(c)).
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7cm]{scale_space.png}
+\end{center}
+\caption{(a) The evolution of shape boundary as scale $\sigma$ increases. From left to right: $\sigma=1, 4, 7, 10, 12, 14$. The points marked on the boundary are the inflection points; (b) the interval tree resulted from the smoothing process; (c) the peaks of the interval tree.}
+\label{scale space}
+\end{figure}
+
+Boundary moments can be used to reduce the dimensions of the boundary representation. Sonka \etal \cite{sonka2014image} assume that the shape boundary has been represented as a shape signature $z(i)$, the $r$-th moment $m_r$ and central moment $\mu_r$ can be estimated as
+$$
+m_r= \frac{1}{N} \sum_{i=1}^N [z(i)]^r, \mu_r = \frac{1}{N} \sum_{i=1}^N [z(i)-m_1]^r,
+$$
+where $N$ is the number of boundary points. The normalized moments $\bar{m}_r=m_r /(\mu_2)^{r/2}$ and $\bar{\mu}_r=\mu_r /(\mu_2)^{r/2}$ are invariant to shape translation, rotation andscaling. Less noise-sensitive shape descriptors can be obtained from $F_1 = (\mu_2)^{1/2} / m1$, $F_2 = \mu_3/(\mu_2)^{3/2}$, and $F_3 = \mu_4/(\mu_2)^2$.
+
+\subsection{Discrete approaches}
+Another member in the shape analysis family is the \textit{discrete shape representation}. With the this kind of approaches, shapes are broken down into boundary segments called \textit{primitives}. Discrete methods differ in the selection of primitives and the organization of the primitives for shape representation.
+
+The \textit{chain code} describes an object by a sequence of unit-size line segments with a given orientation, which was introduced by Freeman \etal \cite{freeman1961encoding}. In this approach, an arbitrary curve is represented by a sequence of small vectors of unit length and a limited set of possible directions. In the implementation, a digital boundary of an image is superimposed with a grid, the boundary points are approximated to the nearest grid point, then a sampled image is obtained. From a selected starting point, a chain code can be generated by using 4-directional or 8-directional chain code, as shown in Fig. \ref{chain code}. $N$-directional ($N > 8$ and $N = 2^k$) chain code is also possible, it is called \textit{general chain code} \cite{freeman1978generalized}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{chain_code.jpg}
+\end{center}
+\caption{(a) The four-connected chain codes: $(1,0,1,0,0,1,0,1)$; (b) The eight-connected chain codes: $(2,1,0,1,1)$.}
+\label{chain code}
+\end{figure}
+
+Groskey \etal \cite{grosky1990index}\cite{grosky1992pictorial} proposed \textit{polygon decomposition} as representation. The given shape boundary is broken down into line segments by polygon approximation. The polygon vertices are used as primitives. The feature for each primitive is expressed as a four element string which consists of internal angle, distance from the next vertex, and its x and y coordinates. The similarity between any two shapes can be attained by comparing a fixed number (5 in the paper) of sharpest vertices selected from each shape.
+
+Berretti \etal \cite{berretti2000retrieval} extended Groskey's model. The curvature zero-crossing points from a Gaussian smoothed boundary are used to obtain smooth curve, called \textit{tokens}. The feature for each token is its maximum curvature and its orientation, and the similarity between two tokens is measured by the weighted Euclidean distance. 
+
+
+\begin{figure}\label{Btokens}
+\begin{center}
+\includegraphics[width=7cm]{Btokens.png}
+\caption{A horse shape has been divided into different tokens. The numbers corresponding to each token are the curvature and the orientation of the token.}
+\end{center}
+\end{figure}
+
+\section{Region-based methods}
+Different from the previous category, region-based representations make the best use of all the pixels within the given shape region. These methods can also be divided into global and structural methods, depending on whether they separate shapes into sub parts or not.
+
+\subsection{Global approaches}
+\textit{Global methods} treat shape as a whole, the result representation is a numeric feature vector which can be used for shape description. Similarity between shapes is simply measured by the metric distance between their feature vectors.
+
+\textit{Geometric moment} is a classical and representative region-based shape description with form
+\begin{equation*}
+    m_{pq} = \sum_x \sum_y x^p y^q f(x, y),
+\end{equation*}
+where $p, q = 0, 1, 2, \cdots$ and $f$ is the given shape. Hu published the first significant paper about geometric moment and applied it in pattern recognition \cite{hu1962visual}. Using nonlinear combinations of the lower order moments, a set of moment invariants, which have the desirable properties of being invariant under translation, scaling and rotation, are derived.
+
+Taubin \etal \cite{taubin1991object,taubin1991recognition} proposed \textit{algebraic moment}, which is computed from the first $m$ central moments and is given as the eigenvalues of predefined matrices, $M_{[j; k]}$, whose elements are scaled factors of the central moments. Different from Hu’s geometric moment invariants, the algebraic moment invariants can be constructed up to arbitrary order and are invariant to affine transformations.
+
+Zhang \etal \cite{zhang2002generic} proposed \textit{generic Fourier descriptor} which is acquired by applying a 2D Fourier transform on a polar-raster sampled image (Fig. \ref{gfd})
+\begin{equation*}
+    PF_2(\rho, \phi) = \sum_r \sum_k f(r, \theta_k) e^{2 \pi i (\frac{r}{R} \rho + \theta_k \phi)},
+\end{equation*}
+where $0 \le r < R$, $0 \le \rho < R$, $0 \le k < T$, $0 \le \phi < T$, $\theta_k = \frac{2\pi k}{T}$ and $R, T$ are the radial frequency resolution and angular frequency resolution respectively. The normalized coefficients are the GFD. The similarity between two shapes are measured by the Manhattan distance between their GFDs.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{gfd.png}
+\end{center}
+\caption{(a) An original shape in polar space; (b) polar-raster sampled image.}
+\label{gfd}
+\end{figure}
+
+\subsection{Structural approaches}
+Similar to the contour methods, region-based structural methods decompose the shape region into parts which are then used for shape representation and description.
+
+The \textit{convex hull} of a region is the smallest convex region $H$ which satisfies the condition $R \subset H$. The difference $H - R$ is called the \textit{convex deficiency} $D$ of the region $R$. Therefore, in \cite{gonzalez2002digital}, the shape can be described by a tree of convex sets. Here the convex hull of an object is first obtained with its convex deficiencies, then the convex hulls and deficiencies of the convex deficiencies are found and so on until all the derived convex deficiencies are convex. This process is shown in Fig. \ref{convex hull}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=14cm]{convex_hull.png}
+\end{center}
+\caption{(a) Convex hull andits concavities; (b) Concavity tree representation of convex hull}
+\label{convex hull}
+\end{figure}
+
+Like the convex hull, a region skeleton can also be employed for shape representation and description, which is represented by Blum’s \textit{medial axis transform} \cite{blum1967transformation}. The medial axis is the locus of centers of maximal disks that fit within the shape. This is illustrated in Fig. \ref{mat}. The boldline in the figure is the skeleton of the shaded rectangular shape. The skeleton can then be decomposed into segments and represented as a graph according to certain criteria.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=7cm]{mat.png}
+\end{center}
+\caption{Construction of the medial axis of a rectangular shape.}
+\label{mat}
+\end{figure}

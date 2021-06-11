@@ -1,0 +1,40 @@
+\contentsline {chapter}{Abstract}{i}% 
+\contentsline {chapter}{Acknowledgement}{iii}% 
+\contentsline {chapter}{\numberline {1}Introduction}{8}% 
+\contentsline {chapter}{\numberline {2}Related works}{13}% 
+\contentsline {section}{\numberline {2.1}Contour-based methods}{14}% 
+\contentsline {subsection}{\numberline {2.1.1}Contunuous approaches}{14}% 
+\contentsline {subsection}{\numberline {2.1.2}Discrete approaches}{16}% 
+\contentsline {section}{\numberline {2.2}Region-based methods}{18}% 
+\contentsline {subsection}{\numberline {2.2.1}Global approaches}{19}% 
+\contentsline {subsection}{\numberline {2.2.2}Structural approaches}{20}% 
+\contentsline {chapter}{\numberline {3}Mathematical background}{22}% 
+\contentsline {section}{\numberline {3.1}Conformal maps}{22}% 
+\contentsline {section}{\numberline {3.2}Mobi\"us transformation}{24}% 
+\contentsline {section}{\numberline {3.3}Conformal welding}{24}% 
+\contentsline {section}{\numberline {3.4}Harmonic maps}{26}% 
+\contentsline {section}{\numberline {3.5}Dirichlet problem and Poisson integral}{27}% 
+\contentsline {section}{\numberline {3.6}Quasi-conformal mapping and Beltrami equation}{30}% 
+\contentsline {chapter}{\numberline {4}Harmonic Beltrami signature (HBS)}{36}% 
+\contentsline {section}{\numberline {4.1}Definition of Harmonic Beltrami Signature}{36}% 
+\contentsline {section}{\numberline {4.2}Unique representative of $[B]$}{39}% 
+\contentsline {section}{\numberline {4.3}Normalization to $M_1$}{43}% 
+\contentsline {subsection}{\numberline {4.3.1}The solvability of equation (4.13\hbox {})}{44}% 
+\contentsline {subsection}{\numberline {4.3.2}The uniqueness of the solution of equation (4.13\hbox {})}{46}% 
+\contentsline {subsection}{\numberline {4.3.3}Unique $\Phi _1$ up to a rotation}{48}% 
+\contentsline {section}{\numberline {4.4}Normalization to $M_2$}{49}% 
+\contentsline {section}{\numberline {4.5}Invariance under simple transformation}{49}% 
+\contentsline {section}{\numberline {4.6}Reconstruction}{51}% 
+\contentsline {section}{\numberline {4.7}Robustness of HBS}{53}% 
+\contentsline {chapter}{\numberline {5}Implementation detail}{56}% 
+\contentsline {section}{\numberline {5.1}Zipper algorithm}{56}% 
+\contentsline {section}{\numberline {5.2}Harmonic extension}{58}% 
+\contentsline {section}{\numberline {5.3}Normalization}{59}% 
+\contentsline {section}{\numberline {5.4}Summary of the Algorithm}{63}% 
+\contentsline {chapter}{\numberline {6}Experimental result}{64}% 
+\contentsline {section}{\numberline {6.1}Invariance}{65}% 
+\contentsline {section}{\numberline {6.2}Robustness}{65}% 
+\contentsline {section}{\numberline {6.3}Classification with HBS}{67}% 
+\contentsline {section}{\numberline {6.4}Classification for more classes}{69}% 
+\contentsline {chapter}{\numberline {7}Conclusion and Future works}{75}% 
+\contentsline {chapter}{Bibliography}{77}% 

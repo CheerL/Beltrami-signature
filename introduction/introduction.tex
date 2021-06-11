@@ -1,0 +1,47 @@
+% chapter introduction
+\chapter{Introduction}\label{intro}
+    As information objects are digitized, more and more digital images have been generated, hence there is a growing interest in shape  analysis in recent years. The outline of a shape contains important information, which can be used in many applications, such as image classification, segmentation, recognition, registration, medical image analysis and so on. Nevertheless, it is a big challenge to define a robust descriptor for the space of shapes, even for the simplest situation of 2D simply-connected objects. In order to manipulate shapes and utilize their geometric information, there is an urgent demand to find a simple and robust representation to mathematically describe shape contours. The shape representation should also inherits a natural metric to measure geometric differences between two shape representations. With the geometric dissimilarity metric, two shapes can be quantitatively compared and prior shape information can be incorporated into various imaging models by adding a penalty term to further improve the accuracy. Due to its significance, this problem has been widely studied and different models to build the metric shape space have been proposed.
+    
+    \begin{figure}
+    \begin{center}
+    \includegraphics[width=14cm]{fig1.png}
+    \end{center}
+    \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$; (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
+    \label{ill of cw}
+    \end{figure}
+
+    % \begin{figure}\label{ill of cw}
+    %     \begin{center}
+    %     \includegraphics[width=10cm]{fig1_down.png}
+    %     \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$; (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
+    %     \end{center}
+    % \end{figure}
+
+    Considering 2D simply-connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simply-connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{ill of cw} shows. However, it has following two fatal defects.
+    
+    First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobi\"us transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisfies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
+
+    Another thing is that even the conformal welding is very easy to be changed under transformations, like rotation, scaling and translation. This means that it becomes quite difficult to determin the differences between two shapes under simple metric like $L^2$ norm. Such a unstable representation is hard to apply in practical applications since these transformations are inevitable in the real world.
+    
+    Under such a situation, we propose a novel presentation for 2D simply-connected shape with help of quasi-conformal theorem, which is invariant under simple transformation, and we name it Harmonic Beltrami signature. Given a shape $\Omega$, $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ can be calculated by zipper algorithm, which is a mature and efficient algorithm to find the conformal mapping from the given domain to unit disk by finite boundary points. Then we have conformal welding $f = \Phi^{-1}_1 \circ \Phi_2$. Such conformal welding $f$ can be extended to the whole unit disk and get a harmonic function $H: \D \rightarrow \D$. Under suitable normalization, harmonic extension $H$ can be determined up to rotations and the Beltrami coefficient $B = \mu_H$ is then unique and becomes our Harmonic Beltrami signature.
+
+    The proposed shape representation, Harmonic Beltrami signature, is uniquely determined by the given domain without any assumption and artificial restriction to domain. The Harmonic Beltrami signature is based on computational quasi-conformal geometry. Computational quasi-conformal geometry has been widely used in image processing and image analysis. Applications can be found in image segmentation 
+    \cite{siu2020image,chan2018topology,zhang2020topology}
+    , image registration
+    \cite{lam2014landmark,lui2014teichmuller,ng2014computing,lui2012optimization,lam2014genus,zhang2012registration,lee2016landmark,lui2010optimized,lui2013texture,lui2010shape,lui2010optimizedc,lui2014geometric,choi2015flash}
+     and image analysis 
+    \cite{wang2007brain,lui2007landmark,choi2020shape,chan2016quasi,zeng2008shape,lui2013shape,lui2010shape3}
+    . 
+    
+    What's more worth mentioning is that Harmonic Beltrami signature is invariant under rotation, translation and scaling and is robust to small deformation and distortion of the original shape. Conversely, The original shape can also be reconstructed from the given Harmonic Beltrami signature. Hence, it can be proved there exists a bijective between the shapes and our signatures up to rotation, translation and rotation, which means the proposed representation has high practical value and can be applied in computer vision work like classification, segmentation and so on.
+    
+    The contributions of this thesis can be summarized as follows.
+\begin{enumerate}
+    \item Firstly, we propose a new shape signature, called the Harmonic Beltrami signature, to effectively represent 2D simply-connected shapes. Every shape has a unique Harmonic Beltrami signature. Conversely, given a Harmonic Beltrami signature, its corresponding shape can be determined up to a translation, rotation and scaling.
+    \item Secondly, the proposed Harmonic Beltrami signature solves the issue of conformal ambiguities facing the conformal welding signature.
+    \item Thirdly, we propose a practical procedure to normalize the Harmonic Beltrami signature to handle the non-uniqueness issue, with rigorous theoretical justifications.
+    \item Fourthly, we propose a reconstruction algorithm to construct the corresponding shape from the Harmonic Beltrami signature up to a rotation, translation and scaling. This allows us to go back and fro between shapes and Beltrami signatures in the imaging model.
+    \item Finally, the proposed Harmonic Beltrami signature inherits a simple metric, namely, the $L^2$ distance, to measure the geometric dissimilarity between shapes. We have applied the shape distance to shape classification and shown satisfactory results. 
+\end{enumerate}
+
+    The thesis is organized as follows: Chapter \ref{related work} reviews some related topics about shape representation; Chapter \ref{background} introduces some theoretic background; Chapter \ref{main} shows the main theorem about how the unique Harmonic Beltrami signature is obtained from given domain and shows the method to reconstruct the original shape from given HBS; Chapter \ref{implementation} gives the details about the implementation; Chapter \ref{result} reports our experimental results. The thesis is concluded in Chapter \ref{conclusion} and we point out future directions.

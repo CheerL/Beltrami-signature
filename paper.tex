@@ -38,7 +38,7 @@
 %
 \begin{document}
 
-\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for  Object Classification}
+\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}
 % \subtitle{Do you have a subtitle?\\ If so, write it here}
 
 %\titlerunning{Short form of title}        % if too long for running head
@@ -64,7 +64,7 @@
 \maketitle
 
 \begin{abstract}
-  There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simply-connected domains in this paper, named the Harmonic Beltrami signature. The proposed signature is based on the extension of the conformal welding map of a unit circle $S^1$ to a harmonic function of a unit disk $\D$. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to a rotation. And finally quasi-conformal theory helps get rid of the only uncertainty by computing the Beltrami coefficient of harmonic extension.  The benifit of the proposed signature is that it keeps to be invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformations and distortions. Experiments demonstrate the above properties and also show the excellent classification performance.
+  There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simply-connected domains in this paper, named the Harmonic Beltrami signature. The proposed signature is based on the harmonic extension of the conformal welding map of a unit circle. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to rotations. And finally quasi-conformal theory helps get rid of the only uncertainty by computing the Beltrami coefficient of harmonic extension. There exists one-by-one relationship between shapes and our Harmonic Beltrami signatures and we also give the method to reconstruct the original shapes from our signatures. The benifit of the proposed signature is that it keeps to be invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformations and distortions. Experiments demonstrate the above properties and also show the excellent classification performance.
 \keywords{
   Shape representation \and conformal welding \and simply-connected \and invariance}
 % \PACS{PACS code1 \and PACS code2 \and more}
@@ -76,7 +76,7 @@
     The outline of a shape contains important information, which can be used in many applications, such as medical image analysis, image segmentation, recognition, registration and so on. Nevertheless, it is a big challenge to define a robust descriptor for the space of shapes, even for the simplest situation of 2D simply-connected objects. In order to manipulate shapes and utilize their geometric information, there is an urgent demand to find a simple and robust representation to mathematically describe shape contours. The shape representation should also inherits a natural metric to measure geometric differences between two shape representations. With the geometric dissimilarity metric, two shapes can be quantitatively compared and prior shape information can be incorporated into various imaging models by adding a penalty term to further improve the accuracy. Due to its significance, this problem has been widely studied and different models to build the metric shape space have been proposed.
     % \cite{belongie2002shape,demisse2017deformation,hagedoorn2000pattern,lades1993distortion,latecki2000shape,mokhtarian1997efficient,zahn1972fourier}.
 
-    Considering 2D simply-connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simply-connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{fig1} shows. However, it has two fatal defects. First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobious transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisfies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
+    Considering 2D simply-connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simply-connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{fig1} shows. However, it has two fatal defects. First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobi\"us transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisfies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
 
     Another thing is that even the conformal welding is very easy to be changed by simple transformations like rotation, scaling and translation. Such a unstable representation is hard to apply in practical applications since these transformations are inevitable in the real world.
     
@@ -94,8 +94,8 @@
 
     \begin{figure}
         \begin{center}
-        \includegraphics[width=7.6cm]{src/fig1_down.png}
-        \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$. (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
+        \includegraphics[width=7.6cm]{fig1_down.png}
+        \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$; (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
         \end{center}
         \label{fig1}
     \end{figure}
@@ -159,9 +159,9 @@ The contributions of this paper can be summarized as follows.
 
         % \begin{figure}
         %     \begin{center}
-        %         \includegraphics[width=7.6cm]{src/fig2.jpg}
+        %         \includegraphics[width=7.6cm]{fig2.jpg}
         %     \end{center}
-        %     \caption{(a) Shows the original hippocampus. (b) Shows the parameter domain with circle packing pattern. Under the quasiconformal parameterization, the infinitesimal circles on the parameter domain are mapped to infinitesimal ellipses on the hippocampus, as shown in (c).}
+        %     \caption{(a) Shows the original hippocampus; (b) Shows the parameter domain with circle packing pattern. Under the quasiconformal parameterization, the infinitesimal circles on the parameter domain are mapped to infinitesimal ellipses on the hippocampus, as shown in (c).}
         %     \label{fig2}
         % \end{figure}
 
@@ -177,7 +177,7 @@ The contributions of this paper can be summarized as follows.
 
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{src/fig3.png}
+                \includegraphics[width=7.6cm]{fig3.png}
             \end{center}
             \caption{Quasi-conformal maps infinitesimal circles to ellipses. The Beltrami coefficient measure the distortion or dilation of the ellipse under the QC map.}
             \label{fig3}
@@ -187,7 +187,7 @@ The contributions of this paper can be summarized as follows.
         Note that there is a one-to-one correspondence between the quasi-conformal mapping f and its Beltrami coefficient $\mu$. Given $f$, there exists a Beltrami coefficient $\mu$ satisfying the Beltrami equation. Conversely, the following theorem states that given an admissible Beltrami coefficient $\mu$, there always exists an quasi-conformal mapping $f$ associating with this $\mu$.
 
         \begin{theorem}[Measurable Riemannian Mapping Theorem]\label{Measurable Riemannian Mapping Theorem}
-            Suppose $\mu : \C \rightarrow \C$ is Lebesgue measurable satisfying $\abs{\mu}_\infty <1$; then, there exists a quasi-conformal homeomorphism $f$ from $\C$ onto itself, which is in the Sobolev space $W_{1,2}(\C)$ and satisfies the Beltrami equation in the distribution sense. The associated quasi-conformal homeomorphism $f$ is unique up to a Mobious transformation. Furthermore, by fixing $0$, $1$ and $\infty$, the $f$ is uniquely determined.
+            Suppose $\mu : \C \rightarrow \C$ is Lebesgue measurable satisfying $\abs{\mu}_\infty <1$; then, there exists a quasi-conformal homeomorphism $f$ from $\C$ onto itself, which is in the Sobolev space $W_{1,2}(\C)$ and satisfies the Beltrami equation in the distribution sense. The associated quasi-conformal homeomorphism $f$ is unique up to a Mobi\"us transformation. Furthermore, by fixing $0$, $1$ and $\infty$, the $f$ is uniquely determined.
         \end{theorem}
 
         Suppose $f, g: \C \rightarrow \C$ are complex-valued function with Beltrami coefficient $\mu_f, \mu_g$ respectively. Then the Beltrami coefficient for the composition $g \circ f$ is given by 
@@ -200,7 +200,7 @@ The contributions of this paper can be summarized as follows.
         \end{equation}
 
     \subsection{Conformal welding}\label{welding}
-        Given 2D bounded simply-connected shape, we can treat it as a boundary simply-connected domain $\Omega \subset \C$, by Riemann mapping theorem, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$. $\Phi_1$ and $\Phi_2$ are unique up to a \textit{Mobious transformation}:
+        Given 2D bounded simply-connected shape, we can treat it as a boundary simply-connected domain $\Omega \subset \C$, by Riemann mapping theorem, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$. $\Phi_1$ and $\Phi_2$ are unique up to a \textit{Mobi\"us transformation}:
         \begin{equation}
             M(z) = e^{i \theta} \frac{z - a}{1 - \overline{a}z}.
         \end{equation}
@@ -214,7 +214,7 @@ The contributions of this paper can be summarized as follows.
         
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{src/unstable welding.png}
+                \includegraphics[width=7.6cm]{unstable_welding.png}
             \end{center}
             \caption{Different conformal welding mappings (b), (c) and (d) of the same shape (a)}
             \label{unsatble}
@@ -240,9 +240,9 @@ The contributions of this paper can be summarized as follows.
         
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{src/fig4_down.png}
+                \includegraphics[width=7.6cm]{fig4_down.png}
             \end{center}
-            \caption{(a) Continuous function $f(e^{i \theta}) = \sin(100 \theta) + \cos(100 \theta)$ defined on $\partial \D$. (b) The corresponding harmonic function $H$ generated from $f$ by the equation (\ref{poisson integral}). Note that we used real-valued function to illustrate the progress of harmonic extension for the convenience of demonstration.}
+            \caption{(a) Continuous function $f(e^{i \theta}) = \sin(10 \theta) + \cos(10 \theta)$ defined on $\partial \D$; (b) The corresponding harmonic function $H$ generated from $f$ by the equation (\ref{poisson integral}). Note that we used real-valued function to illustrate the progress of harmonic extension for the convenience of demonstration.}
             \label{harmonic}
         \end{figure}
 
@@ -295,18 +295,18 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
        %     \end{equation}
         %    Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{src/fig5.png}
+                    \includegraphics[width=\textwidth]{fig5.png}
                 \end{center}
-                \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin. (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b). (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
+                \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin; (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b); (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
                 \label{illu of BS}
-            \end{figure*}
+            \end{figure}
 
         \subsection{Unique representative of $[B]$}
             As discussed, every shape can be represented by its associated HBS, which is an equivalence class. In order to measure the geometric difference between shapes based on HBS, it is necessary to find a unique representative in the equivalence class $[B]$. Once the unique representatives of two shapes are determined, the geometric difference between them can be easily measured, such as the $L^2$ distance.
             
-            According to Riemann mapping theorem, the conformal mappings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobious transformations. Therefore, the corresponding conformal welding is
+            According to Riemann mapping theorem, the conformal mappings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobi\"us transformations. Therefore, the corresponding conformal welding is
             \begin{equation}
                 \tilde{f} = \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 = M_1^{-1} \circ \Phi_1^{-1} \circ \Phi_2 \circ M_2 = M_1^{-1} \circ f \circ M_2.
             \end{equation}
@@ -314,13 +314,13 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             With equation (\ref{poisson integral}), it can be also extended to harmonic function $\tilde{H}$. The following theorem show the relationship between $H$ and $\tilde{H}$.
 
             \begin{theorem}
-                Suppose $f$ and $\tilde{f}$ are continuous map from $\mathbb{S}^1$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobious transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
+                Suppose $f$ and $\tilde{f}$ are continuous map from $\mathbb{S}^1$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobi\"us transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
             \end{theorem}
 
             \begin{proof}
-                Since $M_1$ is a Mobious transformations, $M_1^{-1}$ is also a Mobious transformation, so it can be written as $M_1^{-1}(z) = e^{i \theta}\frac{z - p}{1 - \overline{p}z}$, where $\theta \in [0, 2\pi)$ and $p \in \D$.
+                Since $M_1$ is a Mobi\"us transformations, $M_1^{-1}$ is also a Mobi\"us transformation, so it can be written as $M_1^{-1}(z) = e^{i \theta}\frac{z - p}{1 - \overline{p}z}$, where $\theta \in [0, 2\pi)$ and $p \in \D$.
 
-                $\Rightarrow :$ When $\tilde{H} = M_1^{-1} \circ H \circ M_2$, from Theorem \ref{composition of harmonic} we can know that $H \circ M_2$ is harmonic since there is no doubt that Mobious transformation $M_2$ is conformal. $\tilde{H}$ and $H \circ M_2$ are both harmonic, so $M_1^{-1}(z) = az + b \overline{z} + c$, where $a, b, c \in \C$. Therefore, we have 
+                $\Rightarrow :$ When $\tilde{H} = M_1^{-1} \circ H \circ M_2$, from Theorem \ref{composition of harmonic} we can know that $H \circ M_2$ is harmonic since there is no doubt that Mobi\"us transformation $M_2$ is conformal. $\tilde{H}$ and $H \circ M_2$ are both harmonic, so $M_1^{-1}(z) = az + b \overline{z} + c$, where $a, b, c \in \C$. Therefore, we have 
                 \begin{equation*}
                     e^{i \theta}\frac{z - p}{1 - \overline{p}z} = az + b \overline{z} + c,
                 \end{equation*}
@@ -354,24 +354,24 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
                 then such $\Phi_1$ is unique up to a rotation $M_1$.
             \end{theorem}
 
-            Before proving theorem \ref{unique up to a rotation}, we can consider following problem. Given boundary points $p_i$ on unit circle, can we find a Mobious transformation $M$ satisfies the following equation (\ref{fz})?
+            Before proving theorem \ref{unique up to a rotation}, we can consider following problem. Given boundary points $p_i$ on unit circle, can we find a Mobi\"us transformation $M$ satisfies the following equation (\ref{fz})?
             \begin{equation}\label{fz}
                 \sum_{k=1}^n M(p_k) = \sum_{k=1}^n e^{i\theta} \frac{p_k - a}{1 - \overline{a}p_k}= 0
             \end{equation}
             
-            Without lose of generality, we ignore the rotation of $M$ and let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. So $F_a$ is also a Mobius transformation and it's sufficient to find $a \in \D$ such that
+            Without lose of generality, we ignore the rotation of $M$ and let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. So $F_a$ is also a Mobi\"us transformation and it's sufficient to find $a \in \D$ such that
             \begin{equation}\label{eq}
                 f(a) = \sum_{k=1}^n F_a(p_k) = \sum_{k=1}^n \frac{p_k - a}{1 - \overline{a}p_k} = 0
             \end{equation}
             to show the equation (\ref{fz}) holds for some $M$. Intuitively, we believe that there is always a unique solution to this equation (\ref{eq}) (see Fig \ref{fasolvable}).
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{src/fig6.png}
+                    \includegraphics[width=\textwidth]{fig6.png}
                 \end{center}
                 \caption{The first row are some randomly generated points in $\partial \D$. The second row are the corresponding $\abs{f(a)}$, where $a \in \D$. The third row are also $\abs{f(a)}$ but is in top view. }
                 \label{fasolvable}
-            \end{figure*}
+            \end{figure}
 
             \subsubsection{The solvability of equation (\ref{eq})}
             First thing we want to do is to check whether this equation (\ref{eq}) is always solvable. According to Brouwer fixed point theorem, we have
@@ -469,7 +469,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             Above theorems show that there is always a unique solution $a \in \D$ for equation (\ref{eq}), so we can come back to theorem \ref{unique up to a rotation}.
 
             \begin{proof}
-                Suppose $\Phi_1$ and $\tilde{\Phi}_1$ are two arbitrary conformal map from $\D$ to $\Omega$  then $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, where $M_1$ is a Mobious transformation. If $\Phi_1$, $\tilde{\Phi_1} $ satisfy equation (\ref{norm phi1}), let $p_k = \Phi_1^{-1}(z_k)$, then we have $\sum_{k=1}^n p_k = 0$ and $\sum_{k=1}^n M_1^{-1} (p_k) = 0$. $M_1^{-1}$ is also a Mobious transformation so let $M_1^{-1}(z) = e^{i \theta}\frac{z - a}{1 - \overline{a} z} = e^{i \theta} F_a(z)$, then we have
+                Suppose $\Phi_1$ and $\tilde{\Phi}_1$ are two arbitrary conformal map from $\D$ to $\Omega$  then $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, where $M_1$ is a Mobi\"us transformation. If $\Phi_1$, $\tilde{\Phi_1} $ satisfy equation (\ref{norm phi1}), let $p_k = \Phi_1^{-1}(z_k)$, then we have $\sum_{k=1}^n p_k = 0$ and $\sum_{k=1}^n M_1^{-1} (p_k) = 0$. $M_1^{-1}$ is also a Mobi\"us transformation so let $M_1^{-1}(z) = e^{i \theta}\frac{z - a}{1 - \overline{a} z} = e^{i \theta} F_a(z)$, then we have
                 \begin{equation*}
                     e^{i \theta} \sum_{k=1}^n F_a(p_k) = 0.
                 \end{equation*}
@@ -490,7 +490,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             \end{theorem}
 
             \begin{proof}
-                Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobious transformation, $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisfy (\ref{norm phi2 1}), then
+                Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobi\"us transformation, $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisfy (\ref{norm phi2 1}), then
                 \begin{align*}
                     &\tilde{\Phi}_2(\infty) = \Phi_2(M_2(\infty)) = \infty, \\
                     &\Phi_2(\infty) = \infty.
@@ -596,7 +596,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             &\mu_G = \frac{G_{\overline{z}}}{G_z} = g \nonumber\\
             &G(\infty) = \infty\label{Ginfty}
         \end{align}
-        where $G$ is uniquely determined up to Mobious transformation $M$. 
+        where $G$ is uniquely determined up to Mobi\"us transformation $M$. 
         
         Claim that $\Omega' = G(\D)$ is the reconstructed domain satisfying $\Omega' = T(\Omega)$, where $T$ is composed by rotation, scaling and translation. Note that
         \begin{equation}
@@ -609,7 +609,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
         \begin{equation}
             G = M \circ G_0 \text{ and } M(\infty) = \infty.
         \end{equation}
-        By the properties of Mobious transformation, we have $M(z) = az+b$ where $a, b \in \C$.
+        By the properties of Mobi\"us transformation, we have $M(z) = az+b$ where $a, b \in \C$.
         
         On the other side, $H$ is a harmonic mapping from $\D$ onto itself, so $G_0(\D) = \Phi_1 \circ H(\D) = \Omega$, then $\Omega' = G(\D) = M(\Omega) = a \Omega + b$, which show the claim is correct.
 
@@ -716,24 +716,24 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{src/fig7_down.png}
+                    \includegraphics[width=7.6cm]{fig7_down.png}
                 \end{center}
-                \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red. (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
+                \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red; (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
                 \label{original distribution}
             \end{figure}
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{src/fig8_down.png}
+                    \includegraphics[width=7.6cm]{fig8_down.png}
                 \end{center}
-                \caption{Similar with Fig \ref{original distribution}. (a) The boundary points after adjustment. (b) The $\abs{f(a)}$.}
+                \caption{Similar with Fig \ref{original distribution}. (a) The boundary points after adjustment; (b) The $\abs{f(a)}$.}
             \end{figure}
 
-            Instead of proposing a complicated method to solve equation directly, the solution we adopted to solve this problem is to use some Mobious transformations to adjust the distribution of $p_{i}$ until it becomes almost uniform. For the $r$-th iteration, let 
+            Instead of proposing a complicated method to solve equation directly, the solution we adopted to solve this problem is to use some Mobi\"us transformations to adjust the distribution of $p_{i}$ until it becomes almost uniform. For the $r$-th iteration, let 
             \begin{equation*}
                 p_{c,r} = \frac{\sum_{i=1}^k p_{i,r}}{k} \in \D
             \end{equation*}
-            as the arithmetic center of $p_{i,r} \in \partial \D$. Remark that $F_a(z) = \frac{z-a}{1-\overline{a}z}$ is a Mobious transformation ignoring rotation, then the $F_{p_{c,r}}$ gives new boundary points on unit disk as 
+            as the arithmetic center of $p_{i,r} \in \partial \D$. Remark that $F_a(z) = \frac{z-a}{1-\overline{a}z}$ is a Mobi\"us transformation ignoring rotation, then the $F_{p_{c,r}}$ gives new boundary points on unit disk as 
             \begin{equation*}
                 p_{i,r+1} = F_{p_{c,r}}(p_{i,r}) = \frac{p_{i,r} - p_{c,r}}{1 - \overline{p_{c,r}}p_{i,r}}.
             \end{equation*}
@@ -764,16 +764,16 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
                 \STATE Solve equation (\ref{eq}) by Newtown's method and get solution $a \in \D$.
                 \STATE Let $F_a(z) = \frac{z-a}{1- \overline{a}z}$ and $M_{\Phi_1} = F_a \circ M_{\Phi_1}$.% and $\hat{\Phi}_1 = \Phi_1 \circ F^{-1}_{a}$.
                 %\STATE Compute $p_i = F_a(p_{i,r})$.
-                \RETURN Mobious transformation $M_{\Phi_1}$.%, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
+                \RETURN Mobi\"us transformation $M_{\Phi_1}$.%, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
             \end{algorithmic}
             \end{algorithm}
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{src/fig9.png}
+                    \includegraphics[width=\textwidth]{fig9.png}
                 \end{center}
                 \caption{The iteration of distribution adjustment. The boundary points are blue and their arithmetic center is red in each picture. (a)-(d) The 1st, 3rd, 7th, 12th iteration.}
-            \end{figure*}
+            \end{figure}
             
             As for the normalization of $M_2$, it's much easier. For requirement (\ref{norm phi2 1}), let $b = \Phi_2^{-1}(\infty)$ and $c = -\frac{1}{\bar{b}}$, from
             \begin{equation*}
@@ -803,12 +803,12 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
                 \STATE \textbf{Inputs:} $\Phi_2$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $M=10^5$.
                 \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$ and $c = -\frac{1}{\bar{b}}$.
                 \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $M_{\Phi_2} = F_{c}$.
-                \RETURN Mobious transformation $M_{\Phi_2}$
+                \RETURN Mobi\"us transformation $M_{\Phi_2}$
                 % \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
             \end{algorithmic}
             \end{algorithm}
 
-            After obtaining Mobious transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
+            After obtaining Mobi\"us transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
             \begin{align*}
                 \hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}
             \end{align*}
@@ -850,13 +850,13 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             
             Row b and c are about scaling, the shapes are $\Omega_b = \{z \mid z = 1.5 z_a, z_a \in \Omega_a \}$ and $\Omega_c = \{z \mid z = 0.5 z_a, z_a \in \Omega_a \}$ and the distance are $d(B_a, B_b) = 5.5647 \times 10^{-8}$ and $d(B_a, B_c) = 5.3476 \times 10^{-8}$. Row d is about translation, the shape $\Omega_d = \{z \mid z = z_a+100+20i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_d) = 4.7817 \times 10^{-8}$. Row e is about rotation, the shape is $\Omega_e = \{z \mid z = e^{0.2\pi i} z_a, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.2144 \times 10^{-8}$. Row f is the combination of scaling, translation and rotation, the shape is $\Omega_e = \{z \mid z = 3e^{-0.85\pi i} z_a+350+600i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.7635 \times 10^{-8}$. These confirm the invariance of HBS and scaling, translation and rotation.
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=10.5cm]{src/inv.png}
+                    \includegraphics[width=10.5cm]{inv.png}
                 \end{center}
                 \caption{Harmonic Beltrami signature under scaling, translation and rotation.}
                 \label{inv}
-            \end{figure*}
+            \end{figure}
 
         \subsection{Robustness}
             Similar with Section \ref{sec inv}, here we still treat the dolphin as the original shape and modify some small parts of it and Fig \ref{robust} is the result. It shows that the proposed signature is robust and stable and will not have a big mutation caused by small disturbance.
@@ -865,13 +865,13 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             Row j is for distortion. This dolphin is only enlarged in horizontally and becomes fatter, then the $B_j$ moves a little bit and $d(B_a, B_j) = 0.0724$.
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=10.5cm]{src/robust.png}
+                    \includegraphics[width=10.5cm]{robust.png}
                 \end{center}
                 \caption{Harmonic Beltrami signature under small modification}
                 \label{robust}
-            \end{figure*}
+            \end{figure}
 
         \subsection{Classification with HBS}
             Above properties ensure the proposed signature having the ability to reflect some stable features of given shape, but another much more important thing people concerned is that whether it can distinguish a shape from many different kinds of shapes and classify it correctly.
@@ -884,37 +884,37 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             We prepare 3 kinds of animals, fish, giraffe and elephant. There are 3 images for each group so 9 images in total. From Fig \ref{classification images}, we can find that each class share similar HBS and conformal welding. From Fig \ref{dis matrix}, the intraclass distance of HBS is always less than 0.2 while the interclass distance is greater than 0.2. But for conformal welding, the data is messy, for example, fish 3 thinks itself is very different from other fishes but looks most like giraffe 2. After multidimensional scaling(MDS), we can maps all these 9 shapes to points on 2D plane as Fig \ref{mds1}, where the HBS shows powerful classification ability.
 
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{src/figs.png}
+                    \includegraphics[width=\textwidth]{figs.png}
                 \end{center}
                 \caption{These 3 rows are elephant, fish and giraffe. In each subfigure, the top left is the input shape, bottom left is the conformal welding and the right is Harmonic Beltrami signature.}
                 \label{classification images}
-            \end{figure*}
+            \end{figure}
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{src/distance_down.png}
+                    \includegraphics[width=7.6cm]{distance_down.png}
                 \end{center}
-                \caption{(a) The distance matrix of Harmonic Beltrami signatures of above 9 shapes by equation (\ref{bs dis}). (b) The distance matrix of conformal weldings by equation (\ref{welding dis}).}
+                \caption{(a) The distance matrix of Harmonic Beltrami signatures of above 9 shapes by equation (\ref{bs dis}); (b) The distance matrix of conformal weldings by equation (\ref{welding dis}).}
                 \label{dis matrix}
             \end{figure}
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{src/mds_down.png}
+                    \includegraphics[width=7.6cm]{mds_down.png}
                 \end{center}
-                \caption{(a) The MDS result of Harmonic Beltrami signature. (b) The MDS result of conformal welding.}
+                \caption{(a) The MDS result of Harmonic Beltrami signature; (b) The MDS result of conformal welding.}
                 \label{mds1}
             \end{figure}
             
-            \begin{figure*}
+            \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{src/mds2.png}
+                    \includegraphics[width=\textwidth]{mds2.png}
                 \end{center}
-                \caption{(a) The MDS result of Harmonic Beltrami signature. (b) The MDS result of conformal welding. (c) The clustering result of Harmonic Beltrami signature. (d) The clustering results of conformal welding.}
+                \caption{(a) The MDS result of Harmonic Beltrami signature; (b) The MDS result of conformal welding; (c) The clustering result of Harmonic Beltrami signature; (d) The clustering results of conformal welding.}
                 \label{mds2}
-            \end{figure*}
+            \end{figure}
 
         \subsection{Classification for more classes}
             In this experiment, we enlarge the amount of images to 58 in 7 different classes, camel, deer, dog, elephant, giraffe, gorilla and rabbit. We calculate the distance matrix by equation (\ref{bs dis}) and (\ref{welding dis}) and use MDS to remap these shapes to 2D plane accordingly, then $k$-medoids method is used to cluster these points to 7 classes. The MDS and clustering results based on Harmonic Beltrami signature and conformal welding are displayed in Fig \ref{mds2}. The classification accuracy based on Harmonic Beltrami signature is 94.83\%, while the accuracy based on conformal welding is only 37.93\%.

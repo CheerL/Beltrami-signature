@@ -1,0 +1,155 @@
+\def\degree#1{\def\degree{#1}}
+\def\programme#1{\def\programme{#1}}
+\def\supervisor#1{\def\supervisor{#1}}
+\def\thesistitle#1{\def\thesistitle{#1}}
+\def\authorname#1{\def\authorname{#1}}
+\def\submitdate#1{\def\submitdate{#1}}
+\def\institution{The Chinese University of Hong Kong}
+
+\if
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{corollary}[theorem]{Corollary}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{definition}[theorem]{Definition}
+\else
+  \newtheorem{theorem}{Theorem}[section]
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{corollary}[theorem]{Corollary}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{definition}[theorem]{Definition}
+\fi
+
+\def\proof{\par{\it Proof}. \ignorespaces}
+\def\endproof{\vbox{\hrule height0.6pt\hbox{%
+   \vrule height1.3ex width0.6pt\hskip0.8ex
+   \vrule width0.6pt}\hrule height0.6pt
+  }}
+
+\def\coverpage{
+	% no page number for the cover page
+	\thispagestyle{empty}
+
+	\vspace*{1cm}
+	\begin{center}
+	\Large {\bf \thesistitle}
+
+	\vskip 2cm
+	\Large {\bf \authorname}
+
+	\vskip 2cm
+	\large
+	% both Fulfilment and Fulfillment are correct
+	A Thesis Submitted in Partial Fulfilment \\
+	of the Requirements for the Degree of \\
+	\degree \\
+	in \\
+	\programme \\
+
+	\vskip 1cm
+	
+
+	\vskip 1.5cm
+	\large
+	\institution \\
+	\submitdate
+	\end{center}
+
+
+	\newpage
+}
+
+%=======================================================
+
+\def\abstractpage{
+
+        \addcontentsline{toc}{chapter}{Abstract}
+	
+	\large \noindent
+ \noindent
+	\input{abstract.tex}
+	\newpage
+}
+
+\def\abstractpageCh{
+\chapter*{}
+}
+
+\def\abstractPage{
+
+
+
+	\large \noindent
+ \noindent
+	\input{abstract1.tex}
+	\newpage
+}
+
+%=======================================================
+
+\def\acknowledgementpage{%
+        \chapter*{Acknowledgement}
+
+        \addcontentsline{toc}{chapter}{Acknowledgement}
+        \input{acknowledgement.tex}
+	\newpage
+}
+
+%=======================================================
+
+\def\dedicationpage{%
+	\vspace*{1cm}
+	\vfill
+	\begin{center}
+	\input{dedication.tex}
+	\end{center}
+	\vfill
+	\newpage
+	\newpage
+}
+
+%=======================================================
+
+\newcommand{\note}[2]{%
+	%\vspace*{3mm}
+	\begin{center}
+	\framebox[13cm][t]{%
+		\hspace*{3mm}
+		\parbox[t]{12cm}{%
+			\vspace*{2mm}
+			\centerline{\bf #1}\vspace*{-2mm}
+			\rule{12cm}{0.5mm} 
+			\\#2
+		}
+	}
+	\end{center}
+	\vspace*{3mm}
+}
+
+\newcounter{mydefcounter}[chapter]
+
+\newcommand{\mydef}[1]{%
+	\stepcounter{mydefcounter}
+	\note{Definition \thechapter.\themydefcounter}{#1}
+}
+
+\newcommand{\ill}[1]{%
+	\vspace*{5mm}
+	\noindent{\bf $\equiv$ #1}
+	\vspace*{5mm}
+}
+
+\newcommand{\chapterend}{
+	\vfill
+	\noindent\rule{\textwidth}{0.5mm} \\
+	\noindent{\large\bf $\Box$ End of chapter.}
+}
+
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\newcommand{\reading}[1]{
+	\vfill
+	\noindent {\bf $\equiv$ Readings:}  #1
+}
+
+
