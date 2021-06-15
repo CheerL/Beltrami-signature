@@ -1,29 +1,19 @@
-\RequirePackage{fix-cm}
-%
-%\documentclass{svjour3}                     % onecolumn (standard format)
-%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
-\documentclass[twocolumn]{svjour3}       % onecolumn (second format)
-%\documentclass[twocolumn]{svjour3}          % twocolumn
-%
-% \smartqed  % flush right qed marks, e.g. at end of proof
-%
-% \let\equation\relax
-% \let\endequation\relax
-\let\proof\relax
-\let\endproof\relax
-\let\example\relax
-\let\endexample\relax
+\documentclass[review]{elsarticle}
 
 \usepackage{graphicx}
-\usepackage[margin=1in]{geometry} 
+% \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{lineno}
 \usepackage{amssymb}
-\usepackage{hyperref}
+% \usepackage{hyperref}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \include{snippets}
 %
+\modulolinenumbers[5]
+
+\journal{Pattern Recognition}
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
 % insert here the call for the packages your document requires
@@ -36,42 +26,35 @@
 % Insert the name of "your journal" with
 % \journalname{myjournal}
 %
-\begin{document}
-
-\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}
-% \subtitle{Do you have a subtitle?\\ If so, write it here}
-
-%\titlerunning{Short form of title}        % if too long for running head
-
-\author{Chenran Lin \and Lok Ming Lui}
-
-%\authorrunning{Short form of author list} % if too long for running head
-
-\institute{Chenran Lin \at
-              Department of Mathematics, The Chinese University of Hong Kong \\
-              \email{crlin@math.cuhk.edu.hk}           %  \\
-%             \emph{Present address:} of F. Author  %  if needed
-           \and
-           Lok Ming Lui \at
-              Department of Mathematics, The Chinese University of Hong Kong\\
-              \email{lmlui@math.cuhk.edu.hk}           %  \\
-}
-
-\date{Received: date / Accepted: date}
+\newtheorem{theorem}{Theorem}
+% \newtheorem{lem}[thm]{Lemma}
+% \newdefinition{rmk}{Remark}
+% \newproof{proof}{Proof}
+\newdefinition{definition}{Definition}
 \graphicspath{ {./src/} }
+% \linespread{2.0}
+\begin{document}
+\begin{frontmatter}
+\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}
+\author[1]{Chenran Lin\corref{cor1}}
+\ead{crlin@math.cuhk.edu.hk}
+\address[1]{Department of Mathematics, The Chinese University of Hong Kong, Shatin, Hong Kong}
+\cortext[cor1]{Corresponding author}
 
-% The correct dates will be entered by the editor
-
-
-\maketitle
+\author[1]{Lok Ming Lui}
+\ead{lmlui@math.cuhk.edu.hk}
+% \address[2]{Department of Mathematics, The Chinese University of Hong Kong}
 
 \begin{abstract}
   There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simply-connected domains in this paper, named the Harmonic Beltrami signature. The proposed signature is based on the harmonic extension of the conformal welding map of a unit circle. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to rotations. And finally quasi-conformal theory helps get rid of the only uncertainty by computing the Beltrami coefficient of harmonic extension. There exists one-by-one relationship between shapes and our Harmonic Beltrami signatures and we also give the method to reconstruct the original shapes from our signatures. The benifit of the proposed signature is that it keeps to be invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformations and distortions. Experiments demonstrate the above properties and also show the excellent classification performance.
-\keywords{
-  Shape representation \and conformal welding \and simply-connected \and invariance}
-% \PACS{PACS code1 \and PACS code2 \and more}
-% \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
+
+\begin{keyword}
+  Shape representation \sep conformal welding \sep simply-connected \sep invariance
+\end{keyword}
+\end{frontmatter}
+
+\linenumbers
 
 \section{Introduction}
 \label{intro}
@@ -96,7 +79,7 @@
 
     \begin{figure}
         \begin{center}
-        \includegraphics[width=7.6cm]{fig1_down.png}
+        \includegraphics[width=11cm]{fig1.png}
         \caption{(a) The Illustration of how conformal welding $f$ is defined from given 2D simply-connected domain $\Omega$; (b) The image of conformal welding $f: [0, 2\pi) \rightarrow [0, 2\pi)$}
         \end{center}
         \label{fig1}
@@ -159,14 +142,6 @@ The contributions of this paper can be summarized as follows.
             f(z) = f(p)+f_z(p)(z+\mu(p)\overline{z}).
         \end{equation}
 
-        % \begin{figure}
-        %     \begin{center}
-        %         \includegraphics[width=7.6cm]{fig2.jpg}
-        %     \end{center}
-        %     \caption{(a) Shows the original hippocampus; (b) Shows the parameter domain with circle packing pattern. Under the quasiconformal parameterization, the infinitesimal circles on the parameter domain are mapped to infinitesimal ellipses on the hippocampus, as shown in (c).}
-        %     \label{fig2}
-        % \end{figure}
-
         If $\mu(z)=0$ everywhere, then $f$ us called \textit{conformal} or \textit{holomorphic}. A conformal map satisfies the following well-known Cauchy-Riemann equation:
         \begin{equation}\label{cr eq}
             \Part{f}{\overline{z}} = 0.
@@ -216,7 +191,7 @@ The contributions of this paper can be summarized as follows.
         
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{unstable_welding.png}
+                \includegraphics[width=8cm]{unstable_welding.png}
             \end{center}
             \caption{Different conformal welding mappings (b), (c) and (d) of the same shape (a)}
             \label{unsatble}
@@ -242,7 +217,7 @@ The contributions of this paper can be summarized as follows.
         
         \begin{figure}
             \begin{center}
-                \includegraphics[width=7.6cm]{fig4_down.png}
+                \includegraphics[width=12cm]{fig4.png}
             \end{center}
             \caption{(a) Continuous function $f(e^{i \theta}) = \sin(10 \theta) + \cos(10 \theta)$ defined on $\partial \D$; (b) The corresponding harmonic function $H$ generated from $f$ by the equation (\ref{poisson integral}). Note that we used real-valued function to illustrate the progress of harmonic extension for the convenience of demonstration.}
             \label{harmonic}
@@ -303,9 +278,9 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
         \begin{center}
-            \includegraphics[width=\textwidth]{fig5.png}
+            \includegraphics[width=13cm]{fig5.png}
         \end{center}
-        \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin; (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{ill of cw} (b); (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
+        \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin; (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b); (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
         \label{illu of BS}
     \end{figure}
 
@@ -342,7 +317,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
         \begin{center}
-            \includegraphics[width=15cm]{harmonic_extension_not_rotation.png}
+            \includegraphics[width=11cm]{harmonic_extension_not_rotation.png}
         \end{center}
         \caption{Let $f(e^{i \theta}) = \sin(10 \theta) + \cos(10 \theta)+1.5$, $M_1(z) = e^{i \tau}\cfrac{z-p}{1-\overline{p}z}$, where $p=0.6+0.6i$, $\tau = 0.8$. The image of $f$ and its harmonic extension $H$ are shown in Fig. \ref{harmonic}. (a) $\tilde{f} = M_1 \circ f$; (b) harmonic extension $\tilde{H}$ of $\tilde{f}$; (c) $H' = M_1 \circ H$; (d) $H' - \tilde{H}$, and it's clear that $M_1 \circ H \neq \tilde{H}$ except on the boundary.}
         \label{harmonic extension not rotation}
@@ -696,7 +671,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
     \begin{center}
-        \includegraphics[width=15cm]{zipper_algo.png}
+        \includegraphics[width=9cm]{zipper_algo.png}
     \end{center}
     \caption{Zipper algorithm}
     \label{zipper algo}
@@ -746,7 +721,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
         \begin{center}
-            \includegraphics[width=6cm]{fig7.png}
+            \includegraphics[width=9cm]{fig7.png}
         \end{center}
         \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red; (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
         \label{original distribution}
@@ -754,7 +729,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
         \begin{center}
-            \includegraphics[width=6cm]{fig8.png}
+            \includegraphics[width=9cm]{fig8.png}
         \end{center}
         \caption{Similar with Fig \ref{original distribution}. (a) The boundary points after adjustment; (b) The $\abs{f(a)}$.}
     \end{figure}
@@ -800,7 +775,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
     \begin{figure}
         \begin{center}
-            \includegraphics[width=10cm]{fig9.png}
+            \includegraphics[width=8cm]{fig9.png}
         \end{center}
         \caption{The iteration of distribution adjustment. The boundary points are blue and their arithmetic center is red in each picture. (a)-(d) The 1st, 3rd, 7th, 12th iteration.}
     \end{figure}
@@ -882,13 +857,13 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
             
             Row b and c are about scaling, the shapes are $\Omega_b = \{z \mid z = 1.5 z_a, z_a \in \Omega_a \}$ and $\Omega_c = \{z \mid z = 0.5 z_a, z_a \in \Omega_a \}$ and the distance are $d(B_a, B_b) = 5.5647 \times 10^{-8}$ and $d(B_a, B_c) = 5.3476 \times 10^{-8}$. Row d is about translation, the shape $\Omega_d = \{z \mid z = z_a+100+20i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_d) = 4.7817 \times 10^{-8}$. Row e is about rotation, the shape is $\Omega_e = \{z \mid z = e^{0.2\pi i} z_a, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.2144 \times 10^{-8}$. Row f is the combination of scaling, translation and rotation, the shape is $\Omega_e = \{z \mid z = 3e^{-0.85\pi i} z_a+350+600i, z_a \in \Omega_a \}$ and the distance is $d(B_a, B_e) = 5.7635 \times 10^{-8}$. These confirm the invariance of HBS and scaling, translation and rotation.
 
-            \begin{figure}
+            \begin{figure*}
                 \begin{center}
                     \includegraphics[width=10.5cm]{inv.png}
                 \end{center}
                 \caption{Harmonic Beltrami signature under scaling, translation and rotation.}
                 \label{inv}
-            \end{figure}
+            \end{figure*}
 
         \subsection{Robustness}
             Similar with Section \ref{sec inv}, here we still treat the dolphin as the original shape and modify some small parts of it and Fig \ref{robust} is the result. It shows that the proposed signature is robust and stable and will not have a big mutation caused by small disturbance.
@@ -897,13 +872,13 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             Row j is for distortion. This dolphin is only enlarged in horizontally and becomes fatter, then the $B_j$ moves a little bit and $d(B_a, B_j) = 0.0724$.
 
-            \begin{figure}
+            \begin{figure*}
                 \begin{center}
                     \includegraphics[width=10.5cm]{robust.png}
                 \end{center}
                 \caption{Harmonic Beltrami signature under small modification}
                 \label{robust}
-            \end{figure}
+            \end{figure*}
 
         \subsection{Classification with HBS}
             Above properties ensure the proposed signature having the ability to reflect some stable features of given shape, but another much more important thing people concerned is that whether it can distinguish a shape from many different kinds of shapes and classify it correctly.
@@ -918,7 +893,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=\textwidth]{figs.png}
+                    \includegraphics[width=12cm]{figs.png}
                 \end{center}
                 \caption{These 3 rows are elephant, fish and giraffe. In each subfigure, the top left is the input shape, bottom left is the conformal welding and the right is Harmonic Beltrami signature.}
                 \label{classification images}
@@ -926,7 +901,7 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{distance_down.png}
+                    \includegraphics[width=13cm]{distance2.png}
                 \end{center}
                 \caption{(a) The distance matrix of Harmonic Beltrami signatures of above 9 shapes by equation (\ref{bs dis}); (b) The distance matrix of conformal weldings by equation (\ref{welding dis}).}
                 \label{dis matrix}
@@ -934,23 +909,34 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 
             \begin{figure}
                 \begin{center}
-                    \includegraphics[width=7.6cm]{mds_down.png}
+                    \includegraphics[width=13cm]{mds.png}
                 \end{center}
                 \caption{(a) The MDS result of Harmonic Beltrami signature; (b) The MDS result of conformal welding.}
                 \label{mds1}
             \end{figure}
             
+            
+
+        \subsection{Classification for more classes}\label{more class}
+            In this experiment, we enlarge the amount of images to 58 in 7 different classes, camel, deer, dog, elephant, giraffe, gorilla and rabbit. All these shapes are in Fig \ref{more class all}
+            
+            We calculate the distance matrix by equation (\ref{bs dis}) and (\ref{welding dis}) and use MDS to remap these shapes to 2D plane accordingly, then $k$-medoids method is used to cluster these points to 7 classes. The MDS and clustering results based on Harmonic Beltrami signature and conformal welding are displayed in Fig \ref{mds2}. The classification accuracy based on Harmonic Beltrami signature is 94.83\%, while the accuracy based on conformal welding is only 37.93\%.
             \begin{figure}
+                \begin{center}
+                    \includegraphics[width=10cm]{all_images.png}
+                \end{center}
+                \caption{All 58 shapes within 7 classes used in experiment \ref{more class}}
+                \label{more class all}
+            \end{figure}
+
+
+            \begin{figure*}
                 \begin{center}
                     \includegraphics[width=\textwidth]{mds2.png}
                 \end{center}
                 \caption{(a) The MDS result of Harmonic Beltrami signature; (b) The MDS result of conformal welding; (c) The clustering result of Harmonic Beltrami signature; (d) The clustering results of conformal welding.}
                 \label{mds2}
-            \end{figure}
-
-        \subsection{Classification for more classes}
-            In this experiment, we enlarge the amount of images to 58 in 7 different classes, camel, deer, dog, elephant, giraffe, gorilla and rabbit. We calculate the distance matrix by equation (\ref{bs dis}) and (\ref{welding dis}) and use MDS to remap these shapes to 2D plane accordingly, then $k$-medoids method is used to cluster these points to 7 classes. The MDS and clustering results based on Harmonic Beltrami signature and conformal welding are displayed in Fig \ref{mds2}. The classification accuracy based on Harmonic Beltrami signature is 94.83\%, while the accuracy based on conformal welding is only 37.93\%.
-            
+            \end{figure*}
             
 
     \section{Conclusion}\label{conclusion}
@@ -973,12 +959,11 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 %
 % The authors declare that they have no conflict of interest.
 
-
+\biboptions{sort&compress}
 % BibTeX users please use one of
 % \bibliographystyle{spbasic}      % basic style, author-year citations
-\bibliographystyle{spmpsci}      % mathematics and physical sciences
-%\bibliographystyle{spphys}       % APS-like style for physics
-%\bibliography{}   % name your BibTeX data base
+% \bibliographystyle{spmpsci}      % mathematics and physical sciences
+\bibliographystyle{elsarticle-num}       % APS-like style for physics
 \bibliography{cite}
 % Non-BibTeX users please use
 % \begin{thebibliography}{}
