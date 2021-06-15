@@ -58,6 +58,8 @@
 }
 
 \date{Received: date / Accepted: date}
+\graphicspath{ {./src/} }
+
 % The correct dates will be entered by the editor
 
 
@@ -90,7 +92,7 @@
     \cite{wang2007brain,lui2007landmark,choi2020shape,chan2016quasi,zeng2008shape,lui2013shape,lui2010shape3}
     . What's more worth mentioning is that Harmonic Beltrami signature is invariant under rotation, translation and scaling and is robust to small deformation and distortion of the original shape. It means the proposed representation has high practical value and can be applied in computer vision work like classification, segmentation and so on.
     
-    The paper is organized as follows: Section \ref{related work} reviews some related topics about shape representation; Section \ref{background} introduces some theoretic background; Section \ref{main} shows the main theorem and how Harmonic Beltrami signature is obtained from given domain; Section \ref{implementation} gives the details about the implementation; Section \ref{result} reports our experimental results. The paper is concluded in Section \ref{conclusion} and we point out future directions.
+    The paper is organized as follows: Section \ref{related work} reviews some related topics about shape representation; Section \ref{background} introduces some theoretic background; Section \ref{main} shows the main theorem about how the unique Harmonic Beltrami signature is obtained from given domain and shows the method to reconstruct the original shape from given HBS; Section \ref{implementation} gives the details about the implementation; Section \ref{result} reports our experimental results. The paper is concluded in Section \ref{conclusion} and we point out future directions.
 
     \begin{figure}
         \begin{center}
@@ -246,433 +248,461 @@ The contributions of this paper can be summarized as follows.
             \label{harmonic}
         \end{figure}
 
-    \section{Harmonic Beltrami signature (HBS)}\label{main}
-        In this section, we describe our proposed shape signature, called the {\it Harmonic Beltrami signature (HBS)}, to represent a simply-connected domain $\Omega$. The space of HBS inherits a natural metric, so that geometric distance between two shapes can be easily measured. In the following subsection, the definition of HBS and some of its theoretical analysis are addressed.
-        
+\section{Harmonic Beltrami signature (HBS)}\label{main}
+In this chapter, we describe our proposed shape signature, called the {\it Harmonic Beltrami signature (HBS)}, to represent a simply-connected domain $\Omega$. The space of HBS inherits a natural metric, so that geometric distance between two shapes can be easily measured. In the following sections, the definition of HBS and some of its theoretical analysis are addressed.
 
-        \subsection{Definition of Harmonic Beltrami Signature}
-        Consider a bounded simply-connected domain $\Omega\subset \mathbb{C}$. Suppose $\Omega$ is a quasicircle, which is the image of the unit disk under a quasiconformal map. Let $f = \Phi_1^{-1} \circ \Phi_2$ be the conformal welding of $\Omega$, where  $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are the conformal mappings as described in Section \ref{welding}. Denote the harmonic extension of $f$ by $H:\mathbb{D}\to \mathbb{D}$.
-        
-         \begin{definition}
-         The {\it Harmonic Beltrami Signature (HBS)} is a complex-valued function $B:\mathbb{D}\to \mathbb{D}$ with $||B||_{\infty}<1$ defined as
-         \begin{equation}
-                B:= \mu_H = \frac{H_{\overline{z}}}{H_z}.
-        \end{equation}
-         \end{definition}
-        
-        Note that the HBS is not unique without suitable normalizations of the conformal mappings. More precisely, the conformal welding of $\Omega$ is unique up to a pre- and post-composition of Mobi\"us transformations. Suppose $f_1$ and $f_2$ are both conformal weldings of $\Omega$. Then, $f_2 = M_1\circ f\circ M_2$. The harmonic extension and hence the HBS are not unique due to conformal ambiguities. This motivates us to give the following definition of equivalence.
-        
-        \begin{definition}
-        Two HBS $B$ and $\tilde{B}$ are said to be {\it equivalent} if $B=\mu_H$ and $\tilde{B} = \mu_{\tilde{H}}$, where $H$ and $\tilde{H}$ are respectively the harmonic extensions of a diffeomorphism $f:\mathbb{S}^1\to \mathbb{S}^1$ and $\tilde{f} = M_1\circ f \circ M_2$ for some Mobi\"us transformations $M_1$ and $M_2$. In this case, we denote $B \sim \tilde{B}$. Also, the equivalence class of $B$ is denoted by $[B]$.
-        \end{definition}
-        
-        In this work, we consider the quotient space of HBS $\mathcal{B} = \{B:\mathbb{D}\to \mathbb{D}:B \text{ is a HBS} \} /\sim$ to study the space of bounded simply-connected shapes. The following theorem illustrates that $\mathcal{B}$ is indeed an effective representation for the space of shapes.
-        
-        \begin{theorem}
-        There is a one-to-one correspondence between $\mathcal{B}$ and $\mathcal{S}$. In particular, given $[B]\in \mathcal{B}$, its associated shape $\Omega$ can be determined up to a Mobi\"us transformation. Also, if $\Phi_2$ is chosen such that $\Phi_2(\infty) = \infty$, $\Omega$ is determined up to a translation, rotation and scaling.
-        \end{theorem}
-        
-        \begin{proof}
-        Given $\Omega$, there exist a unique $[B]\in \mathcal{B}$ corresponding to $\Omega$ follows from the definition of HBS. Conversely, let $[B]\in \mathcal{B}$. Define $\mu:\mathbb{C}\to \mathbb{C}$ as
-        \[
-        \mu := \begin{cases}
-        B \text{ on }\mathbb{D}\\
-        0 \text{ on }\mathbb{D}^c.
-        \end{cases}
-        \]
-        According to Quasiconformal Teichm\"uller theory, there exists $G:\mathbb{C}\to \mathbb{C}$ such that $G_{\bar{z}}/G_z = \mu$. $G$ is unique up to a Mobi\"us transformation. In other words, if $G_1$ and $G_2$ are two quasiconformal maps satisfying the above requirement, then $G_2=M\circ G_1$, where $M$ is a Mobi\"us transformation. In particular, $G$ is uniquely determined if we fix $0, 1$ and $\infty$. Let $\Omega = G(\mathbb{D})$. We claim that the HBS of $\Omega$ is $B$. To see this, let $\Phi_1: \mathbb{D}\to \Omega$ be the conformal parameterization of $\Omega$. By construction, $G|_{\mathbb{D}^c}: \mathbb{D}^c\to \Omega^c$ is conformal. The conformal welding of $\Omega$ is $\Phi_1^{-1}\circ G|_{\partial\mathbb{D}}$. As $\Phi_1$ is conformal and $G$ is harmonic, $\Phi_1^{-1}\circ G$ is the harmonic extension of the welding map. Thus, the HBS of $\Omega$ is: $\mu_{\Phi_1^{-1}\circ G}=\mu_G = B$.
-        
-        Now, $\Omega$ is uniquely determined up to a Mobi\"us transformation $M=\frac{az+b}{cz+d}$. If $G(\infty) = \infty$, then $M$ is of the form: $M = az+b= re^{i\theta}z +b$, $r\in \mathbb{R}^+$, $\theta \in [0,2\pi)$ and $b\in \mathbb{C}$. Hence, $\Omega$ is uniquely determined up to a scaling, rotation and translation, which are reflected by $r, \theta$ and $b$ respectively. 
-        \end{proof}
 
-\bigskip
+\subsection{Definition of Harmonic Beltrami Signature}
+Consider a bounded simply-connected domain $\Omega\subset \mathbb{C}$. Suppose $\Omega$ is a quasicircle, which is the image of the unit disk under a quasiconformal map. Let $f = \Phi_1^{-1} \circ \Phi_2$ be the conformal welding of $\Omega$, where  $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are the conformal mappings. Denote the harmonic extension of $f$ as $H:\mathbb{D}\to \mathbb{D}$ by equation (\ref{poisson integral}).
+
+\begin{definition}
+The {\it Harmonic Beltrami Signature (HBS)} is a complex-valued function $B:\mathbb{D}\to \mathbb{D}$ with $||B||_{\infty}<1$ defined as
+\begin{equation}
+        B:= \mu_H = \frac{H_{\overline{z}}}{H_z}.
+\end{equation}
+\end{definition}
+
+Note that the HBS is not unique without suitable normalizations of the conformal mappings. According to Riemann mapping theorem, the conformal mappings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobi\"us transformations. Therefore, the corresponding conformal welding is
+\begin{equation}\label{tilde f}
+    \tilde{f} = \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 = M_1^{-1} \circ \Phi_1^{-1} \circ \Phi_2 \circ M_2 = M_1^{-1} \circ f \circ M_2.
+\end{equation}
+Therefore, the harmonic extension and hence the HBS are not unique due to conformal ambiguities. This motivates us to give the following definition of equivalence.
+
+\begin{definition}
+Two HBS $B$ and $\tilde{B}$ are said to be {\it equivalent} if $B=\mu_H$ and $\tilde{B} = \mu_{\tilde{H}}$, where $H$ and $\tilde{H}$ are respectively the harmonic extensions of a diffeomorphism $f:\mathbb{S}^1\to \mathbb{S}^1$ and $\tilde{f} = M_1^{-1} \circ f \circ M_2$ for some Mobi\"us transformations $M_1$ and $M_2$. In this case, we denote $B \sim \tilde{B}$. Also, the equivalence class of $B$ is denoted by $[B]$.
+\end{definition}
+
+In this work, we consider the quotient space of HBS $\mathcal{B} = \{B:\mathbb{D}\to \mathbb{D}:B \text{ is a HBS} \} \,/ \sim$ to study the space of bounded simply-connected shapes. The following theorem illustrates that $\mathcal{B}$ is indeed an effective representation for the space of shapes.
+
+\begin{theorem}\label{one to one equivalence class}
+There is a one-to-one correspondence between $\mathcal{B}$ and $\mathcal{S}$. In particular, given $[B]\in \mathcal{B}$, its associated shape $\Omega$ can be determined up to a Mobi\"us transformation. Also, if $\Phi_2$ is chosen such that $\Phi_2(\infty) = \infty$, $\Omega$ is determined up to a translation, rotation and scaling.
+\end{theorem}
+
+\begin{proof}
+Given $\Omega$, there exist a unique $[B]\in \mathcal{B}$ corresponding to $\Omega$ follows from the definition of equivalence class of HBS. Conversely, let $[B]\in \mathcal{B}$. Define $\mu:\mathbb{C}\to \mathbb{C}$ as
+\[
+\mu := \begin{cases}
+B \text{ on }\mathbb{D}\\
+0 \text{ on }\mathbb{D}^c.
+\end{cases}
+\]
+According to Measurable Riemannian Mapping Theorem \ref{Measurable Riemannian Mapping Theorem}, there exists $G:\mathbb{C}\to \mathbb{C}$ such that $G_{\bar{z}}/G_z = \mu$. $G$ is unique up to a Mobi\"us transformation. In other words, if $G_1$ and $G_2$ are two quasiconformal maps satisfying the above requirement, then $G_2=M\circ G_1$, where $M$ is a Mobi\"us transformation. In particular, $G$ is uniquely determined if we fix $0, 1$ and $\infty$. Let $\Omega = G(\mathbb{D})$. We claim that the HBS of $\Omega$ is $B$. To see this, let $\Phi_1: \mathbb{D}\to \Omega$ be the conformal parameterization of $\Omega$. By construction, $G|_{\mathbb{D}^c}: \mathbb{D}^c\to \Omega^c$ is conformal. The conformal welding of $\Omega$ is $\Phi_1^{-1}\circ G|_{\partial\mathbb{D}}$. As $\Phi_1$ is conformal and $G$ is harmonic, $\Phi_1^{-1}\circ G$ is the harmonic extension of the welding map. Thus, the HBS of $\Omega$ is: $\mu_{\Phi_1^{-1}\circ G}=\mu_G = B$.
+
+Now, $\Omega$ is uniquely determined up to a Mobi\"us transformation $M=\frac{az+b}{cz+d}$. If $G(\infty) = \infty$, then $M$ is of the form: $M = az+b= re^{i\theta}z +b$, $r\in \mathbb{R}^+$, $\theta \in [0,2\pi)$ and $b\in \mathbb{C}$. Hence, $\Omega$ is uniquely determined up to a scaling, rotation and translation, which are reflected by $r, \theta$ and $b$ respectively. 
+\end{proof}
+
+% \bigskip
 
 The above theorem demonstrates that the HBS is indeed an effective geometric representation or ``fingerprint" of a shape. It determines a shape up to a scaling, rotation and translation. 
 
-            %Here we give a brief explanation of how to create our new signature. Given the boundary simply-connected domain $\Omega \subset \C$, we can get conformal welding $f = \Phi_1^{-1} \circ \Phi_2$ of it. Then $f$ can be extended to harmonic function $H$ defined on $\D$ by Poisson integral (\ref{poisson integral}). At the end, the Beltrami coefficient of $F$ becomes a signature of domain $\Omega$, we call it as \textit{Beltrami signature}:
-           % \begin{equation}
-          %      B:= \mu_H = %\frac{H_{\overline{z}}}{H_z}.
-       %     \end{equation}
-        %    Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
+    %Here we give a brief explanation of how to create our new signature. Given the boundary simply-connected domain $\Omega \subset \C$, we can get conformal welding $f = \Phi_1^{-1} \circ \Phi_2$ of it. Then $f$ can be extended to harmonic function $H$ defined on $\D$ by Poisson integral (\ref{poisson integral}). At the end, the Beltrami coefficient of $F$ becomes a signature of domain $\Omega$, we call it as \textit{Beltrami signature}:
+   % \begin{equation}
+  %      B:= \mu_H = %\frac{H_{\overline{z}}}{H_z}.
+%     \end{equation}
+%    Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
 
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=\textwidth]{fig5.png}
-                \end{center}
-                \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin; (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{fig1} (b); (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
-                \label{illu of BS}
-            \end{figure}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=\textwidth]{fig5.png}
+        \end{center}
+        \caption{Illustration of Harmonic Beltrami signature. (a) The input shape, a dolphin; (b) The corresponding harmonic extension, where the conformal welding is shown in Fig \ref{ill of cw} (b); (c) The Harmonic Beltrami signature of (a). Remark that the harmonic function and Harmonic Beltrami signature should be complex-valued function and we only show modulus of them in z-axis in (b) and (c).}
+        \label{illu of BS}
+    \end{figure}
 
-        \subsection{Unique representative of $[B]$}
-            As discussed, every shape can be represented by its associated HBS, which is an equivalence class. In order to measure the geometric difference between shapes based on HBS, it is necessary to find a unique representative in the equivalence class $[B]$. Once the unique representatives of two shapes are determined, the geometric difference between them can be easily measured, such as the $L^2$ distance.
-            
-            According to Riemann mapping theorem, the conformal mappings $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$ are not unique. Suppose $\tilde{\Phi}_1: \D \rightarrow \Omega$, $\tilde{\Phi}_2: \D^c \rightarrow \Omega^c$ are also conformal and $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, $\tilde{\Phi}_2 = \Phi_2 \circ M_2$, where $M_1, M_2$ are Mobi\"us transformations. Therefore, the corresponding conformal welding is
-            \begin{equation}
-                \tilde{f} = \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 = M_1^{-1} \circ \Phi_1^{-1} \circ \Phi_2 \circ M_2 = M_1^{-1} \circ f \circ M_2.
-            \end{equation}
+\subsection{Unique representative of $[B]$}
+    As discussed, every shape can be represented by its associated HBS, which is an equivalence class. In order to measure the geometric difference between shapes based on HBS, it is necessary to find a unique representative in the equivalence class $[B]$. Once the unique representatives of two shapes are determined, the geometric difference between them can be easily measured, such as the $L^2$ distance.
 
-            With equation (\ref{poisson integral}), it can be also extended to harmonic function $\tilde{H}$. The following theorem show the relationship between $H$ and $\tilde{H}$.
+    Let $f$ and $\tilde{f}$ be two different conformal welding of the same domain $\Omega$ and they satisfy equation (\ref{tilde f}). Their harmonic extension are $H$ and $\tilde{H}$ respectively. As we mentioned in last section, the conformal ambiguity of $M_1$ and $M_2$ is the biggest challenge in the way to unique representative, but we still hope $\tilde{H}$ to reserve such relationship, i.e.
+    \begin{equation}\label{tilde H}
+        \tilde{H} = M_1^{-1} \circ H \circ M_2,
+    \end{equation}
+    for the convenience of subsequent discussion. The following theorem tells us it can be achieved when restricting $M_1$:
 
-            \begin{theorem}
-                Suppose $f$ and $\tilde{f}$ are continuous map from $\mathbb{S}^1$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobi\"us transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
-            \end{theorem}
+    \begin{theorem}
+        Suppose $f$ and $\tilde{f}$ are continuous map from $\mathbb{S}^1$ to itself and $\tilde{f} = M_1^{-1} \circ f \circ M_2$, where $M_1, M_2$ are both Mobi\"us transformations. $H$ and $\tilde{H}$ are harmonic extension of $f$ and $\tilde{f}$, then $\tilde{H} = M_1^{-1} \circ H \circ M_2$ iff $M_1$ is a rotation.
+    \end{theorem}
 
-            \begin{proof}
-                Since $M_1$ is a Mobi\"us transformations, $M_1^{-1}$ is also a Mobi\"us transformation, so it can be written as $M_1^{-1}(z) = e^{i \theta}\frac{z - p}{1 - \overline{p}z}$, where $\theta \in [0, 2\pi)$ and $p \in \D$.
+    \begin{proof}
+        Since $M_1$ is a Mobi\"us transformations, $M_1^{-1}$ is also a Mobi\"us transformation, so it can be written as $M_1^{-1}(z) = e^{i \theta}\frac{z - p}{1 - \overline{p}z}$, where $\theta \in [0, 2\pi)$ and $p \in \D$.
 
-                $\Rightarrow :$ When $\tilde{H} = M_1^{-1} \circ H \circ M_2$, from Theorem \ref{composition of harmonic} we can know that $H \circ M_2$ is harmonic since there is no doubt that Mobi\"us transformation $M_2$ is conformal. $\tilde{H}$ and $H \circ M_2$ are both harmonic, so $M_1^{-1}(z) = az + b \overline{z} + c$, where $a, b, c \in \C$. Therefore, we have 
-                \begin{equation*}
-                    e^{i \theta}\frac{z - p}{1 - \overline{p}z} = az + b \overline{z} + c,
-                \end{equation*}
-                which means $p = b = c = 0$, $a = e^{i \theta}$ and so $M_1$ is a rotation.
+        $\Rightarrow :$ When $\tilde{H} = M_1^{-1} \circ H \circ M_2$, from Theorem \ref{composition of harmonic} we can know that $H \circ M_2$ is harmonic since there is no doubt that Mobi\"us transformation $M_2$ is conformal. $\tilde{H}$ and $H \circ M_2$ are both harmonic, so $M_1^{-1}(z) = az + b \overline{z} + c$, where $a, b, c \in \C$. Therefore, we have 
+        \begin{equation*}
+            e^{i \theta}\frac{z - p}{1 - \overline{p}z} = az + b \overline{z} + c,
+        \end{equation*}
+        which means $p = b = c = 0$, $a = e^{i \theta}$ and so $M_1$ is a rotation.
 
-                $\Leftarrow :$ When $M_1$ is a rotation, $M_1^{-1}$ is also a rotation, so $M_1^{-1} \circ H \circ M_2$ is a harmonic function according to Theorem \ref{composition of harmonic}. It's easy to check that
-                \begin{align*}
-                    M_1^{-1} \circ H \circ M_2 (e^{i \theta})
-                    &= M_1^{-1} \circ f \circ M_2(e^{i \theta})\\
-                    &= \tilde{f}(e^{i \theta}) = \tilde{H} (e^{i \theta}),
-                \end{align*}
-                which means $M_1^{-1} \circ H \circ M_2$ and $\tilde{H}$ have the same boundary value. From the uniqueness of harmonic mapping, $M_1^{-1} \circ H \circ M_2 = \tilde{H}$.
-            \end{proof}
-
-            Suppose HBS $B$ is the representative of given equivalence class $[B]$ and $H$ is the corresponding Harmonic extension. Because of above theorem, we assume $M_1$ is a rotation, then some other $\tilde{B} \in [B]$ of $\tilde{H}$ is
-            \begin{equation}\label{tildeB}
-                \tilde{B} = \mu_{\tilde{H}} = \mu_{M_1^{-1} \circ H \circ M_2} = \mu_{H\circ M_2}.
-            \end{equation}
-            If we want to find a unique $B$, it means $\tilde{B} = \mu_{H \circ M_2} = \mu_{H} = B$, hence some pre- and post-normalizations are required.
-
-        \subsection{Normalization to $M_1$}\label{norm1}
-            We hope $M_1$ is a rotation. It is not that hard, for example, we can achieve it by restricting $\Phi_1(0) = 0$. But it need a hypothesis that $0$ is in $\Omega$, which is equivalent to limiting the position of shape and cannot always hold. Here we want to show a new approach without any additional assumption.
-            
-            In actual application, we usually only know finite boundary points $z_1, z_2, \cdots, z_n \in \partial \Omega$. Denote $p_i = \Phi_1^{-1}(z_i) \in \partial \D$, where $\Phi_1 : \D \rightarrow \Omega$. We claims that $M_1$ can be normalized by restricting the center of $p_i$ to $0$.
-
-            \begin{theorem}\label{unique up to a rotation}
-                Given $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$ and $n \ge 3$, if conformal mapping $\Phi_1: \D \rightarrow \Omega$ satisfies
-                \begin{align}\label{norm phi1}
-                    \sum_{k=1}^n \Phi_1^{-1}(z_k) = 0,
-                \end{align}
-                then such $\Phi_1$ is unique up to a rotation $M_1$.
-            \end{theorem}
-
-            Before proving theorem \ref{unique up to a rotation}, we can consider following problem. Given boundary points $p_i$ on unit circle, can we find a Mobi\"us transformation $M$ satisfies the following equation (\ref{fz})?
-            \begin{equation}\label{fz}
-                \sum_{k=1}^n M(p_k) = \sum_{k=1}^n e^{i\theta} \frac{p_k - a}{1 - \overline{a}p_k}= 0
-            \end{equation}
-            
-            Without lose of generality, we ignore the rotation of $M$ and let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. So $F_a$ is also a Mobi\"us transformation and it's sufficient to find $a \in \D$ such that
-            \begin{equation}\label{eq}
-                f(a) = \sum_{k=1}^n F_a(p_k) = \sum_{k=1}^n \frac{p_k - a}{1 - \overline{a}p_k} = 0
-            \end{equation}
-            to show the equation (\ref{fz}) holds for some $M$. Intuitively, we believe that there is always a unique solution to this equation (\ref{eq}) (see Fig \ref{fasolvable}).
-
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=\textwidth]{fig6.png}
-                \end{center}
-                \caption{The first row are some randomly generated points in $\partial \D$. The second row are the corresponding $\abs{f(a)}$, where $a \in \D$. The third row are also $\abs{f(a)}$ but is in top view. }
-                \label{fasolvable}
-            \end{figure}
-
-            \subsubsection{The solvability of equation (\ref{eq})}
-            First thing we want to do is to check whether this equation (\ref{eq}) is always solvable. According to Brouwer fixed point theorem, we have
-
-            \begin{theorem}\label{existence}
-                Given $\{p_1, p_2, \cdots, p_n\} \subset \partial \D$ and $n \ge 3$, let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. The solution of equation (\ref{eq}) always exists.
-            \end{theorem}
-
-            \begin{proof}
-                Note that when $e^{i \theta} \neq p_k$ for any $k$, we have
-                \begin{equation*}
-                    f(e^{i \theta}) = \sum_{k=1}^n \frac{p_k - e^{i \theta}}{1 - e^{-i\theta}p_k} = - n e^{i\theta},
-                \end{equation*}
-                so $\frac{1}{n} f(e^{i\theta}) + e^{i \theta} = 0$. Let 
-                \begin{equation*}
-                    g(a) = \begin{cases}
-                \frac{1}{n} f(a) + a, a \in \D,\\
-                0, a \in \partial \D,
-                \end{cases}
-                \end{equation*}
-                such $g$ is defined on $\overline{\D}$ and is continuous. It's clear that $\norm{g(a)} \le \frac{1}{n} \norm{f(a)} + \norm{a} \le 2$.
-                
-                Let $M = \{a \in \D ~|~ \norm{g(a)} \ge 1 \}$, then define
-                \begin{equation*}
-                    h(a) = \begin{cases}
-                    g(a), &a \in  \overline{\D} \setminus M,\\
-                    \frac{g(a)}{\norm{g(a)}}, &a \in  M.
-                \end{cases}
-                \end{equation*}
-                $h$ is a continuous map from $\overline{\D}$ to itself, so there exists some $a$ let $h(a) = a$. 
-                
-                If $a \in \partial \D$, $\norm{a} = 1$, but $\norm{h(a)} = 0 \neq \norm{a}$. If $a \in M$, we know $a \notin \partial \D$, so $\norm{a} < 1$, but $\norm{h(a)} = \frac{\norm{g(a)}}{\norm{g(a)}} = 1 \neq \norm{a}$. So when $h(a) = a$, $a$ is inside $\D \setminus M$. Therefore, such $a$ satisfies $g(a) = a$ and then $f(a) = 0$.
-            \end{proof}
-
-            Therefore, there must be some $a \in \D$ to be the solution of equation (\ref{fz}).
-
-            \subsubsection{The uniqueness of the solution of equation (\ref{eq})}
-            With solvability proved, we naturally want to know if this solution is unique. Let's consider a special case when $\sum_{k=1}^n p_k = 0$, we have
-            \begin{theorem}\label{uniqueness when 0}
-                Suppose $\sum_{k=1}^n p_k = 0$, equation (\ref{eq}) holds if and only if $a = 0$.
-            \end{theorem}
-
-            \begin{proof}
-                If $a = 0$, it's obvious $F_0$ is identity, so $f(0) = \sum_{k=1}^n p_k = 0$.
-                
-                If $a \neq 0$, WLOG, we can assume that $0 < a < 1$, then $F_a(1) = 1$ and $F_a(-1) = -1$. For any $p_k \neq \pm 1$, there is some $\theta_k \in (0, \pi) \cup (\pi, 2\pi)$ such that $p_k = \cos \theta_k + \sin \theta_k i$,
-                \begin{align*}
-                    &F_a(p_k) \\
-                    = &F_a(\cos \theta_k + \sin \theta_k i) \\
-                    = &\frac{\cos \theta_k + \sin \theta_k i - a}{1 - a \cos \theta_k - a \sin \theta_k i} \\
-                    = &\frac{(a^2 + 1) \cos \theta_k -2a - (a^2 - 1) \sin \theta_k i}{a^2 + 1 - 2a \cos \theta_k},
-                \end{align*}
-                so
-                \begin{align*}
-                    &\Re(F_a(p_k)) \\
-                    = &\frac{(a^2 + 1) \cos \theta_k -2a}{a^2 + 1 - 2a \cos \theta_k} \\
-                    = &\cos \theta_k - \frac{2a(1-\cos^2 \theta_k)}{(a-1)^2 + 2a(1-\cos \theta_k)} \\
-                    < &\cos \theta_k = \Re(p_k).
-                \end{align*}
-
-                Therefore, if $n \ge 3$, there must be at least one $p_k \neq \pm 1$ and so
-                \begin{align*}
-                    &\Re(\sum_{k=1}^n F_a(p_k)) = \sum_{k=1}^n \Re(F_a(p_k)) \\
-                    < &\sum_{k=1}^n \Re(p_k) = \Re(\sum_{k=1}^n p_k)  = 0,
-                \end{align*}
-                which means $\sum_{k=1}^n F_a(p_k) \neq 0$. So $a=0$ is the only solution of equation (\ref{eq}) when $\sum_{k=1}^n p_k = 0$.
-            \end{proof}
-
-            This theorem confirms the uniqueness for a special situation $\sum_{k=1}^n p_k = 0$ and actually this conclusion is universal no matter how $p_i$ distribute.
-
-            \begin{theorem}\label{uniqueness}
-                The solution of equation (\ref{eq}) is unique.
-            \end{theorem}
-
-            \begin{proof}
-                Assume that $a_0, a_1$ are two different solutions, then we have that
-                \begin{align*}
-                    \sum_{k=1}^n F_{a_0}(p_k) = 0,\sum_{k=1}^n F_{a_1}(p_k) = 0
-                \end{align*}
-                
-                Let $p_k' = F_{a_0}(p_k)$, then
-                \begin{align*}
-                    &\sum_{k=1}^n F_{a_1} \circ F_{a_0}^{-1} \circ F_{a_0}(p_k)\\
-                    = &\sum_{k=1}^n (F_{a_1} \circ F_{-a_0})(F_{a_0}(p_k))\\
-                    = &\frac{1- a_1 \overline{a_0}}{1- a_0 \overline{a_1}}\sum_{k=1}^n F_{\frac{a_1-a_0}{1-a_1\overline{a_0}}} p_k' = 0.
-                \end{align*}
-                
-                Since $a_0, a_1 \in \D$, then $\frac{1- a_1 \overline{a_0}}{1- a_0 \overline{a_1}} \neq 0$ and so \\
-                $\sum_{k=1}^n F_{\frac{a_1-a_0}{1-a_1\overline{a_0}}} p_k' = 0$. According to theorem \ref{uniqueness when 0},\\
-                $\frac{a_1-a_0}{1-a_1\overline{a_0}} = 0$, then $a_0 = a_1$, which contradicts to the assumption.
-            \end{proof}
-
-            \subsubsection{Unique $\Phi_1$ up to a rotation}
-            
-            Above theorems show that there is always a unique solution $a \in \D$ for equation (\ref{eq}), so we can come back to theorem \ref{unique up to a rotation}.
-
-            \begin{proof}
-                Suppose $\Phi_1$ and $\tilde{\Phi}_1$ are two arbitrary conformal map from $\D$ to $\Omega$  then $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, where $M_1$ is a Mobi\"us transformation. If $\Phi_1$, $\tilde{\Phi_1} $ satisfy equation (\ref{norm phi1}), let $p_k = \Phi_1^{-1}(z_k)$, then we have $\sum_{k=1}^n p_k = 0$ and $\sum_{k=1}^n M_1^{-1} (p_k) = 0$. $M_1^{-1}$ is also a Mobi\"us transformation so let $M_1^{-1}(z) = e^{i \theta}\frac{z - a}{1 - \overline{a} z} = e^{i \theta} F_a(z)$, then we have
-                \begin{equation*}
-                    e^{i \theta} \sum_{k=1}^n F_a(p_k) = 0.
-                \end{equation*}
-
-                From theorem \ref{uniqueness when 0} we can know $a = 0$, then $M_1^{-1}(z) = e^{i \theta} z$ and $\Phi_1$ is unique up to a rotation $M_1$.
-            \end{proof}
-
-
-        \subsection{Normalization to $M_2$}\label{norm2}
-            As for $M_2$, we also hope it is also a rotation here, which is equivalent with that $\Phi_2$ is uniquely determined up to a rotation. Luckily, we always have that $\infty \in \D^c$ and $\infty \in \Omega^c$, then we can use this guarantee this uniqueness.
-
-            \begin{theorem}
-                Let $\Phi_2$ be a conformal map from $\D^c$ to $\Omega^c$ satisfying that
-                \begin{equation}
-                    \Phi_2(\infty) = \infty\label{norm phi2 1}
-                \end{equation}
-                then such $\Phi_2$ is uniquely determined a rotation.
-            \end{theorem}
-
-            \begin{proof}
-                Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobi\"us transformation, $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisfy (\ref{norm phi2 1}), then
-                \begin{align*}
-                    &\tilde{\Phi}_2(\infty) = \Phi_2(M_2(\infty)) = \infty, \\
-                    &\Phi_2(\infty) = \infty.
-                \end{align*}
-                Therefore, $M_2(\infty) = e^{i \theta} \frac{\infty - a}{1- \overline{a} \infty} = \infty$, which means that $a = 0$ and $M_2(z) = e^{i \theta} z$.
-            \end{proof}
-
-        \subsection{Post-normalization for $B$}\label{post norm B}
-            After normalizing $M_1$ and $M_2$, where $M_1, M_2$ are both rotation, for $B, \tilde{B} \in [B]$ with harmonic extensions $H, \tilde{H}$, according to equations (\ref{mu of conformal composition}) and (\ref{tildeB}), we have 
-            \begin{equation}\label{arg integral B is 0}
-                \tilde{B}(z) = \mu_{H \circ M_2}(z) = e^{-2i\theta} \mu_H \circ M_2(z) = e^{-2 i \theta} B(e^{i\theta} z),
-            \end{equation}
-            where $M_2(z) = e^{i \theta}z$. This equation tells us the uniqueness of $B$ can be achieved by following theorem.
-            \begin{theorem}\label{unique B}
-                Suppose $B$ is HBS in given equivalence class $[B]$ and satisfies requirements (\ref{norm phi1}) and (\ref{norm phi2 1}). If
-                \begin{equation}
-                    \arg \int_\D B(z) dz = 0,
-                \end{equation}
-                then $B$ is unique representative of $[B]$.
-            \end{theorem}
-
-            \begin{proof}
-                Suppose $B, \tilde{B}$ are both HBS in the same equivalence class $[B]$ with harmonic extensions $H$ and $\tilde{H}$ respectively, where $\tilde{H} = M_1^{-1} \circ H \circ M_2$ and $\int_D B(z)dz = r e^{i \tau}$. According to requirements (\ref{norm phi1}) and (\ref{norm phi2 1}), $M_1, M_2$ are rotation. Let $M_2(z) = e^{i\theta}z$, then we have
-                \begin{eqnarray}
-                    \int_B \tilde{B}(z) dz
-                    &=& \int_D e^{-2i\theta} B(e^{i\theta} z) dz \nonumber \\
-                    &=& e^{-2i\theta} \int_D B(z) dz \nonumber \\
-                    &=& r e^{i(\tau-2\theta)}.
-                \end{eqnarray}
-                If equation (\ref{arg integral B is 0}) holds,
-                \begin{equation*}
-                    \tau = \tau-2\theta  = 0,
-                \end{equation*}
-                hence $\theta = 0$, $M_2$ is identity and so$\tilde{B} = \mu_{H \circ I} = \mu_H = B$.
-            \end{proof}
-
-            Note that the unique representative $B$ of $[B]$ can be easily generated from any HBS $B_0 \in [B]$. If $\tau_0 =\arg \int_\D \tilde{B}(z) dz  \neq 0$, then
-            \begin{equation}\label{normaled B}
-                B(z) = e^{i\tau_0}B_0(e^{-\frac{\tau_0}{2}i}z)
-            \end{equation}
-            is just the desired representative.
-
-        \subsection{Invariance under simple transformation}
-            With the normalization mentioned above, we can get a unique Harmonic Beltrami signature $B$ as the representative corresponding to domain $\Omega$, so we can remark $B$ as $B_\Omega$. Now we want to prove that if we do some simple transformation like rotation, scaling and translation to $\Omega$, the HBS is invariant.
-
-            \begin{theorem}\label{invariance theorem}
-                Given a boundary simply-connected domain $\Omega$ and transformation $T$ which is composed by rotation, scaling and transformation. Let $B_\Omega$ and $B_{T(\Omega)}$ be the HBS of $\Omega$ and $T(\Omega)$, then $B_\Omega = B_{T(\Omega)}$
-            \end{theorem}
-
-            \begin{proof}
-                Suppose $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, $\tilde{\Phi}_1: \D \rightarrow T(\Omega)$ and $\tilde{\Phi}_2 : \D^c \rightarrow T(\Omega)$ are conformal. Since $T$ is composed by rotation, scaling and translation, $T$ can be written as $T(z) = ke^{i\theta} z + b$. Such $T$ is absolutely invertible and conformal.
-                
-                Let $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1 : \D \rightarrow \Omega$, $\hat{\Phi}_1$ is conformal. Given the boundary points $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$, then $\{T(z_1), T(z_2), \cdots, T(z_n)\} \subset \partial T(\Omega)$. Since $\tilde{\Phi}_1$ satisfies condition (\ref{norm phi1}), we have
-                \begin{equation*}
-                    \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0.
-                \end{equation*}
-                    
-                Therefore
-                \begin{equation*}
-                    \sum_{i=1}^n \hat{\Phi}_1^{-1}(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1} \circ T(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0,
-                \end{equation*}
-                which means $\hat{\Phi}_1$ also satisfies condition (\ref{norm phi1}). Hence $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1= \Phi_1 \circ M_1$, which equals to
-                \begin{equation}
-                    \tilde{\Phi}_1 = T \circ \Phi_1 \circ M_1,
-                \end{equation}
-                where $M_1$ is a rotation.
-
-                Similarly, let $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2: \D^c \rightarrow \Omega^c$, $\hat{\Phi}_2$ is conformal. Since $\tilde{\Phi}_2(\infty) = \infty$, we have
-                \begin{equation*}
-                    \hat{\Phi}_2(\infty) = T \circ \tilde{\Phi}_2(\infty) = \infty,
-                \end{equation*}
-                which means $\hat{\Phi}_2$ satisfies condition (\ref{norm phi2 1}). Therefore, $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2 = \Phi_2 \circ M_2$ and then
-                \begin{equation}
-                    \tilde{\Phi}_2 = T \circ \Phi_2 \circ M_2,
-                \end{equation}
-                where $M_2$ is also a rotation.
-
-                We have the conformal welding
-                \begin{eqnarray}
-                    \tilde{f}
-                    &=& \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 \\
-                    &=& M_1^{-1} \circ \Phi_1^{-1} \circ T^{-1} \circ T \circ \Phi_2 \circ M_2 \\
-                    &=& M_1^{-1} \circ f \circ M_2.
-                \end{eqnarray}
-                Then the harmonic extension $\tilde{H} = M_1^{-1} \circ H \circ M_2$ and so $B_\Omega = \mu_H$ and $B_{T(\Omega)} = \mu_{\tilde{H}}$ are both the representative of the same equivalence class. Therefore, $B_\Omega = B_{T(\Omega)}$ because of theorem \ref{unique B}.
-            \end{proof}
-
-    \section{Reconstruction}\label{reconstruction}
+        $\Leftarrow :$ When $M_1$ is a rotation, $M_1^{-1}$ is also a rotation, so $M_1^{-1} \circ H \circ M_2$ is a harmonic function according to Theorem \ref{composition of harmonic}. It's easy to check that
+        \begin{equation}
+            M_1^{-1} \circ H \circ M_2 (e^{i \theta}) = M_1^{-1} \circ f \circ M_2(e^{i \theta}) = \tilde{f}(e^{i \theta}) = \tilde{H} (e^{i \theta}),
+        \end{equation}
+        which means $M_1^{-1} \circ H \circ M_2$ and $\tilde{H}$ have the same boundary value. From the uniqueness of harmonic mapping, $M_1^{-1} \circ H \circ M_2 = \tilde{H}$.
+    \end{proof}
     
-        The above theorems show that our Harmonic Beltrami signature can be uniquely defined by the given shape and is invariant under translation, scaling and rotation. Conversely, we will further demonstrate the method to reconstruct the original shape when given a Beltrami signature in this section.
+    Note that if $M_1$ is not only a rotation, $\tilde{f}$ and $\tilde{H}$ also exist but equation (\ref{tilde H}) doesn't hold, as shown in Fig. \ref{harmonic extension not rotation}.
 
-        If $B_\Omega$ is the HBS of some simply-connected domain $\Omega$, according to the process we mentioned in Section \ref{main}, there exists conformal mappings $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, conformal welding $f: \partial \D \rightarrow \partial \D $ and harmonic extension $H$ of $f$, where $\Phi_1$ satisfies equation (\ref{norm phi1}), $\Phi_2$ satisfies equations (\ref{norm phi2 1}), $f = \Phi_1^{-1} \circ \Phi_2$, $\mu_H = B_\Omega$ and $B_\Omega$ satisfies (\ref{arg integral B is 0}).
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=15cm]{harmonic_extension_not_rotation.png}
+        \end{center}
+        \caption{Let $f(e^{i \theta}) = \sin(10 \theta) + \cos(10 \theta)+1.5$, $M_1(z) = e^{i \tau}\cfrac{z-p}{1-\overline{p}z}$, where $p=0.6+0.6i$, $\tau = 0.8$. The image of $f$ and its harmonic extension $H$ are shown in Fig. \ref{harmonic}. (a) $\tilde{f} = M_1 \circ f$; (b) harmonic extension $\tilde{H}$ of $\tilde{f}$; (c) $H' = M_1 \circ H$; (d) $H' - \tilde{H}$, and it's clear that $M_1 \circ H \neq \tilde{H}$ except on the boundary.}
+        \label{harmonic extension not rotation}
+    \end{figure}
 
-        Given a Harmonic Beltrami signature $B_\Omega$, define
-        \begin{equation}
-            g(z) = \begin{cases}
-                B_\Omega(z), z \in \D \\
-                0, z \in \D^c
-            \end{cases}
+    Suppose HBS $B$ is the representative of given equivalence class $[B]$ and $H$ is the corresponding harmonic extension. Because of above theorem, we assume $M_1$ is a rotation, then for any other $\tilde{B} \in [B]$ of $\tilde{H} = M_1^{-1} \circ H \circ M_2$, we have
+    \begin{equation}\label{tildeB}
+        \tilde{B} = \mu_{\tilde{H}} = \mu_{M_1^{-1} \circ H \circ M_2} = \mu_{H\circ M_2}.
+    \end{equation}
+    This equation tells us the uniqueness of $B$ can be achieved by following theorem.
+    \begin{theorem}\label{unique B}
+        Suppose $B = \mu_H$ and $\tilde{B} = \mu_{\tilde{H}}$ are two Harmonic Beltrami signatures in given equivalence class $[B]$ for some domain $\Omega$, where $H$ and $\tilde{H}$ are the corresponding harmonic extensions of conformal welding $f$ and $\tilde{f}$ respectively with $\tilde{f} = M_1^{-1} \circ f \circ M_2$. If $M_1$ and $M_2$ are both rotation and
+        \begin{equation}\label{arg integral B is 0}
+            \arg \int_\D B(z) dz = \arg \int_\D \tilde{B}(z)dz = 0,
         \end{equation}
-        According to Theorem \ref{Measurable Riemannian Mapping Theorem}, we can find mapping $G: \overline{\C} \rightarrow \overline{\C}$ such that
-        \begin{align}
-            &\mu_G = \frac{G_{\overline{z}}}{G_z} = g \nonumber\\
-            &G(\infty) = \infty\label{Ginfty}
+        then we have $\tilde{B} = B$.
+    \end{theorem}
+
+    \begin{proof}
+        When $M_1$ is rotation, the conformal arbitrary of conformal welding can be delivered to their harmonic extensions and
+        $\tilde{H} = M_1^{-1} \circ H \circ M_2$. Remark $r e^{i \tau} = \int_\D B(z) dz$ and $M_2(z) = e^{i \theta}z$, then the $\tilde{B}$ can be displayed in the form of
+        \begin{equation}
+        \tilde{B}(z) = \mu_{H \circ M_2}(z) = e^{-2i\theta} \mu_H \circ M_2(z) = e^{-2 i \theta} B(e^{i\theta} z).
+        \end{equation}
+        Therefore, we have
+        \begin{eqnarray}
+            \int_B \tilde{B}(z) dz
+            &=& \int_D e^{-2i\theta} B(e^{i\theta} z) dz \nonumber \\
+            &=& e^{-2i\theta} \int_D B(z) dz \nonumber \\
+            &=& r e^{i(\tau-2\theta)}.
+        \end{eqnarray}
+        If equation (\ref{arg integral B is 0}) holds,
+        \begin{equation*}
+            \tau = \tau-2\theta  = 0,
+        \end{equation*}
+        hence $\theta = 0$, $M_2$ is identity and so $\tilde{B} = \mu_H = B$.
+    \end{proof}
+
+    Note that the unique representative $B$ of $[B]$ can be easily generated from any HBS $B_0 = \mu_{H_0} \in [B]$. If $r e^{i\tau_0} =\int_\D B_0(z) dz$ and $\tau_0 \neq 0$, then
+    \begin{equation}\label{normaled B}
+        B(z) = e^{-i\tau_0}B_0(e^{i\frac{\tau_0}{2}}z)
+    \end{equation}
+    is just the desired representative since $B = \mu_{H_0 \circ M_0}$  and
+    \begin{equation}
+        \arg \int_\D B(z) dz = \arg \left( e^{-i\tau_0} \int_\D B_0(e^{i\frac{\tau_0}{2}}z)dz \right) = \arg \left( e^{-i\tau_0} \cdot r e^{i\tau_0} \right) = 0,
+    \end{equation}
+    where $M_0(z) = e^{i \frac{\tau}{2}} z$. Therefore, if we want to find a unique $B$, some pre- and post-normalizations to $M_1$ and $M_2$ are required.
+
+\subsection{Normalization to $M_1$}\label{norm1}
+    We hope $M_1$ is a rotation. It is not that hard, for example, we can achieve it by restricting $\Phi_1(0) = 0$. But it need a hypothesis that $0$ is in $\Omega$, which is equivalent to limiting the position of shape and cannot always hold. Here we want to show a new approach without any additional assumption.
+    
+    In actual application, we usually only know finite boundary points $z_1, z_2, \cdots, z_n \in \partial \Omega$. Denote $p_i = \Phi_1^{-1}(z_i) \in \partial \D$, where $\Phi_1 : \D \rightarrow \Omega$. We claims that $M_1$ can be normalized by restricting the center of $p_i$ to $0$.
+
+    \begin{theorem}\label{unique up to a rotation}
+        Given $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$ and $n \ge 3$, if conformal mapping $\Phi_1: \D \rightarrow \Omega$ satisfies
+        \begin{align}\label{norm phi1}
+            \sum_{k=1}^n \Phi_1^{-1}(z_k) = 0,
         \end{align}
-        where $G$ is uniquely determined up to Mobi\"us transformation $M$. 
+        then such $\Phi_1$ is unique up to a rotation $M_1$.
+    \end{theorem}
+
+    Before proving theorem \ref{unique up to a rotation}, we can consider following problem. Given boundary points $p_i$ on unit circle, can we find a Mobi\"us transformation $M$ satisfies the following equation (\ref{fz})?
+    \begin{equation}\label{fz}
+        \sum_{k=1}^n M(p_k) = \sum_{k=1}^n e^{i\theta} \frac{p_k - a}{1 - \overline{a}p_k}= 0
+    \end{equation}
+    
+    Without lose of generality, we ignore the rotation of $M$ and let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. So $F_a$ is also a Mobi\"us transformation and it's sufficient to find $a \in \D$ such that
+    \begin{equation}\label{eq}
+        f(a) = \sum_{k=1}^n F_a(p_k) = \sum_{k=1}^n \frac{p_k - a}{1 - \overline{a}p_k} = 0
+    \end{equation}
+    to show the equation (\ref{fz}) holds for some $M$. Intuitively, we believe that there is always a unique solution to this equation (\ref{eq}) (see Fig \ref{fasolvable}).
+
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=10cm]{fig6.png}
+        \end{center}
+        \caption{The first row are some randomly generated points in $\partial \D$. The second row are the corresponding $\abs{f(a)}$, where $a \in \D$. The third row are also $\abs{f(a)}$ but is in top view. }
+        \label{fasolvable}
+    \end{figure}
+
+    \subsubsection{The solvability of equation (\ref{eq})}
+    First thing we want to do is to check whether this equation (\ref{eq}) is always solvable. According to Brouwer fixed point theorem, we have
+
+    \begin{theorem}\label{existence}
+        Given $\{p_1, p_2, \cdots, p_n\} \subset \partial \D$ and $n \ge 3$, let $F_a(z) = \frac{z - a}{1 - \overline{a}z}$, where $a \in \D$. The solution of equation (\ref{eq}) always exists.
+    \end{theorem}
+
+    \begin{proof}
+        Note that when $e^{i \theta} \neq p_k$ for any $k$, we have
+        \begin{equation*}
+            f(e^{i \theta}) = \sum_{k=1}^n \frac{p_k - e^{i \theta}}{1 - e^{-i\theta}p_k} = - n e^{i\theta},
+        \end{equation*}
+        so $\frac{1}{n} f(e^{i\theta}) + e^{i \theta} = 0$. Let 
+        \begin{equation*}
+            g(a) = \begin{cases}
+        \frac{1}{n} f(a) + a, a \in \D,\\
+        0, a \in \partial \D,
+        \end{cases}
+        \end{equation*}
+        such $g$ is defined on $\overline{\D}$ and is continuous. It's clear that $\norm{g(a)} \le \frac{1}{n} \norm{f(a)} + \norm{a} \le 2$.
         
-        Claim that $\Omega' = G(\D)$ is the reconstructed domain satisfying $\Omega' = T(\Omega)$, where $T$ is composed by rotation, scaling and translation. Note that
-        \begin{equation}
-            G_0(z) = \begin{cases}
-                \Phi_1 \circ H(z), z \in \D\\
-                \Phi_2(z), z \in \D^c
-            \end{cases}
-        \end{equation}
-        is one solution of (\ref{Ginfty}) since $\mu_{\Phi_1 \circ H} = \mu_H = B_\Omega$ inside $\D$, $\mu_{\Phi_2} = 0$ outside $\D$ and $\Phi_2(\infty) = \infty$. Therefore, we have 
-        \begin{equation}
-            G = M \circ G_0 \text{ and } M(\infty) = \infty.
-        \end{equation}
-        By the properties of Mobi\"us transformation, we have $M(z) = az+b$ where $a, b \in \C$.
+        Let $M = \{a \in \D ~|~ \norm{g(a)} \ge 1 \}$, then define
+        \begin{equation*}
+            h(a) = \begin{cases}
+            g(a), &a \in  \overline{\D} \setminus M,\\
+            \frac{g(a)}{\norm{g(a)}}, &a \in  M.
+        \end{cases}
+        \end{equation*}
+        $h$ is a continuous map from $\overline{\D}$ to itself, so there exists some $a$ let $h(a) = a$. 
         
-        On the other side, $H$ is a harmonic mapping from $\D$ onto itself, so $G_0(\D) = \Phi_1 \circ H(\D) = \Omega$, then $\Omega' = G(\D) = M(\Omega) = a \Omega + b$, which show the claim is correct.
+        If $a \in \partial \D$, $\norm{a} = 1$, but $\norm{h(a)} = 0 \neq \norm{a}$. If $a \in M$, we know $a \notin \partial \D$, so $\norm{a} < 1$, but $\norm{h(a)} = \frac{\norm{g(a)}}{\norm{g(a)}} = 1 \neq \norm{a}$. So when $h(a) = a$, $a$ is inside $\D \setminus M$. Therefore, such $a$ satisfies $g(a) = a$ and then $f(a) = 0$.
+    \end{proof}
 
-        That means the relationship between Harmonic Beltrami signatures and shapes is a bijection, up to transformation, scaling and rotation. 
-        \begin{theorem}
-            Let $\Omega_1, \Omega_2$ be two different simply-connected domains and $B_{\Omega_1}, B_{\Omega_2}$ are the corresponding HBS, then $B_{\Omega_1} = B_{\Omega_2}$ if and only is $\Omega_1 = T(\Omega_2)$, where $T$ is composed by rotation, scaling and translation.
-        \end{theorem}
+    Therefore, there must be some $a \in \D$ to be the solution of equation (\ref{fz}).
 
-        \begin{proof}
-            The direction from signatures to shapes is proved in this section, and another direction is derived from theorem \ref{invariance theorem}.
-        \end{proof}
+    \subsubsection{The uniqueness of the solution of equation (\ref{eq})}
+    With solvability proved, we naturally want to know if this solution is unique. Let's consider a special case when $\sum_{k=1}^n p_k = 0$, we have
+    \begin{theorem}\label{uniqueness when 0}
+        Suppose $\sum_{k=1}^n p_k = 0$, equation (\ref{eq}) holds if and only if $a = 0$.
+    \end{theorem}
+
+    \begin{proof}
+        If $a = 0$, it's obvious $F_0$ is identity, so $f(0) = \sum_{k=1}^n p_k = 0$.
         
-        Hence, following powerful theorem about Beltrami holomorphic flow tells that if two HBS are similar, their corresponding shapes must be very alike.
-
-        \begin{theorem}[Beltrami holomorphic flow on $\mathbb{S}^2$]\label{BHF}
-            There is a one-to-one correspondence between the set of quasiconformal diffeomorphisms of $\mathbb{S}^2$ that fix the points 0, 1, and $\infty$ and the set of smooth complex-valued functions $\mu$ on $\mathbb{S}^2$ with $\norm{\mu}_\infty = k < 1$. Here, we have identified $\mathbb{S}^2$ with the extended complex plane $\overline{\C}$. Furthermore, the solution $f^\mu$ to the Beltrami equation depends holomorphically on $\mu$. Let $\{\mu(t)\}$ be a family of Beltrami coefficients depending on a real or complex parameter $t$. Suppose also that $\mu(t)$ can be written in the form
-            \begin{equation}
-                \mu(t)(z) = \mu(z) + tv(z) + t \epsilon(t)(z)
-            \end{equation}
-            for $z \in \C$, with suitable $\mu$ in the unit ball of $C^\infty(\C)$, $v, \epsilon(t) \in L^\infty(\C)$ such that $\lim_{t \rightarrow 0} \norm{\epsilon(t)}_\infty = 0$. Then for all $w \in \C$,
-            \begin{equation}
-                f^{\mu(t)}(w) = f^{\mu}(w) + tV(f^\mu, v)(w) + o(\abs{t})
-            \end{equation}
-            locally uniformly on $\C$ as $t \rightarrow 0$, where
-            \begin{align}
-                &V(f^\mu, v)(w) = -\frac{f^\mu(w)(f^\mu(w)-1)}{\pi}W(f^\mu, v)(w)\\
-                &W(f^\mu, v)(w) = \int_\C \frac{v(z)(f^\mu)^2_z(z)}{f^\mu(z)(f^\mu(z)-1)(f^\mu(z) - f^\mu(w))}dz.
-            \end{align}
-        \end{theorem}
-
-        \begin{proof}
-            This theorem is due to Bojarski. For detailed proof, please refer to \cite{durrleman2007measuring}.
-        \end{proof}
-
-        Given HBS $B_1, B_2$, we can solve PDE (\ref{Ginfty}) and get solutions $G_1, G_2$, then the corresponding original simply-connected domains $\Omega_1 = G_1(\D), \Omega_2 = G_2(\D)$. Let
-        \begin{equation}
-            g(t)(z) = \begin{cases}
-                B_1(z) + t v(z), z \in \D \\
-                0, z \in \D^c
-            \end{cases}
-        \end{equation}
-        where $v(z) = B_2(z) - B_1(z)$ if $z \in \D$ and $v(z) = 0$ if $z \notin \D$, so $G(t)(z) = G_1(z) + tV(G_1, v)(z)$. When $t=1$, we have $G(1)(z) = G_2(z)$ and
+        If $a \neq 0$, WLOG, we can assume that $0 < a < 1$, then $F_a(1) = 1$ and $F_a(-1) = -1$. For any $p_k \neq \pm 1$, there is some $\theta_k \in (0, \pi) \cup (\pi, 2\pi)$ such that $p_k = \cos \theta_k + \sin \theta_k i$,
         \begin{align*}
-            &\norm{G_2 - G_1}_\infty = \norm{V(G_1, v)}_\infty \\
-            &\le \frac{1}{\pi}\norm{G_1}_\infty \norm{G_1 - 1}_\infty \norm{W(G_1, v)}\\
-            &\le \frac{2}{\pi} \norm{W(G_1, v)}_\infty.
+            &F_a(p_k) \\
+            = &F_a(\cos \theta_k + \sin \theta_k i) \\
+            = &\frac{\cos \theta_k + \sin \theta_k i - a}{1 - a \cos \theta_k - a \sin \theta_k i} \\
+            = &\frac{(a^2 + 1) \cos \theta_k -2a - (a^2 - 1) \sin \theta_k i}{a^2 + 1 - 2a \cos \theta_k},
         \end{align*}
-        Since $G_1$ is continuous and bounded, the integral $\int_\D \frac{(G_1)_z^2(z)}{G_1(z)(G_1(z)-1)(G_1(z)-G_1(w)}dz$ is bounded for any $w \in \D$. Therefore, there exists some $M > 0$ such that
-        \begin{equation}
-            \norm{G_2 - G_1}_\infty \le \frac{2M}{\pi} \norm{B_2-B_1}_\infty.
-        \end{equation}
+        so
+        \begin{align*}
+            &\Re(F_a(p_k)) \\
+            = &\frac{(a^2 + 1) \cos \theta_k -2a}{a^2 + 1 - 2a \cos \theta_k} \\
+            = &\cos \theta_k - \frac{2a(1-\cos^2 \theta_k)}{(a-1)^2 + 2a(1-\cos \theta_k)} \\
+            < &\cos \theta_k = \Re(p_k).
+        \end{align*}
+
+        Therefore, if $n \ge 3$, there must be at least one $p_k \neq \pm 1$ and so
+        \begin{align*}
+            &\Re(\sum_{k=1}^n F_a(p_k)) = \sum_{k=1}^n \Re(F_a(p_k)) \\
+            < &\sum_{k=1}^n \Re(p_k) = \Re(\sum_{k=1}^n p_k)  = 0,
+        \end{align*}
+        which means $\sum_{k=1}^n F_a(p_k) \neq 0$. So $a=0$ is the only solution of equation (\ref{eq}) when $\sum_{k=1}^n p_k = 0$.
+    \end{proof}
+
+    This theorem confirms the uniqueness for a special situation $\sum_{k=1}^n p_k = 0$ and actually this conclusion is universal no matter how $p_i$ distribute.
+
+    \begin{theorem}\label{uniqueness}
+        The solution of equation (\ref{eq}) is unique.
+    \end{theorem}
+
+    \begin{proof}
+        Assume that $a_0, a_1$ are two different solutions, then we have that
+        \begin{align*}
+            \sum_{k=1}^n F_{a_0}(p_k) = 0,\sum_{k=1}^n F_{a_1}(p_k) = 0
+        \end{align*}
         
-        This illustrates that if the difference between HBS is small enough, their corresponding domains is almost the same, which means our Harmonic Beltrami signature is a good indicator similarity of shapes.
+        Let $p_k' = F_{a_0}(p_k)$, then
+        \begin{align*}
+            &\sum_{k=1}^n F_{a_1} \circ F_{a_0}^{-1} \circ F_{a_0}(p_k)\\
+            = &\sum_{k=1}^n (F_{a_1} \circ F_{-a_0})(F_{a_0}(p_k))\\
+            = &\frac{1- a_1 \overline{a_0}}{1- a_0 \overline{a_1}}\sum_{k=1}^n F_{\frac{a_1-a_0}{1-a_1\overline{a_0}}} p_k' = 0.
+        \end{align*}
+        
+        Since $a_0, a_1 \in \D$, then $\frac{1- a_1 \overline{a_0}}{1- a_0 \overline{a_1}} \neq 0$ and so \\
+        $\sum_{k=1}^n F_{\frac{a_1-a_0}{1-a_1\overline{a_0}}} p_k' = 0$. According to theorem \ref{uniqueness when 0},\\
+        $\frac{a_1-a_0}{1-a_1\overline{a_0}} = 0$, then $a_0 = a_1$, which contradicts to the assumption.
+    \end{proof}
+
+    \subsubsection{Unique $\Phi_1$ up to a rotation}
+    
+    Above theorems show that there is always a unique solution $a \in \D$ for equation (\ref{eq}), so we can come back to theorem \ref{unique up to a rotation}.
+
+    \begin{proof}
+        Suppose $\Phi_1$ and $\tilde{\Phi}_1$ are two arbitrary conformal map from $\D$ to $\Omega$  then $\tilde{\Phi}_1 = \Phi_1 \circ M_1$, where $M_1$ is a Mobi\"us transformation. If $\Phi_1$, $\tilde{\Phi_1} $ satisfy equation (\ref{norm phi1}), let $p_k = \Phi_1^{-1}(z_k)$, then we have $\sum_{k=1}^n p_k = 0$ and $\sum_{k=1}^n M_1^{-1} (p_k) = 0$. $M_1^{-1}$ is also a Mobi\"us transformation so let $M_1^{-1}(z) = e^{i \theta}\frac{z - a}{1 - \overline{a} z} = e^{i \theta} F_a(z)$, then we have
+        \begin{equation*}
+            e^{i \theta} \sum_{k=1}^n F_a(p_k) = 0.
+        \end{equation*}
+
+        From theorem \ref{uniqueness when 0} we can know $a = 0$, then $M_1^{-1}(z) = e^{i \theta} z$ and $\Phi_1$ is unique up to a rotation $M_1$.
+    \end{proof}
 
 
+\subsection{Normalization to $M_2$}\label{norm2}
+    As for $M_2$, we also hope it is also a rotation here, which is equivalent with that $\Phi_2$ is uniquely determined up to a rotation. Luckily, we always have that $\infty \in \D^c$ and $\infty \in \Omega^c$, then we can use this guarantee this uniqueness.
 
-    \section{Implementation detail}\label{implementation}
-        \subsection{Zipper algorithm}
-            In order to find a unique and stable HBS, the first thing is to do find a way to calculate a conformal mapping from the given domain to unit disk. As mentioned in Section \ref{norm1}, we only have finite boundary points of the shape and zipper algorithm invented in the 1980s is a suitable and accurate method to deal with this situation numerically. 
+    \begin{theorem}
+        Let $\Phi_2$ be a conformal map from $\D^c$ to $\Omega^c$ satisfying that
+        \begin{equation}
+            \Phi_2(\infty) = \infty\label{norm phi2 1}
+        \end{equation}
+        then such $\Phi_2$ is uniquely determined a rotation.
+    \end{theorem}
 
-            Marshall \etal demonstrates the zipper algorithm detailedly with clear diagrams in \cite{marshall2007convergence}. For the convenience of readers, we gives a very brief review here. Given $N$ clockwise boundary points $z_1, z_2, \cdots, z_N \in \partial \Omega$, this algorithm use a series of linear fractional transformations $g_1, g_2, \cdots, g_N$ to map $z_1, z_2,\cdots, z_N$ to real axis one-by-one, and finally transform the upper half plane to unit disk by $g_{N+1}(z) = \frac{z-i}{z+i}$. Therefore, $g = g_{N+1} \circ g_N \circ \cdots \circ g_2 \circ g_1$ is a conformal mapping indisputably and maps all these boundary points to unit circle and the domain $\Omega$ to $\D$. Remark that zipper algorithm is sensitive to the order of points. If we input the points anti-clockwise, i.e. $z_N, z_{N-1}, \cdots, z_1$, the zipper will give us a conformal mapping from $\Omega^c$ to $\D$.
+    \begin{proof}
+        Let $\Phi_2$ and $\tilde{\Phi_2}$ be two arbitrary conformal map from $\D^c$ to $\Omega^c$, $\tilde{\Phi_2} = \Phi_2 \circ M_2$, where $M_2$ is Mobi\"us transformation, $M_2(z) = e^{i \theta} \frac{z - a}{1- \overline{a}z}$. Since $\Phi_2$ and $\tilde{\Phi}_2$ both satisfy (\ref{norm phi2 1}), then
+        \begin{align*}
+            &\tilde{\Phi}_2(\infty) = \Phi_2(M_2(\infty)) = \infty, \\
+            &\Phi_2(\infty) = \infty.
+        \end{align*}
+        Therefore, $M_2(\infty) = e^{i \theta} \frac{\infty - a}{1- \overline{a} \infty} = \infty$, which means that $a = 0$ and $M_2(z) = e^{i \theta} z$.
+    \end{proof}
 
-            For $\Phi_1 : \D \rightarrow \Omega$, we can find a conformal mapping $g_{\Phi_1}: \Omega \rightarrow \D$ by inputting points clockwise, and $\Phi_1 = g_{\Phi_1}^{-1}$. For $\Phi_2 : \D^c \rightarrow \Omega^c$, we can input anti-clockwise points and get $g_{\Phi_2} : \Omega^c \rightarrow \D$. At the result $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$. Because of the invariance of scaling, the number of boundary points $N$ is fixed as $200$ here and they are picked uniformly from the shape contour. 
+\subsection{Invariance under simple transformation}
+    With the normalization mentioned above, we can get a unique Harmonic Beltrami signature $B$ as the representative corresponding to domain $\Omega$, so we can remark $B$ as $B_\Omega$. Now we want to prove that if we do some simple transformation like rotation, scaling and translation to $\Omega$, the HBS is invariant.
+
+    \begin{theorem}\label{invariance theorem}
+        Given a boundary simply-connected domain $\Omega$ and transformation $T$ which is composed by rotation, scaling and transformation. Let $B_\Omega$ and $B_{T(\Omega)}$ be the HBS of $\Omega$ and $T(\Omega)$, then $B_\Omega = B_{T(\Omega)}$
+    \end{theorem}
+
+    \begin{proof}
+        Suppose $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, $\tilde{\Phi}_1: \D \rightarrow T(\Omega)$ and $\tilde{\Phi}_2 : \D^c \rightarrow T(\Omega)$ are conformal. Since $T$ is composed by rotation, scaling and translation, $T$ can be written as $T(z) = ke^{i\theta} z + b$. Such $T$ is absolutely invertible and conformal.
+        
+        Let $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1 : \D \rightarrow \Omega$, $\hat{\Phi}_1$ is conformal. Given the boundary points $\{z_1, z_2, \cdots, z_n\} \subset \partial \Omega$, then $\{T(z_1), T(z_2), \cdots, T(z_n)\} \subset \partial T(\Omega)$. Since $\tilde{\Phi}_1$ satisfies condition (\ref{norm phi1}), we have
+        \begin{equation*}
+            \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0.
+        \end{equation*}
+            
+        Therefore
+        \begin{equation*}
+            \sum_{i=1}^n \hat{\Phi}_1^{-1}(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1} \circ T(z_i) = \sum_{i=1}^n \tilde{\Phi}_1^{-1}(T(z_i)) = 0,
+        \end{equation*}
+        which means $\hat{\Phi}_1$ also satisfies condition (\ref{norm phi1}). Hence $\hat{\Phi}_1 =  T^{-1} \circ \tilde{\Phi}_1= \Phi_1 \circ M_1$, which equals to
+        \begin{equation}
+            \tilde{\Phi}_1 = T \circ \Phi_1 \circ M_1,
+        \end{equation}
+        where $M_1$ is a rotation.
+
+        Similarly, let $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2: \D^c \rightarrow \Omega^c$, $\hat{\Phi}_2$ is conformal. Since $\tilde{\Phi}_2(\infty) = \infty$, we have
+        \begin{equation*}
+            \hat{\Phi}_2(\infty) = T \circ \tilde{\Phi}_2(\infty) = \infty,
+        \end{equation*}
+        which means $\hat{\Phi}_2$ satisfies condition (\ref{norm phi2 1}). Therefore, $\hat{\Phi}_2 = T^{-1} \circ \tilde{\Phi}_2 = \Phi_2 \circ M_2$ and then
+        \begin{equation}
+            \tilde{\Phi}_2 = T \circ \Phi_2 \circ M_2,
+        \end{equation}
+        where $M_2$ is also a rotation.
+
+        We have the conformal welding
+        \begin{eqnarray}
+            \tilde{f}
+            &=& \tilde{\Phi}_1^{-1} \circ \tilde{\Phi}_2 \\
+            &=& M_1^{-1} \circ \Phi_1^{-1} \circ T^{-1} \circ T \circ \Phi_2 \circ M_2 \\
+            &=& M_1^{-1} \circ f \circ M_2.
+        \end{eqnarray}
+        Then the harmonic extension $\tilde{H} = M_1^{-1} \circ H \circ M_2$ and so $B_\Omega = \mu_H$ and $B_{T(\Omega)} = \mu_{\tilde{H}}$ are both the representative of the same equivalence class. Therefore, $B_\Omega = B_{T(\Omega)}$ because of theorem \ref{unique B}.
+    \end{proof}
+
+\subsection{Reconstruction}\label{reconstruction}
+    The above theorems show that our Harmonic Beltrami signature can be uniquely defined by the given shape and is invariant under translation, scaling and rotation. Conversely, we will further demonstrate the method to reconstruct the original shape when given a Beltrami signature in this section.
+
+    If $B_\Omega$ is the HBS of some simply-connected domain $\Omega$, according to the process we mentioned at the beginning of Section \ref{main}, there exists conformal mappings $\Phi_1 : \D \rightarrow \Omega$, $\Phi_2: \D^c \rightarrow \Omega^c$, conformal welding $f: \partial \D \rightarrow \partial \D $ and harmonic extension $H$ of $f$, where $\Phi_1$ satisfies equation (\ref{norm phi1}), $\Phi_2$ satisfies equations (\ref{norm phi2 1}), $f = \Phi_1^{-1} \circ \Phi_2$, $\mu_H = B_\Omega$ and $B_\Omega$ satisfies (\ref{arg integral B is 0}).
+
+    Given a Harmonic Beltrami signature $B_\Omega$, define
+    \begin{equation}
+        g(z) = \begin{cases}
+            B_\Omega(z), z \in \D \\
+            0, z \in \D^c
+        \end{cases}
+    \end{equation}
+    According to Theorem \ref{Measurable Riemannian Mapping Theorem}, we can find mapping $G: \overline{\C} \rightarrow \overline{\C}$ such that
+    \begin{align}
+        &\mu_G = \frac{G_{\overline{z}}}{G_z} = g \nonumber\\
+        &G(\infty) = \infty\label{Ginfty}
+    \end{align}
+    where $G$ is uniquely determined up to Mobi\"us transformation $M$. 
+    
+    Claim that $\Omega' = G(\D)$ is the reconstructed domain satisfying $\Omega' = T(\Omega)$, where $T$ is composed by rotation, scaling and translation. Note that
+    \begin{equation}
+        G_0(z) = \begin{cases}
+            \Phi_1 \circ H(z), z \in \D\\
+            \Phi_2(z), z \in \D^c
+        \end{cases}
+    \end{equation}
+    is one solution of (\ref{Ginfty}) since $\mu_{\Phi_1 \circ H} = \mu_H = B_\Omega$ inside $\D$, $\mu_{\Phi_2} = 0$ outside $\D$ and $\Phi_2(\infty) = \infty$. Therefore, we have 
+    \begin{equation}
+        G = M \circ G_0 \text{ and } M(\infty) = \infty.
+    \end{equation}
+    By the properties of Mobi\"us transformation, we have $M(z) = az+b$ where $a, b \in \C$.
+    
+    On the other side, $H$ is a harmonic mapping from $\D$ onto itself, so $G_0(\D) = \Phi_1 \circ H(\D) = \Omega$, then $\Omega' = G(\D) = M(\Omega) = a \Omega + b$, which show the claim is correct.
+
+    That means the map between Harmonic Beltrami signatures and shapes is also a bijection, up to transformation, scaling and rotation. In the theorem \ref{one to one equivalence class} tells us that there exists a one-to-one relationship between HBS equivalence classes and shapes and now such bijection can be extended to a special HBS, i.e. the unique representative of equivalence class.
+    \begin{theorem}
+        Let $\Omega_1, \Omega_2$ be two different simply-connected domains and $B_{\Omega_1}, B_{\Omega_2}$ are the corresponding HBS, then $B_{\Omega_1} = B_{\Omega_2}$ if and only is $\Omega_1 = T(\Omega_2)$, where $T$ is composed by rotation, scaling and translation.
+    \end{theorem}
+
+    \begin{proof}
+        The direction from signatures to shapes is proved in this section, and another direction is derived from theorem \ref{invariance theorem}.
+    \end{proof}
+
+\subsection{Robustness of HBS}
+    Although there exists a one-to-one correspondence between HBS and shapes up to a rotation, translation and scaling, the behavior of HBS under small modification to the original shape is still unknown. Of course, we expect the HBS to be slightly deformed within reasonable range so that the proposed signature is robust and useful. The following powerful theorem about Beltrami holomorphic flow(BHF) tells that if two HBS are similar, their corresponding shapes must be very alike.
+
+    \begin{theorem}[Beltrami holomorphic flow on $\mathbb{S}^2$]\label{BHF}
+        There is a one-to-one correspondence between the set of quasiconformal diffeomorphisms of $\mathbb{S}^2$ that fix the points 0, 1, and $\infty$ and the set of smooth complex-valued functions $\mu$ on $\mathbb{S}^2$ with $\norm{\mu}_\infty = k < 1$. Here, we have identified $\mathbb{S}^2$ with the extended complex plane $\overline{\C}$. Furthermore, the solution $f^\mu$ to the Beltrami equation depends holomorphically on $\mu$. Let $\{\mu(t)\}$ be a family of Beltrami coefficients depending on a real or complex parameter $t$. Suppose also that $\mu(t)$ can be written in the form
+        \begin{equation}
+            \mu(t)(z) = \mu(z) + tv(z) + t \epsilon(t)(z)
+        \end{equation}
+        for $z \in \C$, with suitable $\mu$ in the unit ball of $C^\infty(\C)$, $v, \epsilon(t) \in L^\infty(\C)$ such that $\lim_{t \rightarrow 0} \norm{\epsilon(t)}_\infty = 0$. Then for all $w \in \C$,
+        \begin{equation}
+            f^{\mu(t)}(w) = f^{\mu}(w) + tV(f^\mu, v)(w) + o(\abs{t})
+        \end{equation}
+        locally uniformly on $\C$ as $t \rightarrow 0$, where
+        \begin{align}
+            &V(f^\mu, v)(w) = -\frac{f^\mu(w)(f^\mu(w)-1)}{\pi}W(f^\mu, v)(w)\\
+            &W(f^\mu, v)(w) = \int_\C \frac{v(z)(f^\mu)^2_z(z)}{f^\mu(z)(f^\mu(z)-1)(f^\mu(z) - f^\mu(w))}dz.
+        \end{align}
+    \end{theorem}
+
+    \begin{proof}
+        This theorem is due to Bojarski. For detailed proof, please refer to \cite{durrleman2007measuring}.
+    \end{proof}
+
+    Given HBS $B_1, B_2$, we can solve PDE (\ref{Ginfty}) and get solutions $G_1, G_2$, then the corresponding original simply-connected domains $\Omega_1 = G_1(\D), \Omega_2 = G_2(\D)$. Let
+    \begin{equation}
+        g(t)(z) = \begin{cases}
+            B_1(z) + t v(z), z \in \D \\
+            0, z \in \D^c
+        \end{cases}
+    \end{equation}
+    where $v(z) = B_2(z) - B_1(z)$ if $z \in \D$ and $v(z) = 0$ if $z \notin \D$, so $G(t)(z) = G_1(z) + tV(G_1, v)(z)$. When $t=1$, we have $G(1)(z) = G_2(z)$ and
+    \begin{align*}
+        &\norm{G_2 - G_1}_\infty = \norm{V(G_1, v)}_\infty \\
+        &\le \frac{1}{\pi}\norm{G_1}_\infty \norm{G_1 - 1}_\infty \norm{W(G_1, v)}\\
+        &\le \frac{2}{\pi} \norm{W(G_1, v)}_\infty.
+    \end{align*}
+    Since $G_1$ is continuous and bounded, the integral is bounded and for any $w \in \D$ there exists some $M > 0$ such that
+    \begin{equation}
+    \begin{split}
+        &\norm{\int_\D \frac{(G_1)_z^2(z)}{G_1(z)(G_1(z)-1)(G_1(z)-G_1(w)}dz}_\infty \\
+        \le& \int_\D \norm{\frac{(G_1)_z^2(z)}{G_1(z)(G_1(z)-1)(G_1(z)-G_1(w)}}_\infty dz \\
+        \le& M
+    \end{split}
+    \end{equation}
+    
+    then
+    \begin{equation}
+        \norm{G_2 - G_1}_\infty \le \frac{2M}{\pi} \norm{B_2-B_1}_\infty.
+    \end{equation}
+    
+    This illustrates that if the difference between HBS is small enough, their corresponding domains is almost the same, which means our Harmonic Beltrami signature is a good indicator similarity of shapes.
+
+\section{Implementation detail}\label{implementation}
+\subsection{Zipper algorithm}
+    In order to find a unique and stable HBS, the first thing is to do find a way to calculate a conformal mapping from the given domain to unit disk. As mentioned in Section \ref{norm1}, we only have finite boundary points of the shape and zipper algorithm invented in the 1980s is a suitable and accurate method to deal with this situation numerically. 
+
+    Marshall \etal demonstrates the zipper algorithm detailedly with clear diagrams in \cite{marshall2007convergence}. For the convenience of readers, we gives a very brief review here. Given $N$ clockwise boundary points $z_1, z_2, \cdots, z_N \in \partial \Omega$, this algorithm use a series of linear fractional transformations $g_1, g_2, \cdots, g_N$ to map $z_1, z_2,\cdots, z_N$ to real axis one-by-one, and finally transform the upper half plane to unit disk by $g_{N+1}(z) = \frac{z-i}{z+i}$. Therefore, $g = g_{N+1} \circ g_N \circ \cdots \circ g_2 \circ g_1$ is a conformal mapping indisputably and maps all these boundary points to unit circle and the domain $\Omega$ to $\D$. Remark that zipper algorithm is sensitive to the order of points. If we input the points anti-clockwise, i.e. $z_N, z_{N-1}, \cdots, z_1$, the zipper will give us a conformal mapping from $\Omega^c$ to $\D$. This progress is shown in Fig. \ref{zipper algo}.
+
+    \begin{figure}
+    \begin{center}
+        \includegraphics[width=15cm]{zipper_algo.png}
+    \end{center}
+    \caption{Zipper algorithm}
+    \label{zipper algo}
+    \end{figure}
+
+    For $\Phi_1 : \D \rightarrow \Omega$, we can find a conformal mapping $g_{\Phi_1}: \Omega \rightarrow \D$ by inputting points clockwise, and $\Phi_1 = g_{\Phi_1}^{-1}$. For $\Phi_2 : \D^c \rightarrow \Omega^c$, we can input anti-clockwise points and get $g_{\Phi_2} : \Omega^c \rightarrow \D$. At the result $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$. Because of the invariance of scaling, the number of boundary points $N$ is fixed as $200$ here and they are picked uniformly from the shape contour. 
 
             \begin{algorithm}[H]                           % HERE!!!!!!!!!
             \caption{Zipper}          % give the algorithm a caption
@@ -705,138 +735,140 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
                 &j,k=-100,-99,\cdots,99,100 \}.
             \end{align*}
 
-        \subsection{Normalization}
-            Because of the arbitrariness of the conformal mapping, two different harmonic extension $H$ and $\tilde{H}$ of the given domain $\Omega$ have relationship
-            \begin{equation*}
-                \tilde{H} = M_1 \circ H \circ M_2.
-            \end{equation*}
-            Section \ref{norm1} and \ref{norm2} show that we can normalize $M_1$ and $M_2$ by some restrictions and then HBS $B$ can be unique. This section will tells how to satisfy equation (\ref{norm phi1}) and (\ref{norm phi2 1}) from the output of zipper algorithm.
+    \subsection{Normalization}
+    Because of the arbitrariness of the conformal mapping, two different harmonic extension $H$ and $\tilde{H}$ of the given domain $\Omega$ have relationship
+    \begin{equation*}
+        \tilde{H} = M_1 \circ H \circ M_2.
+    \end{equation*}
+    Section \ref{norm1} and \ref{norm2} show that we can normalize $M_1$ and $M_2$ by some restrictions and then HBS $B$ can be unique. This section will tells how to satisfy equation (\ref{norm phi1}) and (\ref{norm phi2 1}) from the output of zipper algorithm.
 
-            To normalization $M_1$, we need to solve equation (\ref{eq}). Generally speaking, the output of zipper, $p_i = g_{\Phi_1}(z_i) \in \D, i = 1, 2, \cdots, N$, will concentrate around a point. At that time, $\abs{f(a)} \approx 1$ almost everywhere and the solution of (\ref{eq}) is also very close to the point. This means the solution is quite unstable and hard to converge for common algorithms(see Fig \ref{original distribution}).
+    To normalization $M_1$, we need to solve equation (\ref{eq}). Generally speaking, the output of zipper, $p_i = g_{\Phi_1}(z_i) \in \D, i = 1, 2, \cdots, N$, will concentrate around a point. At that time, $\abs{f(a)} \approx 1$ almost everywhere and the solution of (\ref{eq}) is also very close to the point. This means the solution is quite unstable and hard to converge for common algorithms(see Fig \ref{original distribution}).
 
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=7.6cm]{fig7_down.png}
-                \end{center}
-                \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red; (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
-                \label{original distribution}
-            \end{figure}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=6cm]{fig7.png}
+        \end{center}
+        \caption{(a) The $p_i \in \partial \D$ gather in a small neighborhood around their arithmetic mean $p_c$, which is labeled in red; (b) The corresponding $\abs{f(a)}$ for these $p_i$. It's worth to mention that the minimal of $\abs{f(a)}$ can reach actually, but it isn't shown in the picture since the grid is not small enough.}
+        \label{original distribution}
+    \end{figure}
 
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=7.6cm]{fig8_down.png}
-                \end{center}
-                \caption{Similar with Fig \ref{original distribution}. (a) The boundary points after adjustment; (b) The $\abs{f(a)}$.}
-            \end{figure}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=6cm]{fig8.png}
+        \end{center}
+        \caption{Similar with Fig \ref{original distribution}. (a) The boundary points after adjustment; (b) The $\abs{f(a)}$.}
+    \end{figure}
 
-            Instead of proposing a complicated method to solve equation directly, the solution we adopted to solve this problem is to use some Mobi\"us transformations to adjust the distribution of $p_{i}$ until it becomes almost uniform. For the $r$-th iteration, let 
-            \begin{equation*}
-                p_{c,r} = \frac{\sum_{i=1}^k p_{i,r}}{k} \in \D
-            \end{equation*}
-            as the arithmetic center of $p_{i,r} \in \partial \D$. Remark that $F_a(z) = \frac{z-a}{1-\overline{a}z}$ is a Mobi\"us transformation ignoring rotation, then the $F_{p_{c,r}}$ gives new boundary points on unit disk as 
-            \begin{equation*}
-                p_{i,r+1} = F_{p_{c,r}}(p_{i,r}) = \frac{p_{i,r} - p_{c,r}}{1 - \overline{p_{c,r}}p_{i,r}}.
-            \end{equation*}
-            Note that we set $p_{i,0} = p_{i}$ at the beginning. Repeat this iteration for $r$ times until the center of boundary points is close to $0$, then the distribution is sufficiently regular and $\Phi_1$ becomes
-            \begin{equation}
-                \tilde{\Phi}_1 = \Phi_1 \circ F_{p_{c,0}}^{-1} \circ F_{p_{c,1}}^{-1} \circ \cdots \circ F_{p_{c,r}}^{-1}.
-            \end{equation}
-            Now equation (\ref{eq}) can be solved without much effort by Newtown's method. Suppose $a \in \D$ is the optimal solution and let 
-            \begin{equation*}
-                M_{\Phi_1} = F_a \circ F_{p_{c,r}} \circ F_{p_{c,r-1}} \circ \cdots \circ F_{p_{c, 0}}
-            \end{equation*}
-            and the final conformal mapping satisfying (\ref{norm phi1}) is
-            \begin{equation}
-                \hat{\Phi}_1 = \tilde{\Phi}_1 \circ F_{a}^{-1} = \Phi_1 \circ M_{\Phi_1}^{-1}
-            \end{equation}
+    Instead of proposing a complicated method to solve equation directly, the solution we adopted to solve this problem is to use some Mobi\"us transformations to adjust the distribution of $p_{i}$ until it becomes almost uniform. For the $r$-th iteration, let 
+    \begin{equation*}
+        p_{c,r} = \frac{\sum_{i=1}^k p_{i,r}}{k} \in \D
+    \end{equation*}
+    as the arithmetic center of $p_{i,r} \in \partial \D$. Remark that $F_a(z) = \frac{z-a}{1-\overline{a}z}$ is a Mobi\"us transformation ignoring rotation, then the $F_{p_{c,r}}$ gives new boundary points on unit disk as 
+    \begin{equation*}
+        p_{i,r+1} = F_{p_{c,r}}(p_{i,r}) = \frac{p_{i,r} - p_{c,r}}{1 - \overline{p_{c,r}}p_{i,r}}.
+    \end{equation*}
+    Note that we set $p_{i,0} = p_{i}$ at the beginning. Repeat this iteration for $r$ times until the center of boundary points is close to $0$, then the distribution is sufficiently regular and $\Phi_1$ becomes
+    \begin{equation}
+        \tilde{\Phi}_1 = \Phi_1 \circ F_{p_{c,0}}^{-1} \circ F_{p_{c,1}}^{-1} \circ \cdots \circ F_{p_{c,r}}^{-1}.
+    \end{equation}
+    Now equation (\ref{eq}) can be solved without much effort by Newtown's method. Suppose $a \in \D$ is the optimal solution and let 
+    \begin{equation*}
+        M_{\Phi_1} = F_a \circ F_{p_{c,r}} \circ F_{p_{c,r-1}} \circ \cdots \circ F_{p_{c, 0}}
+    \end{equation*}
+    and the final conformal mapping satisfying (\ref{norm phi1}) is
+    \begin{equation}
+        \hat{\Phi}_1 = \tilde{\Phi}_1 \circ F_{a}^{-1} = \Phi_1 \circ M_{\Phi_1}^{-1}
+    \end{equation}
 
-            \begin{algorithm}[H]
-            \caption{Normalize $M_1$}
-            \label{alg norm phi1}
-            \begin{algorithmic}
-                \STATE \textbf{Inputs:} $\Phi_1$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $\epsilon=0.2$.
-                \STATE \textbf{Initialize:} Let $r=0$, $p_{i,0} = p_i$, $M_{\Phi_1} = id$ and compute $p_{c,0}= \frac{1}{N} \sum_{i=1}^N p_{i}$. %and $M_{p_{c,0}}(z) = \frac{z-p_{c,0}}{1- \overline{p_{c, 0}}z}$
-                \WHILE{$\abs{p_c,r} > \epsilon$}
-                    \STATE Let $F_{p_{c,r}}(z) = \frac{z-p_{c,r}}{1- \overline{p_{c, r}}z}$ and $M_{\Phi_1} = F_{p_{c,r}} \circ M_{\Phi_1}$.%and $\Phi_1 = \Phi_1 \circ F_{p_{c,r}}^{-1}$.
-                    \STATE Compute $p_{i, r+1} = F_{p_{c,r}}(p_{i, r})$ and $p_{c,r+1} = \frac{1}{N} \sum_{i=1}^N p_{i, r+1}$.
-                    \STATE Let $r = r+1$.
-                \ENDWHILE
-                \STATE Solve equation (\ref{eq}) by Newtown's method and get solution $a \in \D$.
-                \STATE Let $F_a(z) = \frac{z-a}{1- \overline{a}z}$ and $M_{\Phi_1} = F_a \circ M_{\Phi_1}$.% and $\hat{\Phi}_1 = \Phi_1 \circ F^{-1}_{a}$.
-                %\STATE Compute $p_i = F_a(p_{i,r})$.
-                \RETURN Mobi\"us transformation $M_{\Phi_1}$.%, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
-            \end{algorithmic}
-            \end{algorithm}
+    \begin{algorithm}[H]
+    \caption{Normalize $M_1$}
+    \label{alg norm phi1}
+    \begin{algorithmic}
+        \STATE \textbf{Inputs:} $\Phi_1$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $\epsilon=0.2$.
+        \STATE \textbf{Initialize:} Let $r=0$, $p_{i,0} = p_i$, $M_{\Phi_1} = id$ and compute $p_{c,0}= \frac{1}{N} \sum_{i=1}^N p_{i}$. %and $M_{p_{c,0}}(z) = \frac{z-p_{c,0}}{1- \overline{p_{c, 0}}z}$
+        \WHILE{$\abs{p_c,r} > \epsilon$}
+            \STATE Let $F_{p_{c,r}}(z) = \frac{z-p_{c,r}}{1- \overline{p_{c, r}}z}$ and $M_{\Phi_1} = F_{p_{c,r}} \circ M_{\Phi_1}$.%and $\Phi_1 = \Phi_1 \circ F_{p_{c,r}}^{-1}$.
+            \STATE Compute $p_{i, r+1} = F_{p_{c,r}}(p_{i, r})$ and $p_{c,r+1} = \frac{1}{N} \sum_{i=1}^N p_{i, r+1}$.
+            \STATE Let $r = r+1$.
+        \ENDWHILE
+        \STATE Solve equation (\ref{eq}) by Newtown's method and get solution $a \in \D$.
+        \STATE Let $F_a(z) = \frac{z-a}{1- \overline{a}z}$ and $M_{\Phi_1} = F_a \circ M_{\Phi_1}$.% and $\hat{\Phi}_1 = \Phi_1 \circ F^{-1}_{a}$.
+        %\STATE Compute $p_i = F_a(p_{i,r})$.
+        \RETURN Mobi\"us transformation $M_{\Phi_1}$.%, conformal mapping $\hat{\Phi}_1: \D \rightarrow \Omega$ satisfying (\ref{norm phi1}) and boundary points $p_i \in \partial \D$.
+    \end{algorithmic}
+    \end{algorithm}
 
-            \begin{figure}
-                \begin{center}
-                    \includegraphics[width=\textwidth]{fig9.png}
-                \end{center}
-                \caption{The iteration of distribution adjustment. The boundary points are blue and their arithmetic center is red in each picture. (a)-(d) The 1st, 3rd, 7th, 12th iteration.}
-            \end{figure}
-            
-            As for the normalization of $M_2$, it's much easier. For requirement (\ref{norm phi2 1}), let $b = \Phi_2^{-1}(\infty)$ and $c = -\frac{1}{\bar{b}}$, from
-            \begin{equation*}
-                F_{c}(\infty) = \lim_{z \rightarrow \infty} \frac{z -c}{1 - \bar{c}z} = -\frac{1}{\overline{c}} = b
-            \end{equation*} we have 
-            \begin{equation*}
-                \tilde{\Phi}_2(\infty) = \Phi_2 \circ F_{c}(\infty) = \Phi_2(b) = \infty.
-            \end{equation*}
-            So we only need replace $\Phi_2$ with $\tilde{\Phi}_2 =\Phi_2 \circ F_{c}$ to map $\infty$ to $\infty$.
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=10cm]{fig9.png}
+        \end{center}
+        \caption{The iteration of distribution adjustment. The boundary points are blue and their arithmetic center is red in each picture. (a)-(d) The 1st, 3rd, 7th, 12th iteration.}
+    \end{figure}
+    
+    As for the normalization of $M_2$, it's much easier. For requirement (\ref{norm phi2 1}), let $b = \Phi_2^{-1}(\infty)$ and $c = -\frac{1}{\bar{b}}$, from
+    \begin{equation*}
+        F_{c}(\infty) = \lim_{z \rightarrow \infty} \frac{z -c}{1 - \bar{c}z} = -\frac{1}{\overline{c}} = b
+    \end{equation*} we have 
+    \begin{equation*}
+        \tilde{\Phi}_2(\infty) = \Phi_2 \circ F_{c}(\infty) = \Phi_2(b) = \infty.
+    \end{equation*}
+    So we only need replace $\Phi_2$ with $\tilde{\Phi}_2 =\Phi_2 \circ F_{c}$ to map $\infty$ to $\infty$.
 
-            % According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. And another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$.  Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2\pi}{M}(j-1)$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). 
-            
-            % Therefore, the maximal solution
-            % \begin{equation}
-            %     \theta_{\max} = \argmax{j \in [1,10^5]} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}
-            % \end{equation}
-            % can be used to normalize the rotation and the final mapping is 
-            % \begin{equation}
-            %     \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{\max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
-            % \end{equation}
-            % where $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
+    % According to zipper algorithm, we know each linear fractional transformation composing $\Phi_2$, and the derivative of $\tilde{\Phi}_2$ can be found by the chain derivative rule. And another requirement (\ref{norm phi2 2}) can be satisfied by finding $a=\argmax{z \in \partial\D} \abs{\tilde{\Phi}_2'(z)}$.  Here we select $M = 10^5$ points uniformly from $[0, 2\pi)$ as $\theta_j = \frac{2\pi}{M}(j-1)$ and calculate the $\abs{\tilde{\Phi}_2'(e^{i \theta_j})}$ (see Fig \ref{derative}). 
+    
+    % Therefore, the maximal solution
+    % \begin{equation}
+    %     \theta_{\max} = \argmax{j \in [1,10^5]} \abs{\tilde{\Phi}_2'(e^{i \theta_j})}
+    % \end{equation}
+    % can be used to normalize the rotation and the final mapping is 
+    % \begin{equation}
+    %     \hat{\Phi}_2(z) = \tilde{\Phi}_2(e^{i \theta_{\max}}z) = \Phi_2 \circ M_{\Phi_2}(z),
+    % \end{equation}
+    % where $M_{\Phi_2} = e^{i \theta_{\max}} F_{ce^{-i \theta_{\max}}}$.
 
-            \begin{algorithm}[H]
-            \caption{Normalize $M_2$}
-            \label{alg norm phi2}
-            \begin{algorithmic}
-                \STATE \textbf{Inputs:} $\Phi_2$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $M=10^5$.
-                \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$ and $c = -\frac{1}{\bar{b}}$.
-                \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $M_{\Phi_2} = F_{c}$.
-                \RETURN Mobi\"us transformation $M_{\Phi_2}$
-                % \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
-            \end{algorithmic}
-            \end{algorithm}
+    \begin{algorithm}[H]
+    \caption{Normalize $M_2$}
+    \label{alg norm phi2}
+    \begin{algorithmic}
+        \STATE \textbf{Inputs:} $\Phi_2$ and $p_i \in \partial \D$ for $i=1, 2, \cdots, N$, $N=200$, $M=10^5$.
+        \STATE Compute $b = \overline{\Phi_2^{-1}(\infty)}$ and $c = -\frac{1}{\bar{b}}$.
+        \STATE Let $F_c(z) = \frac{z-c}{1-\overline{c}z}$ and $M_{\Phi_2} = F_{c}$.
+        \RETURN Mobi\"us transformation $M_{\Phi_2}$
+        % \RETURN Conformal mapping $\hat{\Phi}_2: \D^c \rightarrow \Omega^c$ satisfied (\ref{norm phi2 1}), (\ref{norm phi2 2}) and boundary points $p_i \in \partial \D$.
+    \end{algorithmic}
+    \end{algorithm}
 
-            After obtaining Mobi\"us transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
-            \begin{align*}
-                \hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}
-            \end{align*}
-            and it is unique up to rotation. Finally, the desired HBS can be generated from $\mu_{\hat{H}}$ according to equation (\ref{normaled B}).
-            
-        
-        \subsection{Summary of the Algorithm}
-            The totally algorithm is as following.
-            \begin{algorithm}[H]
-            \caption{Calculate HBS}
-            \label{alg all}
-            \begin{algorithmic}
-                \STATE \textbf{Inputs:} Simply-connected shape $\Omega \subset \C$, $N=200$.
-                \STATE Pick clockwise points $z_1, \cdots, z_N \in \partial \Omega$ uniformly.
-                \STATE Input $z_1, z_2, \cdots, z_N$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_1}: \D \rightarrow \Omega$ and $p_{i,1} \in \partial\D$.
-                \STATE Input $z_N, \cdots, z_2, z_1$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_2}: \D \rightarrow \Omega^c$ and $p_{i,2} \in \partial\D$.
-                \STATE Let $\Phi_1(z) = g_{\Phi_1}^{-1}(z)$ and $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$.
-                \STATE Let $f = \Phi_1^{-1} \circ \Phi_2$ and represent it by $(\varphi_i, \omega_i) = (\arg(p_{i,2}), \arg(p_{i,1}))$.
-                \STATE Extend $f$ to $H$ on $\D$ by equation (\ref{discrete poisson integral}) on grid $G$.
-                \STATE Input $\Phi_1$ and $p_{i,1}$ to Algorithm \ref{alg norm phi1}, then get $M_{\Phi_1}$.
-                \STATE Input $\Phi_2$ and $p_{i,2}$ to Algorithm \ref{alg norm phi2}, then get $M_{\Phi_2}$.
-                \STATE Calculate normalized harmonic extension $\hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}$.
-                \STATE Calculate Beltrami coefficient $\mu_{\hat{H}}$.
-                \STATE Calculate $\theta = \arg \int_\D \mu_{\hat{H}}(z) dz$.
-                \STATE Let $B(z) = e^{i \theta} \mu_{\hat{H}}(e^{-\frac{1}{2}i\theta} z)$.
-                \RETURN Harmonic Beltrami signature $B$.
-            \end{algorithmic}
-            \end{algorithm}
+    After obtaining Mobi\"us transformations $M_{\Phi_1}$ and $M_{\Phi_2}$, the normalized harmonic extension is
+    \begin{align*}
+        \hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}
+    \end{align*}
+    and it is unique up to rotation. Finally, the desired HBS can be generated from $\mu_{\hat{H}}$ according to equation (\ref{normaled B}).
+    
+
+\subsection{Summary of the Algorithm}
+    The totally algorithm is as following.
+    \begin{algorithm}[H]
+    \caption{Calculate HBS}
+    \label{alg all}
+    \begin{algorithmic}
+        \STATE \textbf{Inputs:} Simply-connected shape $\Omega \subset \C$, $N=200$.
+        \STATE Pick clockwise points $z_1, \cdots, z_N \in \partial \Omega$ uniformly.
+        \STATE Input $z_1, z_2, \cdots, z_N$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_1}: \D \rightarrow \Omega$ and $p_{i,1} \in \partial\D$.
+        \STATE Input $z_N, \cdots, z_2, z_1$ to Algorithm \ref{zipper} and get conformal mapping $g_{\Phi_2}: \D \rightarrow \Omega^c$ and $p_{i,2} \in \partial\D$.
+        \STATE Let $\Phi_1(z) = g_{\Phi_1}^{-1}(z)$ and $\Phi_2(z) = g_{\Phi_2}^{-1}(\frac{1}{z})$.
+        \STATE Let $f = \Phi_1^{-1} \circ \Phi_2$ and represent it by $(\varphi_i, \omega_i) = (\arg(p_{i,2}), \arg(p_{i,1}))$.
+        \STATE Extend $f$ to $H$ on $\D$ by equation (\ref{discrete poisson integral}) on grid $G$.
+        \STATE Input $\Phi_1$ and $p_{i,1}$ to Algorithm \ref{alg norm phi1}, then get $M_{\Phi_1}$.
+        \STATE Input $\Phi_2$ and $p_{i,2}$ to Algorithm \ref{alg norm phi2}, then get $M_{\Phi_2}$.
+        \STATE Calculate normalized harmonic extension $\hat{H} = M_{\Phi_1} \circ H \circ M_{\Phi_2}$.
+        \STATE Calculate Beltrami coefficient $\mu_{\hat{H}}$.
+        \STATE Calculate $\theta = \arg \int_\D \mu_{\hat{H}}(z) dz$.
+        \STATE Let $B(z) = e^{i \theta} \mu_{\hat{H}}(e^{-\frac{1}{2}i\theta} z)$.
+        \RETURN Harmonic Beltrami signature $B$.
+    \end{algorithmic}
+    \end{algorithm}
+
+
     \section{Experimental result}\label{result}
         In this section, we will validate key properties of our proposed Harmonic Beltrami signature, the invariance of under simple transformations and the robustness under small distortion and modification. Besides that, a good shape representation should keep the similarity with the same kind shape and is significantly different from different kinds of shape.
 
