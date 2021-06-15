@@ -1,65 +1,50 @@
-\documentclass[review]{elsarticle}
+\documentclass[review,onefignum,onetabnum]{siamonline190516}
 
 \usepackage{graphicx}
-% \usepackage{geometry}
-\usepackage{amsmath}
-\usepackage{amsthm}
 \usepackage{lineno}
-\usepackage{amssymb}
-% \usepackage{hyperref}
+\usepackage{amsfonts}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\include{snippets}
-%
-\modulolinenumbers[5]
+\usepackage{lipsum}
+\usepackage{epstopdf}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
 
-\journal{Pattern Recognition}
-% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
-%
-% insert here the call for the packages your document requires
-%\usepackage{latexsym}
-% etc.
-%
-% please place your own definitions here and don't use \def but
-% \newcommand{}{}
-%
-% Insert the name of "your journal" with
-% \journalname{myjournal}
-%
-\newtheorem{theorem}{Theorem}
-% \newtheorem{lem}[thm]{Lemma}
-% \newdefinition{rmk}{Remark}
-% \newproof{proof}{Proof}
-\newdefinition{definition}{Definition}
+\usepackage{enumitem}
+\setlist[enumerate]{leftmargin=.5in}
+\setlist[itemize]{leftmargin=.5in}
+\include{snippets}
+
 \graphicspath{ {./src/} }
 % \linespread{2.0}
 \begin{document}
-\begin{frontmatter}
-\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}
-\author[1]{Chenran Lin\corref{cor1}}
-\ead{crlin@math.cuhk.edu.hk}
-\address[1]{Department of Mathematics, The Chinese University of Hong Kong, Shatin, Hong Kong}
-\cortext[cor1]{Corresponding author}
 
-\author[1]{Lok Ming Lui}
-\ead{lmlui@math.cuhk.edu.hk}
-% \address[2]{Department of Mathematics, The Chinese University of Hong Kong}
+% \begin{frontmatter}
+\title{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}
+
+\author{
+    Chenran Lin\thanks{Department of Mathematics, The Chinese University of Hong Kong, Hong Kong (\email{crlin@math.cuhk.edu.hk})}
+\and
+    Lok Ming Lui\thanks{Department of Mathematics, The Chinese University of Hong Kong, Hong Kong (\email{lmlui@math.cuhk.edu.hk})}
+}
+\headers{Harmonic Beltrami Signature: A Novel Invariant 2D Shape Representation for Object Classification}{Chenran Lin, and Lok Ming Lui}
+
+\maketitle
 
 \begin{abstract}
   There is a growing interest in shape analysis in recent years and we present a novel contour-based shape representation for 2D bounded simply-connected domains in this paper, named the Harmonic Beltrami signature. The proposed signature is based on the harmonic extension of the conformal welding map of a unit circle. With suitable normalization, the uniqueness of this harmonic function is guaranteed up to rotations. And finally quasi-conformal theory helps get rid of the only uncertainty by computing the Beltrami coefficient of harmonic extension. There exists one-by-one relationship between shapes and our Harmonic Beltrami signatures and we also give the method to reconstruct the original shapes from our signatures. The benifit of the proposed signature is that it keeps to be invariant under simple transformations like sacling, transformation and rotation and is roubost under slight deformations and distortions. Experiments demonstrate the above properties and also show the excellent classification performance.
 \end{abstract}
 
-\begin{keyword}
-  Shape representation \sep conformal welding \sep simply-connected \sep invariance
-\end{keyword}
-\end{frontmatter}
-
-\linenumbers
+\begin{keywords}
+  Shape representation, conformal welding, simply-connected, invariance
+\end{keywords}
 
 \section{Introduction}
 \label{intro}
     The outline of a shape contains important information, which can be used in many applications, such as medical image analysis, image segmentation, recognition, registration and so on. Nevertheless, it is a big challenge to define a robust descriptor for the space of shapes, even for the simplest situation of 2D simply-connected objects. In order to manipulate shapes and utilize their geometric information, there is an urgent demand to find a simple and robust representation to mathematically describe shape contours. The shape representation should also inherits a natural metric to measure geometric differences between two shape representations. With the geometric dissimilarity metric, two shapes can be quantitatively compared and prior shape information can be incorporated into various imaging models by adding a penalty term to further improve the accuracy. Due to its significance, this problem has been widely studied and different models to build the metric shape space have been proposed.
-    % \cite{belongie2002shape,demisse2017deformation,hagedoorn2000pattern,lades1993distortion,latecki2000shape,mokhtarian1997efficient,zahn1972fourier}.
 
     Considering 2D simply-connected shapes, conformal welding is a kind of well-known shape signature. Given 2D simply-connected domain $\Omega \subset \C$ with Jordan curve boundary $\eta = \partial \D$, there exist conformal function $\Phi_1: \D \rightarrow \Omega$ and $\Phi_2: \D^c \rightarrow \Omega^c$, then conformal welding can be defined as $f = \Phi_1^{-1} \circ \Phi_2$. This gives a simple but wonderful representation of $\Omega$ as Fig. \ref{fig1} shows. However, it has two fatal defects. First is that such representation is not unique. Because of the arbitrary of Riemann conformal mapping, $\Phi_1$ and $\Phi_2$ can only be determined up to a Mobi\"us transformation, so such conformal welding is not unique. Generally speaking, some assumption is required to remove this uncertainty. For example, Sharon \etal \cite{sharon20062d} need to select a base point $P$ inside the given domain $\Omega$ artificially, then let $\Phi_1$ maps $0$ to this point $P$. The work of Mcenteggart \etal \cite{mcenteggart2018uniqueness} is based on Schramm-Loewner evolution(SLE) on random surfaces called Liouville quantum gravity, they proved the equivalence between uniqueness of conformal welding and conformal removable and conculded that if the boundary curve $\eta$ is an $\text{SLE}_k$ for $k \in (0, 4)$ and satisfies some other requirements, the corresponding conformal welding is unique. Some may not that care the uniqueness itself, they used equivalent class to guarantee uniqueness in a broader sense or evne just ignored it \cite{katznelson1990conformal,marshall2012conformal,lui2013shape,astala2010random}.
 
@@ -266,15 +251,7 @@ According to Measurable Riemannian Mapping Theorem \ref{Measurable Riemannian Ma
 Now, $\Omega$ is uniquely determined up to a Mobi\"us transformation $M=\frac{az+b}{cz+d}$. If $G(\infty) = \infty$, then $M$ is of the form: $M = az+b= re^{i\theta}z +b$, $r\in \mathbb{R}^+$, $\theta \in [0,2\pi)$ and $b\in \mathbb{C}$. Hence, $\Omega$ is uniquely determined up to a scaling, rotation and translation, which are reflected by $r, \theta$ and $b$ respectively. 
 \end{proof}
 
-% \bigskip
-
 The above theorem demonstrates that the HBS is indeed an effective geometric representation or ``fingerprint" of a shape. It determines a shape up to a scaling, rotation and translation. 
-
-    %Here we give a brief explanation of how to create our new signature. Given the boundary simply-connected domain $\Omega \subset \C$, we can get conformal welding $f = \Phi_1^{-1} \circ \Phi_2$ of it. Then $f$ can be extended to harmonic function $H$ defined on $\D$ by Poisson integral (\ref{poisson integral}). At the end, the Beltrami coefficient of $F$ becomes a signature of domain $\Omega$, we call it as \textit{Beltrami signature}:
-   % \begin{equation}
-  %      B:= \mu_H = %\frac{H_{\overline{z}}}{H_z}.
-%     \end{equation}
-%    Note that with some suitable normalization methods, which will be revealed in detail in Section \ref{norm1} and \ref{norm2}, $B$ is determined.
 
     \begin{figure}
         \begin{center}
@@ -959,11 +936,11 @@ The above theorem demonstrates that the HBS is indeed an effective geometric rep
 %
 % The authors declare that they have no conflict of interest.
 
-\biboptions{sort&compress}
+% \biboptions{sort&compress}
 % BibTeX users please use one of
 % \bibliographystyle{spbasic}      % basic style, author-year citations
 % \bibliographystyle{spmpsci}      % mathematics and physical sciences
-\bibliographystyle{elsarticle-num}       % APS-like style for physics
+\bibliographystyle{siamplain}       % APS-like style for physics
 \bibliography{cite}
 % Non-BibTeX users please use
 % \begin{thebibliography}{}
